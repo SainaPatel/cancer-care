@@ -1,0 +1,107 @@
+!SESSION 2017-03-03 18:44:16.325 -----------------------------------------------
+eclipse.buildId=4.5.0.I20150603-2000
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product -data C:\Users\ritik\Masters Project\cancer-care -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.jface 2 0 2017-03-03 18:44:32.472
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2017-03-03 18:44:32.472
+!MESSAGE A conflict occurred for ALT+CTRL+SHIFT+T:
+Binding(ALT+CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.tm.terminal.view.ui.command.launchToolbar,Open Terminal,
+		,
+		Category(org.eclipse.tm.terminal.view.ui.commands.category,Terminal Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3d00e981,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.tcf.te.ui.terminals.command.launchToolbar,Open Terminal,
+		,
+		Category(org.eclipse.tcf.te.ui.terminals.commands.category,Terminals Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6265a548,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2017-03-03 18:44:32.472
+!MESSAGE A conflict occurred for ALT+CTRL+T:
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.tm.terminal.connector.local.command.launch,Open Local Terminal on Selection,
+		,
+		Category(org.eclipse.tm.terminal.view.ui.commands.category,Terminal Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2e51ede1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.tcf.te.ui.terminals.local.command.launch,Open Local Terminal on Selection,
+		,
+		Category(org.eclipse.tcf.te.ui.terminals.commands.category,Terminals Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@12051d38,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-03-03 18:45:06.948
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\ritik'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.532
+!MESSAGE RelativityFileSystemStructureProvider.cllectFiles() called. file count=6
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.547
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\AppData\Local\Temp\express-work\1488595593571\cancer-care\app.js
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.563
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\AppData\Local\Temp\express-work\1488595593571\cancer-care\package.json
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.594
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\AppData\Local\Temp\express-work\1488595593571\cancer-care\public\stylesheets\style.css
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.615
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\AppData\Local\Temp\express-work\1488595593571\cancer-care\routes\index.js
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.632
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\AppData\Local\Temp\express-work\1488595593571\cancer-care\routes\user.js
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:34.650
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\AppData\Local\Temp\express-work\1488595593571\cancer-care\views\index.ejs
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:35.293
+!MESSAGE templateRoot: C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:35.304
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\.jshintrc
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:35.354
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\.settings\.jsdtscope
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:35.371
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\.settings\com.eclipsesource.jshint.ui.prefs
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:36.812
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\.settings\org.eclipse.wst.jsdt.core.prefs
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:36.870
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\.settings\org.eclipse.wst.jsdt.ui.superType.container
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:36.889
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\.settings\org.eclipse.wst.jsdt.ui.superType.name
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:36.907
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\common-templates\README.md
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:37.040
+!MESSAGE templateRoot: C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\tern-node
+
+!ENTRY org.nodeclipse.ui 1 0 2017-03-03 18:46:37.040
+!MESSAGE RelativityFileSystemStructureProvider.getContents() called. elemnt=C:\Users\ritik\.eclipse\org.eclipse.platform_4.5.0_1709980481_win32_win32_x86_64\configuration\org.eclipse.osgi\966\0\.cp\templates\tern-node\.tern-project
+
+!ENTRY org.eclipse.debug.ui 4 120 2017-03-03 18:46:38.001
+!MESSAGE org.eclipse.debug.ui.toggleBreakpointsTargetFactory extension failed to load breakpoint toggle target because the specified id is already registered.  Specified ID is: org.chromium.debug.ui.ChromiumToggleBreakpointTargetFactory
