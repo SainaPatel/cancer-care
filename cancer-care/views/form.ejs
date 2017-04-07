@@ -1,0 +1,95 @@
+
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title><%= title %></title>
+    	<link rel='stylesheet' href='/stylesheets/style.css' />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css"/>
+		<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<script src="/node_modules/angular/angular.min.js"></script>
+		<script src="/node_modules/angular-animate/angular-animate.js"></script>
+		<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+		<script src="/node_modules/angular-material/angular-material.min.js"></script>
+		<script>
+			angular.module('myApp',['ngMaterial'])
+				.run(function(){
+					console.log("Ready angular");
+				})
+				.config(function($mdThemingProvider) {
+  					$mdThemingProvider.theme('default')
+    				.primaryPalette('pink')
+    			.accentPalette('orange');
+				})
+				.controller('myController',function($scope){
+					$scope.types=["unsure","small","large"];
+				});
+		</script>
+	</head>
+	<body>
+		<div  style="width:50%;" ng-app="myApp" ng-controller="myController" layout="column" class="mdl-grid md-subhead">
+		<md-toolbar layout="row" layout-align="center center" >Registration</md-toolbar>
+		<md-content >
+			<br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Email</label>
+				<md-icon md-svg-src=""></md-icon>
+				<input type="email" ng-required="true">
+			</md-input-container>
+			
+			<md-input-container class="md-icon-float">
+				<label>First Name</label>
+				<md-icon md-svg-src=""></md-icon>
+				<input type="text" ng-required="true">
+			</md-input-container>
+			
+			<md-input-container class="md-icon-float">
+				<label>Last Name</label>
+				<md-icon md-svg-src=""></md-icon>
+				<input type="text" ng-required="true">
+			</md-input-container>
+			<br>
+			<md-input-container class="md-block" style="margin-left:50px;">
+				<md-radio-group >
+      				<md-radio-button value="male" class="md-primary">Male</md-radio-button>
+      				<md-radio-button value="female"> Female </md-radio-button>
+      				<md-radio-button value="other">Other</md-radio-button>
+    			</md-radio-group>
+			</md-input-container>
+			
+			<br>
+				<md-input-container class="md-icon-float md-block">
+					<label>Type of Cancer</label>
+					<md-icon md-svg-src=""></md-icon>
+					<md-select ng-model="cancer_type">		
+            			<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
+          			</md-select>
+			</md-input-container>
+			<md-input-container class="md-icon-float">
+				<label>Password</label>
+				<md-icon md-svg-src=""></md-icon>
+				<input type="password" ng-required="true">
+			</md-input-container>
+		
+			<md-input-container class="md-icon-float ">
+				<label>Confirm Password</label>
+				<md-icon md-svg-src=""></md-icon>
+				<input type="password" ng-required="true">
+			</md-input-container>
+			
+		</md-content>
+		</div>
+
+
+	</body>
+</html>
