@@ -1,179 +1,247 @@
 <html>
+
 <head>
-		<title><%= title %></title>
-    	<link rel='stylesheet' href='/stylesheets/style.css' />
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="/assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css"/>
-		<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css"/>
-		<script src="/node_modules/angular/angular.min.js"></script>
-		<script src="/node_modules/angular-animate/angular-animate.js"></script>
-		<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
-		<script src="/node_modules/angular-material/angular-material.min.js"></script>
-		<script>
+	<title>
+		<%= title %>
+	</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+	<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css" />
+	<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css" />
+	<script src="/node_modules/angular/angular.min.js"></script>
+	<script src="/node_modules/angular-animate/angular-animate.js"></script>
+	<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+	<script src="/node_modules/angular-material/angular-material.min.js"></script>
+	<script>
 			angular.module('myApp',['ngMaterial'])
 				.run(function(){
 					console.log("Ready angular");
 				})
 		</script>
-	</head>
-	<body ng-app="myApp">
+</head>
 
-<div id="main">
+<body ng-app="myApp">
 
-				<!-- Intro -->
-					<section id="top" class="one dark cover">
-					<div class="container login">
-					<a href="#portfolio" class="button scrolly" style="margin-right: 2em;">Login</a>
-					<a href="#portfolio" class="button scrolly">Signup</a>
-					</div>
-						
-						<div class="container">
-							<header>
-								<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
-								site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
-								<p>Ligula scelerisque justo sem accumsan diam quis<br />
-								vitae natoque dictum sollicitudin elementum.</p>
-							</header>
+	<div id="main">
 
-							
+		<!-- Intro -->
+		<section id="top" class="one dark cover">
+			<div class="container login">
+				<a href="#portfolio" class="button scrolly" style="margin-right: 2em;">Login</a>
+				<a href="#portfolio" class="button scrolly">Signup</a>
+			</div>
 
-						</div>
-					</section>
+			<div class="container">
+			</div>
+		</section>
 
-				<!-- Portfolio -->
-					<section id="portfolio" class="two">
-						<div class="container">
+		<!-- Portfolio -->
+		<section id="portfolio" class="two">
+			<div class="container">
+				<header>
+					<h3>Welcome to the club you didn’t ask to join. </h3>
+					<h3>We know you’re pissed. </h3>
+					<h3>and that’s OK. </h3>
+					<h3>We’ve been there, too. </h3>
+					<h3>We connect you with your community and </h3>
+					<h3>strive to make it all suck a little less.</h3>
 
-							<header>
-								<h2>Portfolio</h2>
-							</header>
+					<h2><strong>What can we help you with you ask?</strong></h2>
+				</header>
+				<div class="row">
+					<div class="4u 12u$(mobile)">
+						<article class="item">
+							<div>
+								<md-card style="height:40%">
+									<md-card-title style="background-color: #87113D; height:20%; color:white;">
+										<md-card-title-text>
+											<span class="md-headline" style="font-weight:600; font-size:1.2em;">LIFESTYLE</span>
+										</md-card-title-text>
+									</md-card-title>
+									<md-card-content style="height:80%; font-size:2em; padding-top:10%; padding-bottom:10%;">
+										<p style="line-height:normal">
+										How to lead a better life with cancer?	
+										</p>
+									</md-card-content>
+								</md-card>
 
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-							egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-							Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-							fusce hendrerit lacus ridiculus.</p>
-
-							<div class="row">
-								<div class="4u 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic02.jpg" alt="" /></a>
-										<header>
-											<h3>Ipsum Feugiat</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic03.jpg" alt="" /></a>
-										<header>
-											<h3>Rhoncus Semper</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic04.jpg" alt="" /></a>
-										<header>
-											<h3>Magna Nullam</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>Natoque Vitae</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u$ 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic06.jpg" alt="" /></a>
-										<header>
-											<h3>Dolor Penatibus</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>Orci Convallis</h3>
-										</header>
-									</article>
-								</div>
 							</div>
 
-						</div>
-					</section>
+						</article>
+						<article class="item">
+							<div>
+								<md-card style="height:50%">
+									<md-card-title style="background-color: #87113D; height:20%; color:white;">
+										<md-card-title-text>
+											<span class="md-headline" style="font-weight:600; font-size:1.2em;">DOCTORS</span>
+										</md-card-title-text>
+									</md-card-title>
+									<md-card-content style="height:80%; font-size:2em; padding-top:10%; padding-bottom:8%;">
+										<p style="line-height:normal">
+											Find a professional who can answer your questions
+										</p>
+									</md-card-content>
+								</md-card>
 
-				<!-- About Me -->
-					<section id="about" class="three">
-						<div class="container">
+							</div>
+						</article>
+					</div>
+					<div class="4u 12u$(mobile)">
+						<article class="item">
+								<div>
+								<md-card style="height:55%">
+									<md-card-title style="background-color: #87113D; height:20%; color:white;">
+										<md-card-title-text>
+											<span class="md-headline" style="font-weight:600; font-size:1.2em;">SUPPORT GROUPS</span>
+										</md-card-title-text>
+									</md-card-title>
+									<md-card-content style="height:80%; font-size:2em; padding-top:10%; padding-bottom:8%;">
+										<p style="line-height:normal">
+											Want to speak to people who are fighting a battle same as yours?
+										</p>
+									</md-card-content>
+								</md-card>
 
-							<header>
-								<h2>About Me</h2>
-							</header>
+							</div>
+						</article>
+						<article class="item">
+								<div>
+								<md-card style="height:40%">
+									<md-card-title style="background-color: #87113D; height:20%; color:white;">
+										<md-card-title-text>
+											<span class="md-headline" style="font-weight:600; font-size:1.2em;">RESEARCH</span>
+										</md-card-title-text>
+									</md-card-title>
+									<md-card-content style="height:80%; font-size:2em; padding-top:10%; padding-bottom:8%;">
+										<p style="line-height:normal">
+											Know the latest findings in the area of lung cancer research
+										</p>
+									</md-card-content>
+								</md-card>
 
-							<a href="#" class="image featured"><img src="/images/pic08.jpg" alt="" /></a>
+							</div>
+						</article>
+					</div>
+					<div class="4u$ 12u$(mobile)">
+						<article class="item">
+							<div>
+								<md-card style="height:45%">
+									<md-card-title style="background-color: #87113D; height:20%; color:white;">
+										<md-card-title-text>
+											<span class="md-headline" style="font-weight:600; font-size:1.2em;">ALTERNATIVE TREATMENTS</span>
+										</md-card-title-text>
+									</md-card-title>
+									<md-card-content style="height:80%; font-size:2em; padding-top:10%; padding-bottom:8%;">
+										<p style="line-height:normal">
+											Know your options apart from conventional treatments
+										</p>
+									</md-card-content>
+								</md-card>
 
-							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
-							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
-							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
-							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
-							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
-							ornare iaculis.</p>
+							</div>
+						</article>
+						<article class="item">
+							<div>
+								<md-card style="height:50%">
+									<md-card-title style="background-color: #87113D; height:20%; color:white;">
+										<md-card-title-text>
+											<span class="md-headline" style="font-weight:600; font-size:1.2em;">SURVIVOR STORIES</span>
+										</md-card-title-text>
+									</md-card-title>
+									<md-card-content style="height:80%; font-size:2em; padding-top:10%; padding-bottom:8%;">
+										<p style="line-height:normal">
+											You are <strong>STRONGER</strong> than you think.
+										</p>
+									</md-card-content>
+								</md-card>
 
-						</div>
-					</section>
-
-				<!-- Contact -->
-					<section id="contact" class="four">
-						<div class="container">
-
-							<header>
-								<h2>Contact</h2>
-							</header>
-
-							<p>Elementum sem parturient nulla quam placerat viverra
-							mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
-
-							<form method="post" action="#">
-								<div class="row">
-									<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
-									<div class="12u$">
-										<textarea name="message" placeholder="Message"></textarea>
-									</div>
-									<div class="12u$">
-										<input type="submit" value="Send Message" />
-									</div>
-								</div>
-							</form>
-
-						</div>
-					</section>
+							</div>
+						</article>
+					</div>
+				</div>
 
 			</div>
+		</section>
 
-		<!-- Footer -->
-			<div id="footer">
+		<!-- About Me -->
+		<section id="about" class="three">
+			<div class="container">
 
-				<!-- Copyright -->
-					<ul class="copyright">
-						<li>&copy; CancerCare 2017. All rights reserved.</li>
-					</ul>
+				<header>
+					<h2>About Cancer Care</h2>
+				</header>
+
+				<a href="#" class="image featured"><img src="/images/supportgroup.jpg" alt="" style="height:40%"/></a>
+
+				<h4><p>
+
+Our mission is to empower those affected by lung cancer by:</p>
+  <ul>  
+	<li>building community</li>
+	<li>improving quality of life</li>
+	<li>providing meaningful survivorship</li>
+  </ul>
+  <p>
+Our vision is no survivor alone. 
+
+Our charter is to ensure that no one affected by lung cancer go unaware of the appropriate support resources they are entitled to so they can get busy living.</p>
+				</h4>
 
 			</div>
+		</section>
 
-		<!-- Scripts -->
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.scrolly.min.js"></script>
-			<script src="/assets/js/jquery.scrollzer.min.js"></script>
-			<script src="/assets/js/skel.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/assets/js/main.js"></script>
+		<!-- Contact -->
+		<section id="contact" class="four">
+			<div class="container">
+
+				<header>
+					<h2>Contact Us</h2>
+				</header>
+<p>
+				<h3>Have a question? Feel free to reach out to us!</h3>
+</p>
+
+				<form method="post" action="#">
+					<div class="row">
+						<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
+						<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
+						<div class="12u$">
+							<textarea name="message" placeholder="Message"></textarea>
+						</div>
+						<div class="12u$">
+							<input type="submit" value="Send Message" />
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Footer -->
+	<div id="footer">
+
+		<!-- Copyright -->
+		<ul class="copyright">
+			<li>&copy; CancerCare 2017. All rights reserved.</li>
+		</ul>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery.scrolly.min.js"></script>
+	<script src="/assets/js/jquery.scrollzer.min.js"></script>
+	<script src="/assets/js/skel.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/assets/js/main.js"></script>
 </body>
+
 </html>

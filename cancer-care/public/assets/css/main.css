@@ -2245,7 +2245,11 @@
 
 			#main > section.one {
 				background-color: #81918E;
-				background-image: url("../../images/banner.jpg");
+				background-image: url("../../images/circleOfHope.jpg");
+				background-repeat: no-repeat;
+				background-size: cover;
+				min-height: 60%;
+				width: 100%;
 			}
 
 			#main > section.two {
