@@ -8,7 +8,8 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , favicon = require('serve-favicon');
+  , favicon = require('serve-favicon')
+  ,	recommendation=require('./routes/recommendation');
 
 var app = express();
 
@@ -30,6 +31,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/radoninfo',recommendation.getRadonInfo);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
