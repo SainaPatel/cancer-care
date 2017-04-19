@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;cancer-care/public/images/Lets-stop-losing-the-woman-we-love-800x959.jpg&apos; to &apos;BreastCancerCard.jpg&apos;" description="Rename resource &apos;Lets-stop-losing-the-woman-we-love-800x959.jpg&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="public/images/Lets-stop-losing-the-woman-we-love-800x959.jpg" name="BreastCancerCard.jpg" stamp="1492563858792" updateReferences="true"/>
+</session>

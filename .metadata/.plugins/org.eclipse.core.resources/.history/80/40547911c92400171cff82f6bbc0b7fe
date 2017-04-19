@@ -1,0 +1,9 @@
+var mongo = require("./mongo");
+var mongoURL = "mongodb://localhost:27017/ParkingAsAService";
+
+export.giveDoctors=function(req,res){
+	mongo.connect(mongoURL, function(){
+		console.log('Connected to mongo at: ' + mongoURL);
+		var coll = mongo.collection('betterDoctor');
+	
+}

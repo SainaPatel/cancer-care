@@ -1,6 +1,5 @@
 @import url("font-awesome.min.css");
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
-
 /*
 	Prologue by HTML5 UP
 	html5up.net | @ajlkn
@@ -10,15 +9,38 @@
 /* Reset */
 
 .section__content {
-  padding-left: 3px;
+   padding-left: 3px;
+
+}
+.main_font {
+  font-style: Helvetica;
+  color: #2b2b2b;
+  text-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
 }
 
+.news {
+	
+	background-color: #875D67;
+	height: 50px;
+	border-bottom-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+}
+.news_font {
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	font-size: 25px;
+	padding-top: 0.5%;
+}
 .card {
   position: relative;
   float: left;
   padding-bottom: 25%;
   width: 25%;
   text-align: center;
+  margin-left: 5%
 }
 /* card fronts and backs */
 .card__front,
@@ -39,11 +61,11 @@
 }
 
 .card__front {
-  background-color: #ff5078;
+  background-color: #754B57;
 }
 
 .card__back {
-  background-color: #1e1e1e;
+  background-color: #754B57;
   -webkit-transform: rotateY(-180deg);
           transform: rotateY(-180deg);
 }
@@ -56,6 +78,31 @@
 .card.effect__click.flipped .card__back {
   -webkit-transform: rotateY(0);
           transform: rotateY(0);
+}
+
+.card__text {
+   position: absolute; 
+   top: 190px; 
+   left: 0; 
+   width: 100%; 
+   color: white;
+   font-family: Arial;
+   font-style: Italic;
+}
+
+.card__text__back {
+	position: relative;
+	top: 10%;
+	width: 100%; 
+   color: white;
+   font-family: Arial;
+   font-style: Italic;
+}
+
+.card__text__back__read {
+	color: black;
+	font-width: bold;
+	width: 100%;
 }
 
 	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
@@ -1649,7 +1696,7 @@
 
 		h2.alt {
 			color: #888;
-		}
+ 		}
 
 			h2.alt strong {
 				color: #666;
@@ -1755,6 +1802,9 @@
 			width: 100%;
 		}
 
+		.types_cancer {
+		height:80%
+		}
 		.image.avatar48 {
 			width: 48px;
 			height: 48px;
@@ -1770,6 +1820,7 @@
 			display: block;
 			width: 100%;
 		}
+		
 
 		.image.featured {
 			display: block;
