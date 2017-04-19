@@ -1,0 +1,136 @@
+
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title><%= title %></title>
+    	<link rel='stylesheet' href='/stylesheets/style.css' />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css"/>
+		<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css"/>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+		<script src="/node_modules/angular/angular.min.js"></script>
+		<script src="/node_modules/angular-animate/angular-animate.js"></script>
+		<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+		<script src="/node_modules/angular-material/angular-material.min.js"></script>
+		<script>
+			angular.module('myApp',['ngMaterial'])
+				.run(function(){
+					console.log("Ready angular");
+				})
+				.config(function($mdThemingProvider) {
+  					$mdThemingProvider.theme('default')
+    				.primaryPalette('deep-purple')
+    			.accentPalette('orange');
+				})
+				.controller('myController',function($scope){
+					$scope.types=["unsure","small","large"];
+					$scope.currentStep=0;
+					$scope.currentType=0;
+					$scope.questions=[
+								{
+									"type":"Physical Well Being",
+									"questions":[
+	             								"Do you have a lack of energy?",
+												"Do you have nausea?",
+												"Because of my physical condition,do you have trouble meeting the needs of my family?",
+												"Do you have pain?",
+												"Are you bothered by side effects of treatment",
+												"Do you feel ill",
+												"Are you forced to spend time in bed",
+												]
+								},
+								{
+	 								"type":"Social Well Being",
+	 								"questions":["I feel close to my friends",
+	  											"I get emotional support from my family",
+	  											"I get support from my friends",
+	  											"My family has accepted my illness",
+	  											"I am satisfied with family communication about my illness",
+	  											"I feel close to my partner (or the person who is my main support)",
+	  											"I am satisfied with my sex life"]
+								},
+								{
+								 "type":"Emotional Well Being",
+	 							"questions":[
+	  										"I feel sad",
+	  										"I am satisfied with how I am coping with my illness",
+	  										"I am losing hope in the fight against my illness",
+	  										"I feel nervous",
+	  										"I worry about dying",
+	  										"I worry that my condition will get worse"]
+								},
+								{
+	 							"type":"Functional Well Being",
+	 							"questions":[	"I am able to work (include work at home)",
+	  											"My work (include work at home) is fulfilling",
+	  											"I am able to enjoy life",
+	  											"I have accepted my illness",
+	  											"I am sleeping well",
+	  											"I am enjoying the things I usually do for fun",
+	  											"I am content with the quality of my life right now"]
+								},
+								{
+	 							"type":"Additional Concerns",
+	 							"questions":["I have been short of breath",
+	  										"I am losing weight",
+	  										"My thinking is clear",
+	  										"I have been coughing",
+	  										"I am bothered by hair loss",
+	  										"I have a good appetite",
+	  										"Breathing is easy for me",
+	  										"Have you ever smoked?",
+	  										"I regret my smoking"]
+								}
+							];
+					$scope.saveclick = function (n) {
+						if($scope.currentType==4&&$scope.currentStep==n){
+							$scope.end=true;
+						}
+						else if($scope.currentStep==n-1){
+					    	$scope.currentType++;
+					    	$scope.currentStep=0;
+					    } 
+					    else{
+					    	$scope.currentStep++;
+					    }
+					    
+					}
+				});
+		</script>
+	</head>
+	<body>
+		<div  style="width:50%;" ng-app="myApp" ng-controller="myController" layout="column" class="mdl-grid md-subhead">
+		<md-toolbar layout="row" layout-align="center center" >Questionare</md-toolbar>
+		<md-content ng-repeat="questionSet in questions" ng-show="currentType == $index">
+			<h2>{{questionSet.type}}</h2>
+			<md-content ng-repeat="question in questionSet.questions" ng-show="currentStep == $index">
+			{{question}}
+			<md-input-container class="md-block" style="margin-left:50px;">
+				<md-radio-group >
+      				<md-radio-button value="1" class="md-primary">Not at all</md-radio-button>
+      				<md-radio-button value="2">A little bit </md-radio-button>
+      				<md-radio-button value="3">Somewhat</md-radio-button>
+      				<md-radio-button value="4">Quite a bit</md-radio-button>
+      				<md-radio-button value="5">Very much</md-radio-button>
+    			</md-radio-group>
+			</md-input-container>
+			
+			<md-button class="md-raised md-primary" ng-click="saveclick(questionSet.questions.length)">Submit</md-button>
+			
+			<md-content>
+		</md-content>
+		<p ng-show="end==true">End</p>
+		</div>
+
+
+	</body>
+</html>
