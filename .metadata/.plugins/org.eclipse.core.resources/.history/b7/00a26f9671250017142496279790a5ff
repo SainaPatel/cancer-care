@@ -60,7 +60,7 @@
 								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
 								<li><a href="#recommendations" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
 								<li><a href="#latestNews" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Latest News</span></a></li>
-								<li><a href="#contact_us" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact Us</span></a></li>
+								<li><a href="#profile" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Profile</span></a></li>
 							</ul>
 						</nav>
 
@@ -184,11 +184,11 @@
 
 
 				<!-- Contact -->
-					<section id="contact_us" class="four">
+					<section id="profile" class="four">
 						<div class="container">
 
 							<header>
-								<h2>Contact Us</h2>
+								<h2>Profile</h2>
 							</header>
 
 							<p>Elementum sem parturient nulla quam placerat viverra

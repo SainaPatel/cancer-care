@@ -60,7 +60,7 @@
 								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
 								<li><a href="#recommendations" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
 								<li><a href="#latestNews" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Latest News</span></a></li>
-								<li><a href="#contact_us" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact Us</span></a></li>
+								<li><a href="#profile" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Profile</span></a></li>
 							</ul>
 						</nav>
 
@@ -89,13 +89,15 @@
 						<div class="container">
 
 							<header>
-								<h2 class="main_font">Medicines can cure, but a good doctor's inspirational words can give the strength to fight from within</h2>
-								
+								<h2 class="alt">Hi! I'm <strong>Prologue</strong>, a <a href="http://html5up.net/license">free</a> responsive<br />
+								site template designed by <a href="http://html5up.net">HTML5 UP</a>.</h2>
+								<p>Ligula scelerisque justo sem accumsan diam quis<br />
+								vitae natoque dictum sollicitudin elementum.</p>
 							</header>
 
-							<!-- <footer>
+							<footer>
 								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
-							</footer> -->
+							</footer>
 
 						</div>
 					</section>
@@ -162,33 +164,31 @@
 					</section>
 
 				<!-- About Me -->
-					<section id="latestNews" class="four">
+					<section id="latestNews" class="three">
 						<div class="container">
 
 							<header>
 								<h2>Latest News</h2>
 							</header>
 
-							<div class="news news_font">OncoMed's lung cancer drug fails mid-stage study, shares tumble 
- 							<a href="http://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font color="black" width="100%">&#8594;</font></a>
- 							</div></br>
-							<div class="news news_font">New Treatments for Lung Cancer
- 							<a href="http://health.usnews.com/health-care/patient-advice/articles/2017-04-18/new-treatments-for-lung-cancer"><font color="black" width="100%">&#8594;</font></a>
- 							</div></br>
- 							<div class="news news_font">OncoMed stock drops 25% after lung cancer drug misses in mid-stage clinical trial 
- 							<a href="http://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font color="black" width="100%">&#8594;</font></a>
- 							</div>
+							<a href="#" class="image featured"><img src="/images/pic08.jpg" alt="" /></a>
+
+							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
+							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
+							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
+							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
+							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
+							ornare iaculis.</p>
 
 						</div>
 					</section>
 
-
 				<!-- Contact -->
-					<section id="contact_us" class="four">
+					<section id="profile" class="four">
 						<div class="container">
 
 							<header>
-								<h2>Contact Us</h2>
+								<h2>Profile</h2>
 							</header>
 
 							<p>Elementum sem parturient nulla quam placerat viverra
