@@ -15,10 +15,30 @@ exports.connect = function(url, callback){
     });
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+/**
+ * Returns the collection on the selected database
+ */
+>>>>>>> master
+=======
+/**
+ * Returns the collection on the selected database
+ */
+>>>>>>> master
 exports.collection = function(name){
     if (!connected) {
       throw new Error('Must connect to Mongo before calling "collection"');
     } 
     return db.collection(name);
   
+<<<<<<< HEAD
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> master
+=======
+};
+>>>>>>> master

@@ -10,7 +10,8 @@ var express = require('express')
   , mongo=require('./routes/mongo')
   , http = require('http')
   , path = require('path')
-  , favicon = require('serve-favicon');
+  , favicon = require('serve-favicon')
+  ,	recommendation=require('./routes/recommendation');
 
 var app = express();
 
@@ -32,7 +33,15 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+<<<<<<< HEAD
+<<<<<<< HEAD
 app.get('/getDoctors',doctors.getDoctors)
+=======
+app.get('/radoninfo',recommendation.getRadonInfo);
+>>>>>>> master
+=======
+app.get('/radoninfo',recommendation.getRadonInfo);
+>>>>>>> master
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
