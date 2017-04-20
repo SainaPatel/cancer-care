@@ -1,0 +1,2 @@
+var mongo = require("./mongo");
+var mongoURL = "mongodb://<dbuser>:<dbpassword>@ds163940.mlab.com:63940/betterdoctor";
