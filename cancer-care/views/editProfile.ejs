@@ -27,13 +27,39 @@
 					console.log("Ready angular");
 				})
 				.config(function($mdThemingProvider) {
+					$mdThemingProvider.definePalette('cancer-care-palette', {
+						   
+					    '100': '754B57',
+					    '200': 'BA99A2',
+					    '300': 'D1B8BF',
+					    '50': 'ffebee',
+					    '400': 'ef5350',
+					    '500': 'f44336',
+					    '600': 'e53935',
+					    '700': 'd32f2f',
+					    '800': 'c62828',
+					    '900': 'b71c1c',
+					    'A100': 'ff8a80',
+					    'A200': 'ff5252',
+					    'A400': 'ff1744',
+					    'A700': 'd50000',
+					    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+					                                        // on this palette should be dark or light
+
+					    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+					     '200', '300', '400', 'A100'],
+					    'contrastLightColors': undefined 
+					
+					  });
+		
   					$mdThemingProvider.theme('default')
-    				.primaryPalette('deep-purple')
-    			.accentPalette('orange');
+    				.primaryPalette('cancer-care-palette',{'default':'100'})
+    			.accentPalette('cancer-care-palette',{'default':'200'});
 				})
-				.controller('myController',function($scope){
+				.controller('myController',function($scope,$http){
 					$scope.currentStep=0;
 					$scope.currentType=0;
+					$scope.answers=[];
 					$scope.questions=[
 								{
 									"type":"Physical Well Being",
@@ -90,8 +116,12 @@
 	  										"I regret my smoking"]
 								}
 							];
-					$scope.saveclick = function (n) {
-						if($scope.currentType==4&&$scope.currentStep==n){
+					$scope.saveclick = function (n,answer) {
+						if(typeof answer=='undefined')
+							$scope.answers.push(-1);
+						else
+							$scope.answers.push(parseInt(answer));
+						if($scope.currentType==4&&$scope.currentStep==n-1){
 							$scope.end=true;
 						}
 						else if($scope.currentStep==n-1){
@@ -100,36 +130,136 @@
 					    } 
 					    else{
 					    	$scope.currentStep++;
-					    }
-					    
+					    }					    
+					}
+				
+					$scope.submitFACTL = function(){
+						var PWB=$scope.answers.slice(0,7);
+						var SWB=$scope.answers.slice(7,14);
+						var EWB=$scope.answers.slice(14,20);
+						var FWB=$scope.answers.slice(20,27)
+						var LCS=$scope.answers.slice(27);
+						PWB=calculatePWB(PWB);
+						SWB=calculateSWB(SWB);
+						EWB=calculateSWB(EWB);
+						FWB=calculateFWB(FWB);
+						LCS=calculateLCS(LCS);
+						console.log(SWB+"\n");
+						console.log(EWB+"\n");
+						console.log(FWB+"\n");
+						console.log(LCS+"\n");
+						console.log($scope.answers+"\n");
+						$http.post('/addFACTL', { 
+					
+							   email: "donita.almeida@gmail.com" , 
+							   PWB:PWB, 
+							   SWB:SWB, 
+							   EWB: EWB, 
+							   FWB:FWB, 
+							   LCS:LCS,
+							   }
+						   ).success(function (response) {
+			                    console.log(response);
+			               });
+					}
+					function calculatePWB(PWB){
+						var count=PWB.length;
+						var result=0;
+						for(var value in PWB){
+							if(value==-1){
+								count--;
+							}else{
+								result+=4-value;
+							}
+						}
+						result=(result*7)/count;
+						return result;
+					}
+					function calculateSWB(SWB){
+						var count=SWB.length;
+						var result=0;
+						for(var value in SWB){
+							if(value==-1){
+								count--;
+							}else{
+								result+=parseInt(value);
+							}
+						}
+						result=(result*7)/count;
+						return result;
+					}
+					function calculateEWB(EWB){
+						var count=EWB.length;
+						var result=0;
+						for(var i=0;i<EWB.length;i++){
+							if(EWB[i]==-1){
+								count--;
+							}else{
+								if(i==1){
+									result+=EWB[i];
+								}else{								
+									result+=4-EWB[i];								
+								}
+							}							
+						}
+						result=(result*7)/count;
+						return result;
+					}
+					function calculateFWB(FWB){
+						var count=FWB.length;
+						var result=0;
+						for(var value in FWB){
+							if(value==-1){
+								count--;
+							}else{
+								result+=parseInt(value);
+							}
+						}
+						result=(result*7)/count;
+						return result;
+						
+					}
+					function calculateLCS(LCS){
+						var count=LCS.length;
+						var result=0;
+						for(var i=0;i<LCS.length;i++){
+							if(LCS[i]==-1){
+								count--;
+							}else{
+								if(i==2||i==4||i==6){
+									result+=LCS[i];
+								}else{								
+									result+=4-LCS[i];								
+								}
+							}							
+						}
+						result=(result*7)/count;
+						return result;
 					}
 				});
 		</script>
 	</head>
 	<body>
-		<div  style="width:50%;" ng-app="myApp" ng-controller="myController" layout="column" class="mdl-grid md-subhead">
-		<md-toolbar layout="row" layout-align="center center" >Questionare</md-toolbar>
-		<md-content ng-repeat="questionSet in questions" ng-show="currentType == $index">
-			<h2>{{questionSet.type}}</h2>
-			<md-content ng-repeat="question in questionSet.questions" ng-show="currentStep == $index">
-			{{question}}
-			<md-input-container class="md-block" style="margin-left:50px;">
-				<md-radio-group >
-      				<md-radio-button value="1" class="md-primary">Not at all</md-radio-button>
-      				<md-radio-button value="2">A little bit </md-radio-button>
-      				<md-radio-button value="3">Somewhat</md-radio-button>
-      				<md-radio-button value="4">Quite a bit</md-radio-button>
-      				<md-radio-button value="5">Very much</md-radio-button>
-    			</md-radio-group>
-			</md-input-container>
-			
-			<md-button class="md-raised md-primary" ng-click="saveclick(questionSet.questions.length)">Submit</md-button>
-			
+		<div  style="width:50%;;margin-left:25%;" ng-app="myApp" ng-controller="myController" layout="column" class="mdl-grid md-subhead">
+			<md-toolbar layout="row" layout-align="center center" >Questionare</md-toolbar>
+			<md-content style="padding:20px;" ng-repeat="questionSet in questions" ng-show="currentType == $index">
+				<h2>{{questionSet.type}}</h2>
+				<md-content ng-repeat="question in questionSet.questions" ng-show="currentStep == $index">
+				{{question}}
+				<md-input-container class="md-block" style="margin-left:50px;">
+					<md-radio-group ng-model="answer" ng-change="saveclick(questionSet.questions.length,answer)" ng-required="true">
+      					<md-radio-button value="0" class="md-primary">Not at all</md-radio-button>
+      					<md-radio-button value="1">A little bit </md-radio-button>
+      					<md-radio-button value="2">Somewhat</md-radio-button>
+      					<md-radio-button value="3">Quite a bit</md-radio-button>
+      					<md-radio-button value="4">Very much</md-radio-button>
+    				</md-radio-group>
+				</md-input-container>			
+				<!--  <md-button type="submit" ng-hide="end" class="md-raised md-primary" ng-click="saveclick(questionSet.questions.length,answer)">Next</md-button>-->			
 			<md-content>
-		</md-content>
-		<p ng-show="end==true">End</p>
+		</md-content>	
+		<md-button ng-show="end" class="md-raised md-primary" ng-click="submitFACTL()" >Done</md-button>			
+			
 		</div>
-
-
 	</body>
 </html>
