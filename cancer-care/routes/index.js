@@ -4,5 +4,6 @@
  */
 
 exports.index = function(req, res){
-  res.render('landing', { title: 'CancerCare' });
+
+  res.render('patientProfile', { title: 'CancerCare' });
 };
