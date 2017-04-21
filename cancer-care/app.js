@@ -9,7 +9,9 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , favicon = require('serve-favicon')
-  ,	recommendation=require('./routes/recommendation');
+  ,	recommendation=require('./routes/recommendation')
+  ,registration=require('./routes/registration')
+  ,profile=require('./routes/profile');
 
 var app = express();
 
@@ -33,6 +35,9 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
+app.post('/register',registration.register);
+app.post('/login',registration.login);
+app.post('/addFACTL',profile.addFACTL);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

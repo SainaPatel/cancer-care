@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Register</title>
+		<title>Login</title>
     	<link rel='stylesheet' href='/stylesheets/style.css' />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -50,18 +50,11 @@
 				})
 				.controller('myController',function($scope,$http){
 					$scope.types=["unsure","small cell","large cell"];
-					$scope.signup=function() {
+					$scope.login=function() {
 						console.log("Function called");
-						   $http.post('/register', { 
-							   name: $scope.name , 
-							   state:$scope.state, 
+						   $http.post('/login', { 
 							   email:$scope.email, 
 							   password: $scope.password, 
-							   gender:$scope.gender, 
-							   county:$scope.county,
-							   dob:$scope.dob,
-							   cancer_type:$scope.cancer_type,
-							   gender:$scope.gender
 							   }
 						   ).success(function (response) {
 			                    console.log(response);
@@ -81,43 +74,12 @@
 				
 				<input ng-model="email" type="email" ng-required="true">
 			</md-input-container>		
-			<md-input-container class="md-icon-float  md-block"">
-				<label>Name</label>
-		
-				<input ng-model="name" type="text" ng-required="true">
-			</md-input-container>
-			
-			<md-input-container class="md-icon-float md-block" >
-				<md-radio-group ng-model="gender">
-      				<md-radio-button  value="male" class="md-primary">Male</md-radio-button>
-      				<md-radio-button  value="female"> Female </md-radio-button>
-      				<md-radio-button  value="other">Other</md-radio-button>
-    			</md-radio-group>
-			</md-input-container>
-			
-			<md-input-container class="md-icon-float md-block">		
-			 <md-datepicker  ng-model="dob" md-placeholder="Enter Birth date"r></md-datepicke>	
-			 </md-input-container>				
-			<md-input-container class="md-icon-float  md-block">
-				<label>State</label>
-				<input ng-model="state" type="text">
-			</md-input-container>
-			<md-input-container class="md-icon-float  md-block">
-				<label>County</label>	
-				<input ng-model="county" type="text" >
-			</md-input-container>
-			<md-input-container class="md-icon-float md-block">
-				<label>Type of Lung Cancer</label>		
-				<md-select ng-model="cancer_type">		
-            		<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
-          		</md-select>
-			</md-input-container>
-			<br>
+	
 			<md-input-container class="md-icon-float md-block"">
 				<label>Password</label>
 				<input ng-model="password" type="password" ng-required="true">
 			</md-input-container>	
-			<md-button type="submit" ng-click="signup();" class="md-raised md-primary">Submit</md-button>
+			<md-button type="submit" ng-click="login();" class="md-raised md-primary">Login</md-button>
 		</md-content>
 		
 		</div>
