@@ -8,6 +8,16 @@
 */
 
 /* Reset */
+.article-heading{
+    text-align: left;
+    color: #754B57;
+    font-weight: 600;
+    font-size: large;
+}
+.article-link{
+	font-size: medium;
+    text-align: left;
+}
 
 .login{
 	padding-top: 2em;
