@@ -15,45 +15,46 @@
 		<script src="/node_modules/angular-animate/angular-animate.js"></script>
 		<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 		<script src="/node_modules/angular-material/angular-material.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js" type="text/javascript"></script>
 		<script>
-			angular.module('myApp',['ngMaterial'])
+			angular.module('myApp',['ngMaterial','googlechart'])
 				.run(function(){
 					console.log("Ready angular");
+				}).controller('myController',function($scope,$http){
+					var chart1={};
+					$scope.generalMessage=true;
+					chart1.type = "GeoChart";
+					chart1.data=[  ['State', 'Radon Level'],
+					               ];
+					
+					chart1.options={
+			        		region:'US',
+			        		displayMode: 'regions',
+			        		resolution: 'provinces',
+			        	colorAxis: {colors: ['yellow', 'orange', 'red']}
+			        };
+					
+					$scope.getRadonInfo=function(){
+						 $http.get('/radoninfoGeneral').success(function (response) {
+			                    console.log(response.data);
+			                    
+			                    for(var i=0;i<response.data.length;i++)
+			                    {
+			                    	chart1.data.push([response.data[i].code,response.data[i].level]);
+			                    	
+			                    }
+			                    
+			                    
+			                    console.log(chart1.data);
+			                    $scope.chart=chart1;
+			                  
+			                })           
+					}
 				})
 		</script>
-		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['geochart']});
-      google.charts.setOnLoadCallback(drawRegionsMap);
-
-      function drawRegionsMap() {
-
-        var data = google.visualization.arrayToDataTable([
-  
-          ['State', 'Radon Zones'],
-          ['US-IL', 1],
-          ['US-IN', 2],
-          ['US-IA', 3],
-          ['US-RI', 2],
-          ['US-NY',2],
-          ['US-PA',1],
-          ['US-OH',1]
-        ]);
-
-        var options = {
-        		region:'US',
-        		displayMode: 'regions',
-        		resolution: 'provinces',
-        	colorAxis: {colors: ['red', 'orange', 'yellow']}
-        };
-
-        var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-        chart.draw(data, options);
-      }
-    </script>
+	
 	</head>
-	<body ng-app="myApp">
+	<body ng-app="myApp" ng-controller="myController" ng-init="getRadonInfo()">
 
 		<!-- Header -->
 			<div id="header">
@@ -119,12 +120,17 @@
 						<div class="container">
 
 							<header>
-								<h2>Radon zones near you</h2>	
+								<h2 ng-show="generalMessage">Radon Levels in the United States</h2>	
 							</header>
 							
-							<div id="regions_div" style="width: 800px; height: 400px;"></div>
-							<h3>Did you know?</h3><p>Radon decays quickly, giving off tiny radioactive particles.
-
+							<!-- <div id="regions_div" style="width: 800px; height: 400px;"></div>-->
+							<div google-chart chart="chart"></div>
+				
+							<h3>Did you know?</h3>
+							
+												<strong>According to the U.S. Environmental Protection Agency (EPA) a radon level at or above 4 picocuries per liter (pCi/L) of air is dangerous</strong>
+							<p ng-show="generalMessage">Radon decays quickly, giving off tiny radioactive particles.
+		
 When inhaled, these radioactive particles can damage the cells that line the lung.
 
 Long-term exposure to radon can lead to lung cancer, only cancer proved to be associated with inhaling radon.

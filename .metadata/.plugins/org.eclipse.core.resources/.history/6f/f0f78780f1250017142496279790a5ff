@@ -1,0 +1,23 @@
+var mongo = require("./mongo");
+var mongoURL = "mongodb://doctorSearch:cmpe295@ds163940.mlab.com:63940/betterdoctor";
+
+exports.getDoctors = function(req,res){
+	mongo.connect(mongoURL, function(){
+		console.log('Connected to mongo at: ' + mongoURL);
+		var coll = mongo.collection('doctorSearch');
+
+		coll.find({"distance": {lte : 20}}).toArray(function(err,response)
+				{
+			if(err)
+			{
+				console.log("error in getting doctors");
+			}else
+			{
+				console.log("in response"+response.length);
+				
+				res.send({"result" : response});
+			}
+				}
+		)
+	});
+}

@@ -22,25 +22,91 @@
 <script src="/node_modules/angular-animate/angular-animate.js"></script>
 <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 <script src="/node_modules/angular-material/angular-material.min.js"></script>
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>4
--->
+
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD06FRmOIpOsvUxrEXiwllrtQfLLVML2r4&libraries=places"></script>
+
 <script>
-	angular.module('myApp', [ 'ngMaterial' ]).run(function() {
+	var app = angular.module('myApp', [ 'ngMaterial' ]).run(function() {
 		console.log("Ready angular");
-	}).controller('myController',function($scope, $http){
+	})
+
+	app.controller("PatientController", function($scope, $http) {
+
+		//var marker;
+		var map;
+		var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+		$scope.createMap = function(Latitude, Longitude) {
+			//var markers=[[37.791198,-122.431769],[37.66554,-122.47586],[37.94366,-122.53337],[37.3558630,-121.8505680],[37.2583720,-121.9188660],[37.4975170,-122.2710600],[37.3785350,-122.0865850],[37.3189150,-121.9416230],[37.3558630,-121.8505680],[37.3132070,-121.9334580],[37.3280060,-121.9370740],[37.2520720,-121.9463300],[37.3630490,-121.8531090],[37.2533940,-121.9516570],[37.4357880,-122.1765360],[37.3132070,-121.9334580],[37.3157330,-121.9371280],[37.3325120,-121.9089420],[37.3526400,-122.0492810],[37.3132070,-121.9334580],[37.2637820,-121.8775830],[37.2637820,-121.8775830]];
+			var mapProp = {
+				// var position=getLocation();
+				center : new google.maps.LatLng(Latitude, Longitude),
+				zoom : 10,
+				mapTypeId : google.maps.MapTypeId.ROADMAP
+			};
+			/* if(typeof position.title=="undefined")
+				{ */
+			map = new google.maps.Map(document.getElementById("googleMap"),
+					mapProp);
+
+			/* var marker=new google.maps.Marker({
+				position : new google.maps.LatLng(37.66554,-122.47586),
+				map:map
+			}); */
+			//marker.setMap(map)
+			/*  markers.forEach(function(marker){
+					console.log("filtered" + marker[0]);
+				new google.maps.Marker({
+					position : new google.maps.LatLng(marker[0],marker[1]),
+					map: map
+				});
+				}) */
+		}
+
+		$scope.getDoctors = function() {
+			$http({
+				method : 'POST',
+				url : '/getDoctors',
+				data : {
+					"state" : "California",
+					"lat" : 37.3418790,
+					"lon" : -121.9242500
+				}
+			}).success(
+					function(data) {
+						//	window.alert("In Success");
+						//console.log("data" + data.result[0].lattitude);
+						console.log("in success" + data.result.length);
+						var result = data.result;
+						result.forEach(function(marker) {
+							console.log("filtered" + marker);
+							new google.maps.Marker({
+								position : new google.maps.LatLng(
+										marker.visit_address.lat,
+										marker.visit_address.lon),
+								map : map
+							});
+						})
+						//return $scope.result;
+					}).error(function(error) {
+				alert("error");
+			});
+		};
+
+//get lifestyle articles
 		$scope.getLifestyleArticles = function (){
+			console.log("Called");
 			$http.get('/getLifestyleArticles').success(function(data) {
 			console.log("Back" +JSON.stringify(data));
 			$scope.suggestions = data;
 			$scope.articles = data;
     });
 		};
-	});
+	})
 </script>
 </head>
-<body ng-app="myApp" ng-controller="myController">
+<body ng-app="myApp" ng-controller="PatientController"
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors()">
 
 	<!-- Header -->
 	<div id="header">
@@ -84,7 +150,8 @@
 						class="skel-layers-ignoreHref"><span
 							class="icon fa-stethoscope">Doctors</span></a></li>
 					<li><a href="#contact_us" id="profile-link"
-						class="skel-layers-ignoreHref"><span class="icon fa-user">Contact Us</span></a></li>
+						class="skel-layers-ignoreHref"><span class="icon fa-user">Contact
+								Us</span></a></li>
 				</ul>
 			</nav>
 
@@ -202,24 +269,33 @@
 
 		<!-- Latest News -->
 		<section id="latestNews" class="four">
-						<div class="container">
+			<div class="container">
 
-							<header>
-								<h2>Latest News</h2>
-							</header>
+				<header>
+					<h2>Latest News</h2>
+				</header>
 
-							<div class="news news_font">OncoMed's lung cancer drug fails mid-stage study, shares tumble 
- 							<a href="http://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font color="black" width="100%">&#8594;</font></a>
- 							</div></br>
-							<div class="news news_font">New Treatments for Lung Cancer
- 							<a href="http://health.usnews.com/health-care/patient-advice/articles/2017-04-18/new-treatments-for-lung-cancer"><font color="black" width="100%">&#8594;</font></a>
- 							</div></br>
- 							<div class="news news_font">OncoMed stock drops 25% after lung cancer drug misses in mid-stage clinical trial 
- 							<a href="http://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font color="black" width="100%">&#8594;</font></a>
- 							</div>
+				<div class="news news_font">
+					OncoMed's lung cancer drug fails mid-stage study, shares tumble <a
+						href="http://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font
+						color="black" width="100%">&#8594;</font></a>
+				</div>
+				</br>
+				<div class="news news_font">
+					New Treatments for Lung Cancer <a
+						href="http://health.usnews.com/health-care/patient-advice/articles/2017-04-18/new-treatments-for-lung-cancer"><font
+						color="black" width="100%">&#8594;</font></a>
+				</div>
+				</br>
+				<div class="news news_font">
+					OncoMed stock drops 25% after lung cancer drug misses in mid-stage
+					clinical trial <a
+						href="http://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font
+						color="black" width="100%">&#8594;</font></a>
+				</div>
 
-						</div>
-					</section>
+			</div>
+		</section>
 
 
 		<!-- Doctors -->
@@ -230,32 +306,38 @@
 					<h2>Doctors</h2>
 				</header>
 
+				<div id="googleMap" style="width: 700px; height: 500px;"></div>
+
 			</div>
 		</section>
 
 		<!-- Profile -->
 		<section id="contact_us" class="six">
-						<div class="container">
+			<div class="container">
 
-							<header>
-								<h2>Contact Us</h2>
-							</header>
+				<header>
+					<h2>Contact Us</h2>
+				</header>
 
-							<form method="post" action="#">
-								<div class="row">
-									<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
-									<div class="12u$">
-										<textarea name="message" placeholder="Message"></textarea>
-									</div>
-									<div class="12u$">
-										<input type="submit" value="Send Message" />
-									</div>
-								</div>
-							</form>
-
+				<form method="post" action="#">
+					<div class="row">
+						<div class="6u 12u$(mobile)">
+							<input type="text" name="name" placeholder="Name" />
 						</div>
-					</section>
+						<div class="6u$ 12u$(mobile)">
+							<input type="text" name="email" placeholder="Email" />
+						</div>
+						<div class="12u$">
+							<textarea name="message" placeholder="Message"></textarea>
+						</div>
+						<div class="12u$">
+							<input type="submit" value="Send Message" />
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</section>
 
 	</div>
 
