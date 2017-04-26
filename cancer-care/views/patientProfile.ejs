@@ -22,6 +22,7 @@
 <script src="/node_modules/angular-animate/angular-animate.js"></script>
 <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 <script src="/node_modules/angular-material/angular-material.min.js"></script>
+
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD06FRmOIpOsvUxrEXiwllrtQfLLVML2r4&libraries=places"></script>
 
@@ -30,7 +31,7 @@
 		console.log("Ready angular");
 	})
 
-	app.controller("DoctorsController", function($scope, $http) {
+	app.controller("PatientController", function($scope, $http) {
 
 		//var marker;
 		var map;
@@ -92,10 +93,19 @@
 			});
 		};
 
+//get lifestyle articles
+		$scope.getLifestyleArticles = function (){
+			console.log("Called");
+			$http.get('/getLifestyleArticles').success(function(data) {
+			console.log("Back" +JSON.stringify(data));
+			$scope.suggestions = data;
+			$scope.articles = data;
+    });
+		};
 	})
 </script>
 </head>
-<body ng-app="myApp" ng-controller="DoctorsController"
+<body ng-app="myApp" ng-controller="PatientController"
 	ng-init="createMap(37.3418790,-121.9242500); getDoctors()">
 
 	<!-- Header -->
@@ -132,7 +142,7 @@
 					<li><a href="#cancerInfo" id="recommendations-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
 					<li><a href="#lifestyle" id="lifestyle-link"
-						class="skel-layers-ignoreHref"><span class="icon fa-heart-o">Lifestyle</span></a></li>
+						class="skel-layers-ignoreHref"><span class="icon fa-heart-o" ng-click="getLifestyleArticles()">Lifestyle</span></a></li>
 					<li><a href="#latestNews" id="news-link"
 						class="skel-layers-ignoreHref"><span
 							class="icon fa-newspaper-o">Latest News</span></a></li>
@@ -246,65 +256,15 @@
 				<header>
 					<h2>Lifestyle</h2>
 				</header>
-
-				<p>Vitae natoque dictum etiam semper magnis enim feugiat
-					convallis convallis egestas rhoncus ridiculus in quis risus amet
-					curabitur tempor orci penatibus. Tellus erat mauris ipsum fermentum
-					etiam vivamus eget. Nunc nibh morbi quis fusce hendrerit lacus
-					ridiculus.</p>
-
-				<div class="row">
-					<div class="4u 12u$(mobile)">
-						<article class="item">
-							<a href="#" class="image fit"><img src="/images/pic02.jpg"
-								alt="" /></a>
-							<header>
-								<h3>Ipsum Feugiat</h3>
-							</header>
-						</article>
-						<article class="item">
-							<a href="#" class="image fit"><img src="/images/pic03.jpg"
-								alt="" /></a>
-							<header>
-								<h3>Rhoncus Semper</h3>
-							</header>
-						</article>
-					</div>
-					<div class="4u 12u$(mobile)">
-						<article class="item">
-							<a href="#" class="image fit"><img src="/images/pic04.jpg"
-								alt="" /></a>
-							<header>
-								<h3>Magna Nullam</h3>
-							</header>
-						</article>
-						<article class="item">
-							<a href="#" class="image fit"><img src="/images/pic05.jpg"
-								alt="" /></a>
-							<header>
-								<h3>Natoque Vitae</h3>
-							</header>
-						</article>
-					</div>
-					<div class="4u$ 12u$(mobile)">
-						<article class="item">
-							<a href="#" class="image fit"><img src="/images/pic06.jpg"
-								alt="" /></a>
-							<header>
-								<h3>Dolor Penatibus</h3>
-							</header>
-						</article>
-						<article class="item">
-							<a href="#" class="image fit"><img src="/images/pic07.jpg"
-								alt="" /></a>
-							<header>
-								<h3>Orci Convallis</h3>
-							</header>
-						</article>
-					</div>
+				<div ng-repeat="article in articles.data">
+				
+					<div class="article-heading">{{article.Summary}}</div>
+					<div class="article-link"><a href={{article.Link}} target="_blank">{{article.Link}}</a></div>
+					<div class="article-description">{{article.description}}</div>
+				
 				</div>
-
-			</div>
+		
+				</div>
 		</section>
 
 		<!-- Latest News -->

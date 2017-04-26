@@ -5,5 +5,6 @@
 
 exports.index = function(req, res){
 
-  res.render('doctorsignup', { title: 'CancerCare' });
+  res.render('patientProfile', { title: 'Circle of Hope' });
+
 };

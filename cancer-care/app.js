@@ -35,6 +35,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
+app.get('/getLifestyleArticles', recommendation.getLifestyleArticles);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
 app.post('/register',registration.patientRegister);
 app.post('/login',registration.login);
