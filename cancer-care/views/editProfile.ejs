@@ -241,7 +241,7 @@
 	</head>
 	<body>
 		<div  style="width:50%;;margin-left:25%;" ng-app="myApp" ng-controller="myController" layout="column" class="mdl-grid md-subhead">
-			<md-toolbar layout="row" layout-align="center center" >Questionare</md-toolbar>
+			<md-toolbar layout="row" layout-align="center center" md-colors="{color:'accent'}" >Questionare</md-toolbar>
 			<md-content style="padding:20px;" ng-repeat="questionSet in questions" ng-show="currentType == $index">
 				<h2>{{questionSet.type}}</h2>
 				<md-content ng-repeat="question in questionSet.questions" ng-show="currentStep == $index">

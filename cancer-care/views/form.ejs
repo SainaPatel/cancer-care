@@ -50,6 +50,7 @@
 				})
 				.controller('myController',function($scope,$http){
 					$scope.types=["unsure","small cell","large cell"];
+					$scope.stages=["1","2","3","4","unsure"];
 					$scope.signup=function() {
 						console.log("Function called");
 						   $http.post('/register', { 
@@ -61,7 +62,8 @@
 							   county:$scope.county,
 							   dob:$scope.dob,
 							   cancer_type:$scope.cancer_type,
-							   gender:$scope.gender
+							   gender:$scope.gender,
+							   stage:$scope.stage
 							   }
 						   ).success(function (response) {
 			                    console.log(response);
@@ -110,6 +112,12 @@
 				<label>Type of Lung Cancer</label>		
 				<md-select ng-model="cancer_type">		
             		<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
+          		</md-select>
+			</md-input-container>
+						<md-input-container class="md-icon-float md-block">
+				<label>Stage of Lung Cancer</label>		
+				<md-select ng-model="stage">		
+            		<md-option ng-value="stage"  ng-repeat="stage in stages" >{{stage}}</md-option>       		
           		</md-select>
 			</md-input-container>
 			<br>
