@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Register</title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.js"></script>
+<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="/node_modules/angular-material/angular-material.min.js"></script>
+<script>
+			angular.module('myApp',['ngMaterial'])
+				.run(function(){
+					console.log("Ready angular");
+				})
+				.config(function($mdThemingProvider) {
+					$mdThemingProvider.definePalette('cancer-care-palette', {
+					   
+					    '100': '754B57',
+					    '200': 'BA99A2',
+					    '300': 'D1B8BF',
+					    '50': 'ffebee',
+					    '400': 'ef5350',
+					    '500': 'f44336',
+					    '600': 'e53935',
+					    '700': 'd32f2f',
+					    '800': 'c62828',
+					    '900': 'b71c1c',
+					    'A100': 'ff8a80',
+					    'A200': 'ff5252',
+					    'A400': 'ff1744',
+					    'A700': 'd50000',
+					    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+					                                        // on this palette should be dark or light
+
+					    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+					     '200', '300', '400', 'A100'],
+					    'contrastLightColors': undefined 
+					
+					  });
+		
+  					$mdThemingProvider.theme('default')
+    				.primaryPalette('cancer-care-palette',{'default':'100'})
+    			.accentPalette('cancer-care-palette',{'default':'200'});
+				})
+				.controller('myController',function($scope,$http){
+					$scope.types=["unsure","small cell","large cell"];
+					$scope.stages=["1","2","3","4","unsure"];
+					$scope.signup=function() {
+						console.log("Function called");
+						   $http.post('/doctorRegister', { 
+							   name: $scope.name , 
+							   state:$scope.state, 
+							   email:$scope.email, 
+							   password: $scope.password, 
+							   gender:$scope.gender, 
+							   county:$scope.county,
+							   dob:$scope.dob,
+							   qualifications:$scope.selectedQualifications,
+							   gender:$scope.gender,
+							   specializations:$scope.selectedSpecializations
+							   }
+						   ).success(function (response) {
+			                    console.log(response);
+			               });			            
+					};
+				    $scope.qualifications = ["MD","PHD"];
+				      $scope.selectedQualifications = [];
+				      $scope.selectedSpecializations=[];
+				      $scope.specializations=["General Oncology","Radiology","Cancer Diagnostics","Medical Oncology"];
+
+				      $scope.toggle = function (item, list) {
+				        var idx = list.indexOf(item);
+				        if (idx > -1) {
+				          list.splice(idx, 1);
+				        }
+				        else {
+				          list.push(item);
+				        }
+				      };
+
+				      $scope.exists = function (item, list) {
+				        return list.indexOf(item) > -1;
+				      };
+				});
+		</script>
+</head>
+<body>
+	<div style="width: 50%; margin-left: 25%;" ng-app="myApp"
+		ng-controller="myController" layout="column"
+		class="mdl-grid md-subhead">
+		<md-toolbar layout="row" layout-align="center center">Registration</md-toolbar>
+
+		<md-content style="padding:20px;"> <br>
+		<md-input-container class="md-icon-float md-block">
+		<label>Email</label> <input ng-model="email" type="email"
+			ng-required="true"> </md-input-container> <md-input-container
+			class="md-icon-float  md-block""> <label>Name</label>
+
+		<input ng-model="name" type="text" ng-required="true"> </md-input-container> <md-input-container
+			class="md-icon-float md-block"> <md-radio-group
+			ng-model="gender"> <md-radio-button value="male"
+			class="md-primary">Male</md-radio-button> <md-radio-button
+			value="female"> Female </md-radio-button> <md-radio-button
+			value="other">Other</md-radio-button> </md-radio-group> </md-input-container> <md-input-container
+			class="md-icon-float md-block"> <md-datepicker
+			ng-model="dob" md-placeholder="Enter Birth date" r>
+		</md-datepicke>
+		</md-input-container> <md-input-container class="md-icon-float  md-block">
+		<label>State</label> <input ng-model="state" type="text"> </md-input-container> <md-input-container
+			class="md-icon-float  md-block"> <label>County</label>
+		<input ng-model="county" type="text"> </md-input-container> 
+		 <label>Qualifications:</label>
+		<div  ng-repeat="item in qualifications">
+			<md-checkbox ng-checked="exists(item, selectedQualifications)"
+				ng-click="toggle(item, selectedQualifications)"> {{ item }} 
+				 </md-checkbox>
+		</div>
+		<br>
+			 <label>Specialization:</label>
+		<div  ng-repeat="item in specializations">
+			<md-checkbox ng-checked="exists(item, selectedSpecializations)"
+				ng-click="toggle(item, selectedSpecializations)"> {{ item }}</md-checkbox>
+		</div>
+<br>
+		<md-input-container class="md-icon-float md-block"">
+		<label>Password</label> <input ng-model="password" type="password"
+			ng-required="true"> </md-input-container> <md-button type="submit"
+			ng-click="signup();" class="md-raised md-primary">Submit</md-button>
+		</md-content>
+
+	</div>
+</body>
+</html>

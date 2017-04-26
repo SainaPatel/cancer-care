@@ -1,10 +1,31 @@
 var mongo = require("./mongo");
 var mongoURL = "mongodb://cmpe295:cmpe295@ds161630.mlab.com:61630/radon";
 var json_responses={};
-exports.register = function (req, res){
+exports.patientRegister = function (req, res){
 	console.log (req.body);
 	mongo.connect(mongoURL,function() {
 	mongo.collection('user').insertOne(req.body,function(err, user) { 
+		if (user) {
+			json_responses.status_code=200;
+			console.log('success');
+			res.send( json_responses);
+
+		} else {
+			json_responses.status_code=500;
+			console.log(err);
+			res.send(json_responses);
+		}
+  	});
+
+	});
+	
+	res.send("respond with a resource");
+};
+
+exports.doctorRegister = function (req, res){
+	console.log (req.body);
+	mongo.connect(mongoURL,function() {
+	mongo.collection('doctors').insertOne(req.body,function(err, user) { 
 		if (user) {
 			json_responses.status_code=200;
 			console.log('success');

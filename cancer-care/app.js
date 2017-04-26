@@ -36,9 +36,10 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
-app.post('/register',registration.register);
+app.post('/register',registration.patientRegister);
 app.post('/login',registration.login);
 app.post('/addFACTL',profile.addFACTL);
+app.post('/doctorRegister',registration.doctorRegister);
 
 app.post('/getDoctors',doctors.getDoctors);
 
