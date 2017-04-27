@@ -79,12 +79,12 @@ exports.findUser = function(username, password, callback) {
 			"email": username,
 			"password": password
 		}, function(err, result) {
-			console.log(result);
+	//		console.log(result);
 			if (err) {
 				console.log(err);
 				callback(err,null);
 			} else if (result) {
-				console.log("Found the user", result);
+			//	console.log("Found the user", result);
 				callback(null, result);
 			} else {
 				console.log("No User found with given credentials");
@@ -102,17 +102,17 @@ exports.findUserById = function(username, callback){
 		mongo.collection('user').findOne({
 			"email": username
 		}, function(err, result) {
-			console.log(result);
+			
 			if (err) {
 				console.log(err);
 				callback(err);
 
 			} else if (result) {
-				console.log("Found the user", result);
+			//	console.log("Found the user", result);
 				callback(null, result);
 
 			} else {
-				console.log("No User found with given credentials")
+				console.log("No User found with given credentials");
 				callback(null, false);
 			}
 
@@ -121,4 +121,4 @@ exports.findUserById = function(username, callback){
 
 	});
 
-}
+};

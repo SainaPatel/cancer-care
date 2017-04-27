@@ -58,7 +58,7 @@
 							   }
 						   ).success(function (response) {
 			                    console.log(response);
-			                    $window.location.href='/patientProfile';
+			                    $window.location.href='/patientProfile?id='+response;
 			               }).error(function(err){
 			            	   $window.alert(err);
 			                 

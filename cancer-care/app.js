@@ -30,7 +30,7 @@ app.use(favicon(path.join(__dirname,'public', 'favicon_cancer.ico')));
 
 
 app.use(session({  
-	  store:new MongoStore({url:'mongodb://cmpe295:cmpe295@ds023500.mlab.com:23500/session'}),
+	  store:new MongoStore({url:'mongodb://cmpe295:cmpe295@ds023500.mlab.com:23500/session',collection:'sessions'}),
 	  secret: "best project ever",
 	  resave: false,
 	  saveUninitialized: false
@@ -46,17 +46,17 @@ passport.serializeUser(function (user, done) {
     done(null, user.email);
 });
 
-passport.deserializeUser(function (username, done) {
+passport.deserializeUser(function (email, done) {
 	
-    console.log("deserializing " + username);
-    registration.findUserById(username, done);
+    console.log("deserializing " + email);
+    registration.findUserById(email, done);
 
     //done(null, user);
 });
 
 passport.use( new LocalStrategy({ passReqToCallback : true,usernameField: 'email'},
 	    function (req,email, password, done) {
-			console.log(email+" "+password);
+			console.log(email+" | "+password);
 	        registration.findUser(email,password, function (err, user) {
 	            if (err) {
 	                return done(err);
@@ -64,7 +64,7 @@ passport.use( new LocalStrategy({ passReqToCallback : true,usernameField: 'email
 	            if (!user) {
 	                return done(null, false);
 	            }
-	            return done(null, user);
+	            	 return done(null, user);     
 	        });
 	    }
 	));
@@ -73,13 +73,13 @@ passport.use( new LocalStrategy({ passReqToCallback : true,usernameField: 'email
 passport.authenticationMiddleware = function() {
     return function (req, res, next) {
         if (req.isAuthenticated()) {
-            return next(req, res);
+            return next();
         }
-        res.redirect('/faliureLogin');
+        res.redirect('/');
     };
 };
 
-function loggedIn(req, res, next) {
+/*function loggedIn(req, res, next) {
     if (!req.user) {
         res.status(404).send("Unauthorized");
 
@@ -94,7 +94,7 @@ function loggedIn(req, res, next) {
     }
 
 }
-
+*/
 //development only
 if ('development' == app.get('env')) {
 app.use(express.errorHandler());
@@ -102,18 +102,19 @@ app.use(express.errorHandler());
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
-app.get('/getLifestyleArticles', recommendation.getLifestyleArticles);
-app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
+app.get('/getLifestyleArticles', passport.authenticationMiddleware(),recommendation.getLifestyleArticles);
+app.get('/radoninfoGeneral',passport.authenticationMiddleware(),recommendation.getRadonInfoGeneral);
 app.get('/successLogin',function(req,res){
+	
 	res.status(200).send("success");
 });
 app.get('/faliureLogin',function(req,res){
 	res.status(401).send("Unauthorized");
 });
-app.get('/patientProfile',function(req,res){
+app.get('/patientProfile',passport.authenticationMiddleware(),function(req,res){
 	 res.render('patientProfile', { title: 'Circle of Hope' });
 });
-app.get('/doctorProfile',function(req,res){
+app.get('/doctorProfile',passport.authenticationMiddleware(),function(req,res){
 	 res.render('doctorProfile', { title: 'Circle of Hope' });
 });
 app.post('/register',registration.patientRegister);
@@ -122,7 +123,12 @@ app.post('/login', passport.authenticate('local', {
     successRedirect: '/successLogin',
     failureRedirect: '/faliureLogin'
 }));
-
+app.get('/logout', function(req, res){
+	  var name = req.user.email;
+	  console.log("LOGGIN OUT " + name);
+	  req.logout();
+	  res.redirect('/');
+	});
 app.post('/addFACTL',profile.addFACTL);
 app.post('/doctorRegister',registration.doctorRegister);
 app.post('/getDoctors',doctors.getDoctors);
