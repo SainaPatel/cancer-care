@@ -48,7 +48,7 @@
     				.primaryPalette('cancer-care-palette',{'default':'100'})
     			.accentPalette('cancer-care-palette',{'default':'200'});
 				})
-				.controller('myController',function($scope,$http){
+				.controller('myController',function($scope,$http,$window){
 					$scope.types=["unsure","small cell","large cell"];
 					$scope.login=function() {
 						console.log("Function called");
@@ -58,6 +58,10 @@
 							   }
 						   ).success(function (response) {
 			                    console.log(response);
+			                    $window.location.href='/patientProfile';
+			               }).error(function(err){
+			            	   $window.alert(err);
+			                 
 			               });			            
 					};		        
 				});

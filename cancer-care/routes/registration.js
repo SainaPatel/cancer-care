@@ -70,3 +70,55 @@ var password=req.body.password;
 		});
 	});
 };
+
+exports.findUser = function(username, password, callback) {
+
+	
+	mongo.connect(mongoURL, function() {
+		mongo.collection('user').findOne({
+			"email": username,
+			"password": password
+		}, function(err, result) {
+			console.log(result);
+			if (err) {
+				console.log(err);
+				callback(err,null);
+			} else if (result) {
+				console.log("Found the user", result);
+				callback(null, result);
+			} else {
+				console.log("No User found with given credentials");
+				callback(null, null);
+			}
+		});
+	});
+};
+
+exports.findUserById = function(username, callback){
+
+	mongo.connect(mongoURL, function() {
+
+
+		mongo.collection('user').findOne({
+			"email": username
+		}, function(err, result) {
+			console.log(result);
+			if (err) {
+				console.log(err);
+				callback(err);
+
+			} else if (result) {
+				console.log("Found the user", result);
+				callback(null, result);
+
+			} else {
+				console.log("No User found with given credentials")
+				callback(null, false);
+			}
+
+			
+		});
+
+	});
+
+}
