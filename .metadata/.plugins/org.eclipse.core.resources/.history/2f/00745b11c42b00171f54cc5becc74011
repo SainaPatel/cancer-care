@@ -129,7 +129,7 @@
 				//console.log("data" + data.result[0].lattitude);
 				console.log("in success" + data.result.length);
 				var result = data.result;
-				$scope.foodDetails = result;
+				$scope.treatments = result;
 
 			});
 			$scope.showFoodDetails = false;
@@ -138,7 +138,7 @@
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments()">
 
 	<!-- Header -->
 	<div id="header">
@@ -336,8 +336,8 @@
 				</div> -->
 		</section>
 
-		<section id="altFood" class="three"
-			ng-click="showFoodDetails=!showFoodDetails"
+		<section id="altTreatments" class="three"
+			ng-click="showTreatments=!showTreatments"
 			style="border: 2px solid black">
 			<div class="container">
 
@@ -346,15 +346,15 @@
 				</header>
 
 
-				<div ng-repeat="food in foodDetails" ng-show="showFoodDetails">
-					<div class="treatment-heading">{{food.name}}</div>
+				<div ng-repeat="treatment in treatments" ng-show="showTreatments">
+					<div class="treatment-heading">{{treatment.name}}</div>
 					<!-- 					<div class="article-description">{{treatment.description}}</div>
  -->
 					<p class="treatment-text">
-						<img class="treatment-image" src="{{food.image}}" alt=""
-							align="left" /> {{food.description}}
+						<img class="treatment-image" src="{{treatment.image}}" alt=""
+							align="right" /> {{treatment.description}}
 					</p>
-					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+					<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
 				</div>
 			</div>
 			<!-- <div id="Treatment1">

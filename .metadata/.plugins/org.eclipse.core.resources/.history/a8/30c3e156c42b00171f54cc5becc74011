@@ -138,7 +138,7 @@
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments()">
 
 	<!-- Header -->
 	<div id="header">
@@ -354,7 +354,7 @@
 						<img class="treatment-image" src="{{food.image}}" alt=""
 							align="left" /> {{food.description}}
 					</p>
-					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+					<a href="{{food.link1}}" class="treatment-link">{{treatment.link1}}</a>
 				</div>
 			</div>
 			<!-- <div id="Treatment1">
