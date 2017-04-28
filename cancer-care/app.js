@@ -119,6 +119,8 @@ app.post('/doctorRegister',registration.doctorRegister);
 app.post('/getDoctors',doctors.getDoctors);
 app.get('/getCamTreatments',cam.getCamTreatments);
 app.get('/getFoodDetails',cam.getFoodDetails);
+app.get('/getProfileInfo',profile.getProfileInfo);
+app.post('/updateProfileInfo',profile.updateProfileInfo);
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });

@@ -61,7 +61,36 @@
 	})
 
 	app.controller("PatientController", function($scope, $http, $mdDialog, $mdMedia) {
+		$scope.profile={};
+		$scope.profile.types=["unsure","small cell","large cell"];
+		$scope.profile.stages=["1","2","3","4","unsure"];
+	    $scope.profile.treatments=["Chemotherapy","Radiotherapy","Surgery"];
+			$scope.getProfileInfo=function(){
+				 $http.get('/getProfileInfo').success(function (response) {
+	                    console.log($scope.user=response.result);              
+	                  
+	                })  
+			};
+			$scope.updateProfileInfo=function(){
+				$scope.user.type="user";
+				console.log($scope.user)
+				$http.post('/updateProfileInfo',$scope.user).success(function(response){
+					console.log("successfully updated");
+				})
+			}
+		      $scope.toggle = function (item, list) {
+			        var idx = list.indexOf(item);
+			        if (idx > -1) {
+			          list.splice(idx, 1);
+			        }
+			        else {
+			          list.push(item);
+			        }
+			      };
 
+			      $scope.exists = function (item, list) {
+			        return list.indexOf(item) > -1;
+			      };
 		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 		  $scope.showFACTL = function(ev) {
 		    $mdDialog.show({
@@ -69,7 +98,10 @@
 		      templateUrl: 'FACTL.tmpl.html',
 		      parent: angular.element(document.body),
 		      targetEvent: ev,
-		      clickOutsideToClose:true
+		      clickOutsideToClose:true,
+		      locals: {
+		          answers: $scope.answers
+		       }
 		    })
 		        .then(function(answer) {
 		          $scope.status = 'You said the information was "' + answer + '".';
@@ -180,7 +212,7 @@
 		};
 	});
 	
-	function FACTLController($scope, $mdDialog,$http,$mdToast) {
+	function FACTLController($scope, $mdDialog,$http,$mdToast,answers) {
 		
 	  	$scope.hide = function() {
 	  		
@@ -381,7 +413,7 @@
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails();getProfileInfo();">
 
 	<!-- Header -->
 	<div id="header">
@@ -682,7 +714,86 @@
 		<section id="profile" class="six">
 			
 	<div class="container">
-		<h1 class="page-header ">Profile</h1>
+			      <md-card>
+              <md-card-header>
+              <md-card-avatar>
+            <img class="md-user-avatar" src="images/avatar.jpg"/>
+          </md-card-avatar>
+          <md-card-header-text>
+       
+            <span class="md-subhead"></span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+         <table style="width:80%;margin:20px;"ng-table="vm.tableParams" class="table table-bordered" >
+    		<tr >
+        		<td >   <md-input-container class="md-block">
+          <label>Name</label>
+          <input ng-model="user.name">
+        </md-input-container>
+        		</td>
+        		<td >   <md-input-container class="md-block">
+          <label>Email</label>
+          <input disabled ng-model="user.email">
+        </md-input-container>
+        		</td>
+        		
+    		</tr>
+    		<tr >
+        		<td ><md-input-container class="md-block">
+          <label>State</label>
+          <input ng-model="user.state">
+        </md-input-container></td>
+        <td ><md-input-container class="md-block">
+          <label>County</label>
+          <input ng-model="user.county">
+        </md-input-container></td>
+        	
+    		</tr>
+    	
+    	
+    		<tr > <td ><md-input-container class="md-block">
+          <label>Gender</label>
+          <input ng-model="user.gender">
+        </md-input-container></td>
+        		  
+        		
+    		</tr>
+    		<tr>
+    			<td>
+    					<md-input-container class="md-icon-float md-block">
+				<label>Type of Lung Cancer</label>		
+				<md-select ng-model="user.cancer_type">		
+            		<md-option ng-value="opt"  ng-repeat="opt in profile.types" >{{opt}}</md-option>       		
+          		</md-select>
+          		
+			
+			</md-input-container>
+			</td>
+			<td>	<md-input-container class="md-icon-float md-block">
+				<label>Stage of Lung Cancer</label>		
+				<md-select ng-model="user.stage">		
+            		<md-option ng-value="user.stage"  ng-repeat="stage in profile.stages" >{{stage}}</md-option>       		
+          		</md-select>
+			</md-input-container></td>
+			</tr>
+			
+			<tr><td>
+	 		<label>Current Treatments:</label>
+			<div  ng-repeat="item in profile.treatments">
+			<md-checkbox ng-checked="exists(item, user.treatments)"
+				ng-click="toggle(item, user.treatments)"> {{ item }} 
+				 </md-checkbox>
+				</div>
+				</td>
+    		</tr>
+    	
+		</table>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary" ng-click="updateProfileInfo()">Update</md-button>
+        </md-card-actions>
+      </md-card>
 		<md-button type="submit" ng-click="showFACTL($event)" class="md-raised md-primary">Answer questions to access Quality of Life</md-button>
 		</section>
 	<!--  <section id="contact_us" class="six">

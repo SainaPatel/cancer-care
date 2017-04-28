@@ -474,7 +474,7 @@ Our charter is to ensure that no one affected by lung cancer go unaware of the a
 			<br>
 	 		<label>Current Treatments:</label>
 			<div  ng-repeat="item in treatments">
-			<md-checkbox ng-checked="exists(item, selectedQualifications)"
+			<md-checkbox ng-checked="exists(item, selectedTreatments)"
 				ng-click="toggle(item, selectedTreatments)"> {{ item }} 
 				 </md-checkbox>
 				</div>
