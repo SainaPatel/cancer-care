@@ -1,6 +1,6 @@
 var mongo = require("./mongo");
+var lifestylemongoURL = "mongodb://cmpe295lifestyle:cmpe295@ds111771.mlab.com:11771/circleofhope";
 var mongoURL = "mongodb://cmpe295:cmpe295@ds161630.mlab.com:61630/radon";
-//var mongoURL = "mongodb://localhost:27017/test";
 var json_responses = {};
 
 exports.getRadonInfo = function (req, res) {
@@ -53,8 +53,8 @@ exports.getLifestyleArticles = function (req, res) {
 		rx.push(new RegExp(v));
 	});
 	console.log("Regex: " + rx);
-	mongo.connect(mongoURL, function () {
-		var coll = mongo.collection('articles');
+	mongo.connect(lifestylemongoURL, function () {
+		var coll = mongo.collection('articlesLifestyle');
 		coll.find({
 			"Keywords": { $in: rx }
 		}).toArray(function (err, articles) {

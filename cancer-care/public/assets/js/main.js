@@ -132,3 +132,18 @@
 	    });
 	  }
 	})();
+
+(function() {
+	  var cards = document.querySelectorAll(".landing-card.landing-effect__click");
+	  for ( var i  = 0, len = cards.length; i < len; i++ ) {
+	    var card = cards[i];
+	    clickListener( card );
+	  }
+
+	  function clickListener(card) {
+	    card.addEventListener( "click", function() {
+	      var c = this.classList;
+	      c.contains("landing-flipped") === true ? c.remove("landing-flipped") : c.add("landing-flipped");
+	    });
+	  }
+	})();
