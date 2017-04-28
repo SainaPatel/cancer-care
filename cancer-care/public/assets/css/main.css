@@ -11,6 +11,30 @@
 */
 
 /* Reset */
+.navbar {
+  overflow: hidden;
+  background-color: rgba(96,13,41,0.75);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 3;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  border-bottom: none;
+}
+
+.navbar a:hover{
+	font-weight: 600;
+}
+
 .landing-container{
 	padding: 5% 0%;
 }
@@ -134,12 +158,6 @@
 
 .recommendation-header{
 	height: 80px;
-}
-
-.login {
-	padding-top: 2em;
-	text-align: right;
-	margin-right: 2em !important;
 }
 
 .section__content {
@@ -1941,15 +1959,6 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 				background-size: cover;
 				background-position: center center;
 			}
-
-			#main > section.one {
-				background-color: #81918E;
-				background-image: url("../../images/circleOfHope.jpg");
-				background-repeat: no-repeat;
-				background-size: cover;
-				min-height: 60%;
-				width: 100%;
-			}
 			
 			#main > section.patient {
 			background-color: #81918E;
@@ -2200,7 +2209,7 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 
 #main>section.one {
 	background-color: #81918E;
-	background-image: url("../../images/circleOfHope.jpg");
+	/*background-image: url("../../images/circleOfHope.jpg");*/
 	background-repeat: no-repeat;
 	background-size: cover;
 	min-height: 60%;

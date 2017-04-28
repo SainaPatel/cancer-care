@@ -201,15 +201,17 @@
 </head>
 
 <body ng-app="myApp" ng-controller="AppCtrl">
-
+<div class="navbar">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a href="#login" style="float:right" ng-click="showLoginDialog($event)">Login</a>
+  <a href="#signup" style="float:right" ng-click="showTabDialog($event)">Signup</a>
+</div>
 	<div id="main">
 
 		<!-- Intro -->
 		<section id="top" class="one dark cover">
-			<div class="container login">
-				<a href="#portfolio" class="button scrolly" ng-click="showLoginDialog($event)">Login</a>
-				<a href="#portfolio" class="button scrolly" ng-click="showTabDialog($event)">Signup</a>
-			</div>
 
 			<div class="container">
 			</div>
