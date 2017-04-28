@@ -21,7 +21,8 @@ exports.addFACTL=function(req,res){
 					"LCS":req.body.LCS,
 					"FACTL_TOI":FACTL_TOI,
 					"FACTG":FACTG,
-					"FACTL":FACTL
+					"FACTL":FACTL,
+					"answers":req.body.answers
 				}
 			},
 			function(err, user) { 

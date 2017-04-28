@@ -29,10 +29,54 @@
 <script>
 	var app = angular.module('myApp', [ 'ngMaterial' ]).run(function() {
 		console.log("Ready angular");
+	})	.config(function($mdThemingProvider) {
+		$mdThemingProvider.definePalette('cancer-care-palette', {
+			   
+		    '100': '754B57',
+		    '200': 'BA99A2',
+		    '300': 'D1B8BF',
+		    '50': 'ffebee',
+		    '400': 'ef5350',
+		    '500': 'f44336',
+		    '600': 'e53935',
+		    '700': 'd32f2f',
+		    '800': 'c62828',
+		    '900': 'b71c1c',
+		    'A100': 'ff8a80',
+		    'A200': 'ff5252',
+		    'A400': 'ff1744',
+		    'A700': 'd50000',
+		    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+		                                        // on this palette should be dark or light
+
+		    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+		     '200', '300', '400', 'A100'],
+		    'contrastLightColors': undefined 
+		
+		  });
+
+			$mdThemingProvider.theme('default')
+		.primaryPalette('cancer-care-palette',{'default':'100'})
+	.accentPalette('cancer-care-palette',{'default':'200'});
 	})
 
-	app.controller("PatientController", function($scope, $http) {
+	app.controller("PatientController", function($scope, $http, $mdDialog, $mdMedia) {
 
+		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+		  $scope.showFACTL = function(ev) {
+		    $mdDialog.show({
+		      controller: FACTLController,
+		      templateUrl: 'FACTL.tmpl.html',
+		      parent: angular.element(document.body),
+		      targetEvent: ev,
+		      clickOutsideToClose:true
+		    })
+		        .then(function(answer) {
+		          $scope.status = 'You said the information was "' + answer + '".';
+		        }, function() {
+		          $scope.status = 'You cancelled the dialog.';
+		        });
+		  };
 		//var marker;
 		var map;
 		var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
@@ -135,6 +179,205 @@
 			$scope.showFoodDetails = false;
 		};
 	});
+	
+	function FACTLController($scope, $mdDialog,$http,$mdToast) {
+		
+	  	$scope.hide = function() {
+	  		
+	    	$mdDialog.hide(answer);
+	  	};
+	  	$scope.cancel = function() {
+		  
+	    	$mdDialog.cancel("cancel");
+	  	};
+	  	$scope.edit = function() {
+		
+	  	};
+		$scope.currentStep=0;
+		$scope.currentType=0;
+		$scope.answers=[];
+		$scope.questions=[
+					{
+						"type":"Physical Well Being",
+						"questions":[
+     								"Do you have a lack of energy?",
+									"Do you have nausea?",
+									"Because of my physical condition,do you have trouble meeting the needs of my family?",
+									"Do you have pain?",
+									"Are you bothered by side effects of treatment",
+									"Do you feel ill",
+									"Are you forced to spend time in bed",
+									]
+					},
+					{
+							"type":"Social Well Being",
+							"questions":["I feel close to my friends",
+										"I get emotional support from my family",
+										"I get support from my friends",
+										"My family has accepted my illness",
+										"I am satisfied with family communication about my illness",
+										"I feel close to my partner (or the person who is my main support)",
+										"I am satisfied with my sex life"]
+					},
+					{
+					 "type":"Emotional Well Being",
+						"questions":[
+									"I feel sad",
+									"I am satisfied with how I am coping with my illness",
+									"I am losing hope in the fight against my illness",
+									"I feel nervous",
+									"I worry about dying",
+									"I worry that my condition will get worse"]
+					},
+					{
+						"type":"Functional Well Being",
+						"questions":[	"I am able to work (include work at home)",
+										"My work (include work at home) is fulfilling",
+										"I am able to enjoy life",
+										"I have accepted my illness",
+										"I am sleeping well",
+										"I am enjoying the things I usually do for fun",
+										"I am content with the quality of my life right now"]
+					},
+					{
+						"type":"Additional Concerns",
+						"questions":["I have been short of breath",
+									"I am losing weight",
+									"My thinking is clear",
+									"I have been coughing",
+									"I am bothered by hair loss",
+									"I have a good appetite",
+									"Breathing is easy for me",
+									"Have you ever smoked?",
+									"I regret my smoking"]
+					}
+				];
+		$scope.saveclick = function (n,answer) {
+			if(typeof answer=='undefined')
+				$scope.answers.push(-1);
+			else
+				$scope.answers.push(parseInt(answer));
+			if($scope.currentType==4&&$scope.currentStep==n-1){
+				$scope.end=true;
+			}
+			else if($scope.currentStep==n-1){
+		    	$scope.currentType++;
+		    	$scope.currentStep=0;
+		    } 
+		    else{
+		    	$scope.currentStep++;
+		    }					    
+		}
+	
+		$scope.submitFACTL = function(){
+			var PWB=$scope.answers.slice(0,7);
+			var SWB=$scope.answers.slice(7,14);
+			var EWB=$scope.answers.slice(14,20);
+			var FWB=$scope.answers.slice(20,27)
+			var LCS=$scope.answers.slice(27);
+			PWB=calculatePWB(PWB);
+			SWB=calculateSWB(SWB);
+			EWB=calculateSWB(EWB);
+			FWB=calculateFWB(FWB);
+			LCS=calculateLCS(LCS);
+			console.log(SWB+"\n");
+			console.log(EWB+"\n");
+			console.log(FWB+"\n");
+			console.log(LCS+"\n");
+			console.log($scope.answers+"\n");
+			$http.post('/addFACTL', { 
+		
+				   email: "donita.almeida@gmail.com" , 
+				   PWB:PWB, 
+				   SWB:SWB, 
+				   EWB: EWB, 
+				   FWB:FWB, 
+				   LCS:LCS,
+				   answers:$scope.answers
+				   }
+			   ).success(function (response) {
+                    console.log(response);
+                    $mdDialog.hide(response);
+               });
+		}
+		function calculatePWB(PWB){
+			var count=PWB.length;
+			var result=0;
+			for(var value in PWB){
+				if(value==-1){
+					count--;
+				}else{
+					result+=4-value;
+				}
+			}
+			result=(result*7)/count;
+			return result;
+		}
+		function calculateSWB(SWB){
+			var count=SWB.length;
+			var result=0;
+			for(var value in SWB){
+				if(value==-1){
+					count--;
+				}else{
+					result+=parseInt(value);
+				}
+			}
+			result=(result*7)/count;
+			return result;
+		}
+		function calculateEWB(EWB){
+			var count=EWB.length;
+			var result=0;
+			for(var i=0;i<EWB.length;i++){
+				if(EWB[i]==-1){
+					count--;
+				}else{
+					if(i==1){
+						result+=EWB[i];
+					}else{								
+						result+=4-EWB[i];								
+					}
+				}							
+			}
+			result=(result*7)/count;
+			return result;
+		}
+		function calculateFWB(FWB){
+			var count=FWB.length;
+			var result=0;
+			for(var value in FWB){
+				if(value==-1){
+					count--;
+				}else{
+					result+=parseInt(value);
+				}
+			}
+			result=(result*7)/count;
+			return result;
+			
+		}
+		function calculateLCS(LCS){
+			var count=LCS.length;
+			var result=0;
+			for(var i=0;i<LCS.length;i++){
+				if(LCS[i]==-1){
+					count--;
+				}else{
+					if(i==2||i==4||i==6){
+						result+=LCS[i];
+					}else{								
+						result+=4-LCS[i];								
+					}
+				}							
+			}
+			result=(result*7)/count;
+			return result;
+		}
+
+	
+
+	}
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
@@ -185,9 +428,8 @@
 					<li><a href="#doctors" id="doctors-link"
 						class="skel-layers-ignoreHref"><span
 							class="icon fa-stethoscope">Doctors</span></a></li>
-					<li><a href="#contact_us" id="profile-link"
-						class="skel-layers-ignoreHref"><span class="icon fa-user">Contact
-								Us</span></a></li>
+					<li><a href="#profile" id="profile-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-user">Profile</span></a></li>
 				</ul>
 			</nav>
 
@@ -437,7 +679,13 @@
 		</section>
 
 		<!-- Profile -->
-		<section id="contact_us" class="six">
+		<section id="profile" class="six">
+			
+	<div class="container">
+		<h1 class="page-header ">Profile</h1>
+		<md-button type="submit" ng-click="showFACTL($event)" class="md-raised md-primary">Answer questions to access Quality of Life</md-button>
+		</section>
+	<!--  <section id="contact_us" class="six">
 			<div class="container">
 
 				<header>
@@ -462,7 +710,7 @@
 				</form>
 
 			</div>
-		</section>
+		</section>-->	
 
 	</div>
 
@@ -475,8 +723,40 @@
 		</ul>
 
 	</div>
+	
 
 	<!-- Scripts -->
+		<script type="text/ng-template" id="FACTL.tmpl.html">
+		<md-dialog  style="width:50%">
+		<md-toolbar layout="row" layout-align="center center" md-colors="{color:'accent'}" >Questionare</md-toolbar>
+			<md-content style="padding:20px;" ng-repeat="questionSet in questions" ng-show="currentType == $index">
+				<h2>{{questionSet.type}}</h2>
+				<md-content ng-repeat="question in questionSet.questions" ng-show="currentStep == $index">
+				{{question}}
+				<md-input-container class="md-block" style="margin-left:50px;">
+					<md-radio-group ng-model="answer" ng-change="saveclick(questionSet.questions.length,answer)" ng-required="true">
+      					<md-radio-button value="0" class="md-primary">Not at all</md-radio-button>
+      					<md-radio-button value="1">A little bit </md-radio-button>
+      					<md-radio-button value="2">Somewhat</md-radio-button>
+      					<md-radio-button value="3">Quite a bit</md-radio-button>
+      					<md-radio-button value="4">Very much</md-radio-button>
+    				</md-radio-group>
+				</md-input-container>			
+				<!--  <md-button type="submit" ng-hide="end" class="md-raised md-primary" ng-click="saveclick(questionSet.questions.length,answer)">Next</md-button>-->			
+
+			<md-content>
+		</md-content>	
+		
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="cancel()" >
+        Cancel
+      </md-button>
+      <md-button ng-show="end" class="md-raised md-primary" ng-click="submitFACTL()" >Done</md-button>
+    </md-dialog-actions>
+</md-dialog>
+
+</script>
 	<script src="/assets/js/jquery.min.js"></script>
 	<script src="/assets/js/jquery.scrolly.min.js"></script>
 	<script src="/assets/js/jquery.scrollzer.min.js"></script>
