@@ -93,20 +93,52 @@
 			});
 		};
 
-//get lifestyle articles
-		$scope.getLifestyleArticles = function (){
+		//get lifestyle articles
+		$scope.getLifestyleArticles = function() {
 			console.log("Called");
 			$http.get('/getLifestyleArticles').success(function(data) {
-			console.log("Back" +JSON.stringify(data));
-			$scope.suggestions = data;
-			$scope.articles = data;
-    });
+				console.log("Back" + JSON.stringify(data));
+				$scope.suggestions = data;
+				$scope.articles = data;
+			});
 		};
-	})
+
+		$scope.getCamTreatments = function() {
+			$http({
+				method : 'GET',
+				url : '/getCamTreatments',
+				data : {}
+			}).success(function(data) {
+				//	window.alert("In Success");
+				//console.log("data" + data.result[0].lattitude);
+				console.log("in success" + data.result.length);
+				var result = data.result;
+				$scope.treatments = result;
+
+			});
+			$scope.showTreatments = false;
+		};
+		
+		$scope.getFoodDetails = function() {
+			$http({
+				method : 'GET',
+				url : '/getFoodDetails',
+				data : {}
+			}).success(function(data) {
+				//	window.alert("In Success");
+				//console.log("data" + data.result[0].lattitude);
+				console.log("in success" + data.result.length);
+				var result = data.result;
+				$scope.foodDetails = result;
+
+			});
+			$scope.showFoodDetails = false;
+		};
+	});
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails()">
 
 	<!-- Header -->
 	<div id="header">
@@ -139,10 +171,14 @@
 				<ul>
 					<li><a href="#top" id="top-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+					<li><a href="#cancerInfo" id="cancerinfo-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-th">Cancer
+								Information</span></a></li>
 					<li><a href="#cancerInfo" id="recommendations-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
 					<li><a href="#lifestyle" id="lifestyle-link"
-						class="skel-layers-ignoreHref"><span class="icon fa-heart-o" ng-click="getLifestyleArticles()">Lifestyle</span></a></li>
+						class="skel-layers-ignoreHref"><span class="icon fa-heart-o"
+							ng-click="getLifestyleArticles()">Lifestyle</span></a></li>
 					<li><a href="#latestNews" id="news-link"
 						class="skel-layers-ignoreHref"><span
 							class="icon fa-newspaper-o">Latest News</span></a></li>
@@ -249,6 +285,93 @@
 			</div>
 		</section>
 
+		<section id="recommendations" class="three">
+			<div class="container">
+
+				<header>
+					<h2>Recommendations</h2>
+				</header>
+				Explore our various recommendations on alternative treatments,
+				lifestyle and food, to improve your qualilty of life. These
+				recommendations are personlized based on your profile. Give us as
+				much information as possible for better recommendations.
+
+			</div>
+		</section>
+
+		<section id="altTreatments" class="three"
+			ng-click="showTreatments=!showTreatments"
+			style="border: 2px solid black">
+			<div class="container">
+
+				<header class="recommendations-header">
+					<h3>Complementary and Alternative Medications</h3>
+				</header>
+
+
+				<div ng-repeat="treatment in treatments" ng-show="showTreatments">
+					<div class="treatment-heading">{{treatment.name}}</div>
+					<!-- 					<div class="article-description">{{treatment.description}}</div>
+ -->
+					<p class="treatment-text">
+						<img class="treatment-image" src="{{treatment.image}}" alt=""
+							align="right" /> {{treatment.description}}
+					</p>
+					<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
+				</div>
+			</div>
+			<!-- <div id="Treatment1">
+				
+				<img id="Treatment1Image"> 
+				</div>
+				
+				<div id="Treatment2">
+				
+				<img id="Treatment2Image"> 
+				</div>
+				
+				<div id="Treatment3">
+				
+				<img id="Treatment3Image"> 
+				</div> -->
+		</section>
+
+		<section id="altFood" class="three"
+			ng-click="showFoodDetails=!showFoodDetails"
+			style="border: 2px solid black">
+			<div class="container">
+
+				<header class="recommendations-header">
+					<h3>Food</h3>
+				</header>
+
+
+				<div ng-repeat="food in foodDetails" ng-show="showFoodDetails">
+					<div class="treatment-heading">{{food.name}}</div>
+					<!-- 					<div class="article-description">{{treatment.description}}</div>
+ -->
+					<p class="treatment-text">
+						<img class="treatment-image" src="{{food.image}}" alt=""
+							align="left" /> {{food.description}}
+					</p>
+					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+				</div>
+			</div>
+			<!-- <div id="Treatment1">
+				
+				<img id="Treatment1Image"> 
+				</div>
+				
+				<div id="Treatment2">
+				
+				<img id="Treatment2Image"> 
+				</div>
+				
+				<div id="Treatment3">
+				
+				<img id="Treatment3Image"> 
+				</div> -->
+		</section>
 		<!-- Portfolio -->
 		<section id="lifestyle" class="three">
 			<div class="container">
@@ -257,14 +380,16 @@
 					<h2>Lifestyle</h2>
 				</header>
 				<div ng-repeat="article in articles.data">
-				
+
 					<div class="article-heading">{{article.Summary}}</div>
-					<div class="article-link"><a href={{article.Link}} target="_blank">{{article.Link}}</a></div>
+					<div class="article-link">
+						<a href={{article.Link}} target="_blank">{{article.Link}}</a>
+					</div>
 					<div class="article-description">{{article.description}}</div>
-				
+
 				</div>
-		
-				</div>
+
+			</div>
 		</section>
 
 		<!-- Latest News -->
