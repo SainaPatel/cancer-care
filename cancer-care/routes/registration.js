@@ -4,43 +4,88 @@ var json_responses={};
 exports.patientRegister = function (req, res){
 	console.log (req.body);
 	mongo.connect(mongoURL,function() {
-	mongo.collection('user').insertOne(req.body,function(err, user) { 
-		if (user) {
-			json_responses.status_code=200;
-			console.log('success');
-			res.send( json_responses);
+		mongo.collection('user').findOne({
+			"email": req.body.email
+		}, function(err, result) {
+			
+			if (err) {
+				//internal error
+				json_responses.status_code=500;
+				console.log(err);
+				res.send(json_responses);
 
-		} else {
-			json_responses.status_code=500;
-			console.log(err);
-			res.send(json_responses);
-		}
-  	});
+			} else if (result) {
+				//user already exists
+			json_responses.status_code=400;
+				console.log(err);
+				res.send(json_responses);
+
+			} else {
+				//unique email
+				mongo.collection('user').insertOne(req.body,function(err, user) { 
+					if (user) {
+						json_responses.status_code=200;
+						console.log('success');
+						res.send( json_responses);
+
+					} else {
+						json_responses.status_code=500;
+						console.log(err);
+						res.send(json_responses);
+					}
+			  	});
+			}
+
+			
+		});
+		
+	
 
 	});
 	
-	res.send("respond with a resource");
 };
 
 exports.doctorRegister = function (req, res){
 	console.log (req.body);
 	mongo.connect(mongoURL,function() {
-	mongo.collection('doctors').insertOne(req.body,function(err, user) { 
-		if (user) {
-			json_responses.status_code=200;
-			console.log('success');
-			res.send( json_responses);
+		mongo.collection('doctors').findOne({
+			"email": req.body.email
+		}, function(err, result) {
+			
+			if (err) {
+				//internal error
+				json_responses.status_code=500;
+				console.log(err);
+				res.send(json_responses);
 
-		} else {
-			json_responses.status_code=500;
-			console.log(err);
-			res.send(json_responses);
-		}
-  	});
+			} else if (result) {
+				//user already exists
+			json_responses.status_code=400;
+				console.log(err);
+				res.send(json_responses);
+
+			} else {
+				//unique email
+				mongo.collection('doctors').insertOne(req.body,function(err, user) { 
+					if (user) {
+						json_responses.status_code=200;
+						console.log('success');
+						res.send( json_responses);
+
+					} else {
+						json_responses.status_code=500;
+						console.log(err);
+						res.send(json_responses);
+					}
+			  	});
+			}
+
+			
+		});
+		
+	
 
 	});
-	
-	res.send("respond with a resource");
 };
 
 exports.login = function(req,res) {

@@ -79,22 +79,6 @@ passport.authenticationMiddleware = function() {
     };
 };
 
-/*function loggedIn(req, res, next) {
-    if (!req.user) {
-        res.status(404).send("Unauthorized");
-
-
-    } else {
-        if (req.user.email === req.params.id) {
-            next();
-        }
-        else {
-            res.status(401).send("Unauthorized");
-        }
-    }
-
-}
-*/
 //development only
 if ('development' == app.get('env')) {
 app.use(express.errorHandler());
