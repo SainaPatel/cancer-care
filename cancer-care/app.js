@@ -44,7 +44,7 @@ app.use(app.router);
 //passport config
 passport.serializeUser(function (user, done) {
 	console.log("serializing " + user.email);
-	done(null, user.email);
+	done(null, user.email+" "+user.type);
 });
 
 passport.deserializeUser(function (email, done) {
@@ -58,7 +58,7 @@ passport.deserializeUser(function (email, done) {
 passport.use( new LocalStrategy({ passReqToCallback : true,usernameField: 'email'},
 		function (req,email, password, done) {
 	console.log(email+" | "+password);
-	registration.findUser(email,password, function (err, user) {
+	registration.findUser(email,password,req.body.type, function (err, user) {
 		if (err) {
 			return done(err);
 		}

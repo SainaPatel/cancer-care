@@ -91,8 +91,9 @@ exports.doctorRegister = function (req, res){
 exports.login = function(req,res) {
 var email=req.body.email;
 var password=req.body.password;
+var type=req.body.type;
 	mongo.connect(mongoURL, function() {
-		mongo.collection('user').findOne({
+		mongo.collection(type).findOne({
 			"email": email,
 			"password": password
 		}, function(err, result) {
@@ -116,11 +117,11 @@ var password=req.body.password;
 	});
 };
 
-exports.findUser = function(username, password, callback) {
+exports.findUser = function(username, password,type, callback) {
 
 	
 	mongo.connect(mongoURL, function() {
-		mongo.collection('user').findOne({
+		mongo.collection(type).findOne({
 			"email": username,
 			"password": password
 		}, function(err, result) {
@@ -130,6 +131,7 @@ exports.findUser = function(username, password, callback) {
 				callback(err,null);
 			} else if (result) {
 			//	console.log("Found the user", result);
+				result.type=type;
 				callback(null, result);
 			} else {
 				console.log("No User found with given credentials");
@@ -141,11 +143,12 @@ exports.findUser = function(username, password, callback) {
 
 exports.findUserById = function(username, callback){
 
+	var arr=username.split(" ");
 	mongo.connect(mongoURL, function() {
 
 
-		mongo.collection('user').findOne({
-			"email": username
+		mongo.collection(arr[1]).findOne({
+			"email": arr[0]
 		}, function(err, result) {
 			
 			if (err) {

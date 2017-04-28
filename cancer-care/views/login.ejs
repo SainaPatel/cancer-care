@@ -55,6 +55,7 @@
 						   $http.post('/login', { 
 							   email:$scope.email, 
 							   password: $scope.password, 
+							   type:"user"
 							   }
 						   ).success(function (response) {
 			                    console.log(response);
@@ -69,7 +70,7 @@
 	</head>
 	<body>
 		<div  style="width:50%;margin-left:25%;" ng-app="myApp" ng-controller="myController" layout="column" class="mdl-grid md-subhead">
-		<md-toolbar layout="row" layout-align="center center" >Registration</md-toolbar>
+		<md-toolbar layout="row" layout-align="center center" >Login</md-toolbar>
 	
 		<md-content style="padding:20px;">
 			<br>
@@ -79,7 +80,7 @@
 				<input ng-model="email" type="email" ng-required="true">
 			</md-input-container>		
 	
-			<md-input-container class="md-icon-float md-block"">
+			<md-input-container class="md-icon-float md-block">
 				<label>Password</label>
 				<input ng-model="password" type="password" ng-required="true">
 			</md-input-container>	
@@ -87,5 +88,6 @@
 		</md-content>
 		
 		</div>
+
 	</body>
 </html>
