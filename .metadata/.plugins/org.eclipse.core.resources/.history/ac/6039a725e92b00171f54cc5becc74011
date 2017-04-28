@@ -37,21 +37,3 @@ exports.getFoodDetails=function(req,res){
 
 	
 }
-
-exports.getLifestyleDetails=function(req,res){
-	mongo.connect(mongoURL,function(){
-		console.log('Connected to mongo at: ' + mongoURL);
-		var coll = mongo.collection('Lifestyle');
-		coll.find().toArray(function(err,response){
-			if(err)
-			{
-				console.log("error in getting cam treatments");
-			}else{
-				console.log("in response"+response.length);
-				res.send({"result":response});
-			}
-		})
-	})
-
-	
-}

@@ -134,28 +134,11 @@
 			});
 			$scope.showFoodDetails = false;
 		};
-		
-		$scope.getLifestyleDetails = function() {
-			$http({
-				method : 'GET',
-				url : '/getLifestyleDetails',
-				data : {}
-			}).success(function(data) {
-				//	window.alert("In Success");
-				//console.log("data" + data.result[0].lattitude);
-				console.log("in success" + data.result.length);
-				var result = data.result;
-				$scope.LifestyleDetails = result;
-
-			});
-			$scope.showLifestyleDetails = false;
-		};
-		
 	});
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails(); getLifestyleDetails()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails()">
 
 	<!-- Header -->
 	<div id="header">
@@ -391,25 +374,24 @@
 		</section>
 		
 		<section id="altLifestyle" class="three"
-			ng-click="showLifestyleDetails=!showLifestyleDetails"
+			ng-click="showFoodDetails=!showFoodDetails"
 			style="border: 2px solid black">
 			<div class="container">
 
 				<header class="recommendations-header">
-					<h3>LifeStyle</h3>
+					<h3>Food</h3>
 				</header>
-				<div ng-show="showLifestyleDetails">
-				Along with medications you lifestyle plays a very important role towards your health. Incorporate the following recommendations in your day to day activities to lead a healthier life.
-				<div ng-repeat="lifestyle in LifestyleDetails">
-					<div class="treatment-heading">{{lifestyle.name}}</div>
+
+
+				<div ng-repeat="food in foodDetails" ng-show="showFoodDetails">
+					<div class="treatment-heading">{{food.name}}</div>
 					<!-- 					<div class="article-description">{{treatment.description}}</div>
  -->
 					<p class="treatment-text">
-						<img class="treatment-image" src="{{lifestyle.image}}" alt=""
-							align="right" /> {{lifestyle.description}}
+						<img class="treatment-image" src="{{food.image}}" alt=""
+							align="left" /> {{food.description}}
 					</p>
-					<a href="{{lifestyle.link1}}" class="treatment-link">{{lifestyle.link1}}</a>
-				</div>
+					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
 				</div>
 			</div>
 			<!-- <div id="Treatment1">

@@ -155,7 +155,7 @@
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails(); getLifestyleDetails()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails(); getLifestyleDetails(); getLifestyleArticles()">
 
 	<!-- Header -->
 	<div id="header">
@@ -193,9 +193,9 @@
 								Information</span></a></li>
 					<li><a href="#cancerInfo" id="recommendations-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
-					<li><a href="#lifestyle" id="lifestyle-link"
+					<li><a href="#articles" id="lifestyle-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-heart-o"
-							ng-click="getLifestyleArticles()">Lifestyle</span></a></li>
+							ng-click="getLifestyleArticles()">Articles</span></a></li>
 					<li><a href="#latestNews" id="news-link"
 						class="skel-layers-ignoreHref"><span
 							class="icon fa-newspaper-o">Latest News</span></a></li>
@@ -428,11 +428,11 @@
 				</div> -->
 		</section>
 		<!-- Portfolio -->
-		<section id="lifestyle" class="three">
+		<section id="articles" class="three">
 			<div class="container">
 
 				<header>
-					<h2>Lifestyle</h2>
+					<h2>Articles</h2>
 				</header>
 				<div ng-repeat="article in articles.data">
 

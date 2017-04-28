@@ -44,7 +44,7 @@ app.use(app.router);
 //passport config
 passport.serializeUser(function (user, done) {
 	console.log("serializing " + user.email);
-	done(null, user.email+" "+user.type);
+	done(null, user.email);
 });
 
 passport.deserializeUser(function (email, done) {
@@ -58,7 +58,7 @@ passport.deserializeUser(function (email, done) {
 passport.use( new LocalStrategy({ passReqToCallback : true,usernameField: 'email'},
 		function (req,email, password, done) {
 	console.log(email+" | "+password);
-	registration.findUser(email,password,req.body.type, function (err, user) {
+	registration.findUser(email,password, function (err, user) {
 		if (err) {
 			return done(err);
 		}
@@ -80,6 +80,22 @@ passport.authenticationMiddleware = function() {
 	};
 };
 
+/*function loggedIn(req, res, next) {
+    if (!req.user) {
+        res.status(404).send("Unauthorized");
+
+
+    } else {
+        if (req.user.email === req.params.id) {
+            next();
+        }
+        else {
+            res.status(401).send("Unauthorized");
+        }
+    }
+
+}
+ */
 //development only
 if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
@@ -119,7 +135,6 @@ app.post('/doctorRegister',registration.doctorRegister);
 app.post('/getDoctors',doctors.getDoctors);
 app.get('/getCamTreatments',cam.getCamTreatments);
 app.get('/getFoodDetails',cam.getFoodDetails);
-app.get('/getLifestyleDetails',cam.getLifestyleDetails);
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });

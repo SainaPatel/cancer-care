@@ -155,7 +155,7 @@
 </script>
 </head>
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails(); getLifestyleDetails()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getCamTreatments(); getFoodDetails(); getLifestyleDetails(); getLifestyleArticles()">
 
 	<!-- Header -->
 	<div id="header">
@@ -432,7 +432,7 @@
 			<div class="container">
 
 				<header>
-					<h2>Lifestyle</h2>
+					<h2>Articles</h2>
 				</header>
 				<div ng-repeat="article in articles.data">
 

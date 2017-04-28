@@ -432,7 +432,7 @@
 			<div class="container">
 
 				<header>
-					<h2>Lifestyle</h2>
+					<h2>Articles</h2>
 				</header>
 				<div ng-repeat="article in articles.data">
 

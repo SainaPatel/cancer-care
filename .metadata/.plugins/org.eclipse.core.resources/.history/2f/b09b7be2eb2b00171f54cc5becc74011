@@ -396,11 +396,10 @@
 			<div class="container">
 
 				<header class="recommendations-header">
-					<h3>LifeStyle</h3>
+					<h3>Food</h3>
 				</header>
-				<div ng-show="showLifestyleDetails">
 				Along with medications you lifestyle plays a very important role towards your health. Incorporate the following recommendations in your day to day activities to lead a healthier life.
-				<div ng-repeat="lifestyle in LifestyleDetails">
+				<div ng-repeat="lifestyle in LifestyleDetails" ng-show="showFoodDetails">
 					<div class="treatment-heading">{{lifestyle.name}}</div>
 					<!-- 					<div class="article-description">{{treatment.description}}</div>
  -->
@@ -409,7 +408,6 @@
 							align="right" /> {{lifestyle.description}}
 					</p>
 					<a href="{{lifestyle.link1}}" class="treatment-link">{{lifestyle.link1}}</a>
-				</div>
 				</div>
 			</div>
 			<!-- <div id="Treatment1">
