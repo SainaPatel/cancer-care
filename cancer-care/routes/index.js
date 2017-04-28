@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('landing', { title: 'Circle of Hope' });
+  res.render('patientProfile', { title: 'Circle of Hope' });
 };

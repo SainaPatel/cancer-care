@@ -168,7 +168,9 @@
 	font-size: 25px;
 	padding-top: 0.5%;
 }
-
+.InfoTextHeader {
+		font-weight: bold;
+}
 .card {
 	position: relative;
 	float: left;

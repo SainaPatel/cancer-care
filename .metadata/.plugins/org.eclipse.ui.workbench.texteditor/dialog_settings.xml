@@ -2,30 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="button" key="selection"/>
+		<item value="articles" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="button"/>
-			<item value="section"/>
-			<item value="10"/>
-			<item value="padding"/>
-			<item value="footer"/>
-			<item value="four"/>
-			<item value="nav"/>
-			<item value="two"/>
+			<item value="articles"/>
+			<item value="getLifestyleArticles"/>
+			<item value="getArticles"/>
+			<item value="article"/>
+			<item value="showFoodDetails"/>
+			<item value="header"/>
+			<item value="h3"/>
+			<item value="container"/>
 		</list>
 		<list key="replacehistory">
 			<item value="/images"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="381" key="DIALOG_HEIGHT"/>
-		<item value="1057" key="DIALOG_X_ORIGIN"/>
+		<item value="265" key="DIALOG_WIDTH"/>
+		<item value="1|.SF NS Text|11.0|0|COCOA|1|.SFNSText" key="DIALOG_FONT_NAME"/>
+		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="1015" key="DIALOG_X_ORIGIN"/>
 		<item value="85" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
