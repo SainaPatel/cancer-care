@@ -1,0 +1,289 @@
+<html>
+<head>
+<title>Register</title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.js"></script>
+<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="/node_modules/angular-material/angular-material.min.js"></script>
+
+<script>
+		angular.module('dialogDemo1', ['ngMaterial'])
+		.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
+		  $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+		  $scope.showTabDialog = function(ev) {
+		    $mdDialog.show({
+		      controller: DialogController,
+		      templateUrl: 'tabDialog.tmpl.html',
+		      parent: angular.element(document.body),
+		      targetEvent: ev,
+		      clickOutsideToClose:true
+		    })
+		        .then(function(answer) {
+		          $scope.status = 'You said the information was "' + answer + '".';
+		        }, function() {
+		          $scope.status = 'You cancelled the dialog.';
+		        });
+		  };
+		  
+		});
+		function DialogController($scope, $mdDialog,$http,$mdToast) {
+			$scope.selectedIndex=0;
+		  	$scope.hide = function() {
+		  		console.log($scope.selectedIndex);
+		    	$mdDialog.hide(answer);
+		  	};
+		  	$scope.cancel = function() {
+			  	console.log($scope.selectedIndex);
+		    	$mdDialog.cancel("cancel");
+		  	};
+		  	$scope.signup = function() {
+			  	console.log($scope.selectedIndex);
+			  	if($scope.selectedIndex==0){
+				  	$scope.signupPatient();
+			  	}else if($scope.selectedIndex==1){
+				  	$scope.signupDoctor();
+			  	}
+		  	};
+			$scope.types=["unsure","small cell","large cell"];
+			$scope.stages=["1","2","3","4","unsure"];
+			$scope.signupDoctor=function() {
+				console.log("Function called");
+				$http.post('/doctorRegister', { 
+					   name: $scope.name , 
+					   state:$scope.state, 
+					   email:$scope.email, 
+					   password: $scope.password, 
+					   gender:$scope.gender, 
+					   county:$scope.county,
+					   dob:$scope.dob,
+					   qualifications:$scope.selectedQualifications,
+					   gender:$scope.gender,
+					   specializations:$scope.selectedSpecializations
+					   }
+				  ).success(function (response) {
+						console.log(response);
+	                	if(response.status_code==200)
+	                    	$mdDialog.hide(response);
+	                	else  if(response.status_code==400){	                    	
+	                    	$scope.showToast("Username already exists");
+	               		}else{
+	                    	$scope.showToast("An internal error occured sorry for inconvinience");
+	                	}
+	               });			            
+			};
+			$scope.signupPatient=function() {
+				console.log("Function called");
+				   $http.post('/register', { 
+					   name: $scope.name , 
+					   state:$scope.state, 
+					   email:$scope.email, 
+					   password: $scope.password, 
+					   gender:$scope.gender, 
+					   county:$scope.county,
+					   dob:$scope.dob,
+					   cancer_type:$scope.cancer_type,
+					   gender:$scope.gender,
+					   stage:$scope.stage
+					   }
+				   ).success(function (response) {
+	                    console.log(response);
+	                    if(response.status_code==200)
+	                    	$mdDialog.hide(response);
+	                    else  if(response.status_code==400){
+	                    	
+	                    	$scope.showToast("Username already exists");
+	                    }else{
+	                    	$scope.showToast("An internal error occured sorry for inconvinience");
+	                    }                    	
+	               });			            
+			};
+		    $scope.qualifications = ["MD","PHD"];
+		      $scope.selectedQualifications = [];
+		      $scope.selectedSpecializations=[];
+		      $scope.specializations=["General Oncology","Radiology","Cancer Diagnostics","Medical Oncology"];
+		      $scope.toggle = function (item, list) {
+		        var idx = list.indexOf(item);
+		        if (idx > -1) {
+		          list.splice(idx, 1);
+		        }
+		        else {
+		          list.push(item);
+		        }
+		      };
+
+		      $scope.exists = function (item, list) {
+		        return list.indexOf(item) > -1;
+		      };
+		      $scope.showToast = function(message) {
+                  $mdToast.show(
+                     $mdToast.simple()
+                        .textContent(message)                       
+                        .hideDelay(3000)
+                  );
+               };
+		}
+		</script>
+
+
+</head>
+<body ng-app="dialogDemo1">
+	<div ng-controller="AppCtrl" class="md-padding" id="popupContainer"
+		ng-cloak>
+
+		<div class="dialog-demo-content" layout="row" layout-wrap
+			layout-margin>
+
+			<md-button class="md-primary md-raised"
+				ng-click="showTabDialog($event)" flex="100" flex-gt-md="auto">
+			Register </md-button>
+		</div>
+		
+
+		<script type="text/ng-template" id="tabDialog.tmpl.html">
+<md-dialog aria-label="Mango (Fruit)" style="width:50%">
+  <form name="myForm" style="font-size:80%;">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Registration</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+        <md-tab label="patient" >
+          <md-content class="md-padding">
+            
+	
+			<br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Email</label>
+				
+				<input ng-model="email" type="email" ng-required="true">
+			</md-input-container>		
+			<md-input-container class="md-icon-float  md-block"">
+				<label>Name</label>
+		
+				<input ng-model="name" type="text" ng-required="true">
+			</md-input-container>
+			
+			<md-input-container class="md-icon-float md-block" >
+				<md-radio-group ng-model="gender">
+      				<md-radio-button  value="male" class="md-primary">Male</md-radio-button>
+      				<md-radio-button  value="female"> Female </md-radio-button>
+      				<md-radio-button  value="other">Other</md-radio-button>
+    			</md-radio-group>
+			</md-input-container>
+			
+			<md-input-container class="md-icon-float md-block">		
+			 <md-datepicker  ng-model="dob" md-placeholder="Enter Birth date"r></md-datepicke>	
+			 </md-input-container>				
+			<md-input-container class="md-icon-float  md-block">
+				<label>State</label>
+				<input ng-model="state" type="text">
+			</md-input-container>
+			<md-input-container class="md-icon-float  md-block">
+				<label>County</label>	
+				<input ng-model="county" type="text" >
+			</md-input-container>
+			<br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Type of Lung Cancer</label>		
+				<md-select ng-model="cancer_type">		
+            		<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
+          		</md-select>
+			<br>
+			</md-input-container>
+						<md-input-container class="md-icon-float md-block">
+				<label>Stage of Lung Cancer</label>		
+				<md-select ng-model="stage">		
+            		<md-option ng-value="stage"  ng-repeat="stage in stages" >{{stage}}</md-option>       		
+          		</md-select>
+			</md-input-container>
+			<br>
+
+			<md-input-container class="md-icon-float md-block"">
+				<label>Password</label>
+				<input ng-model="password" type="password" ng-required="true">
+			</md-input-container>	
+		
+          </md-content>
+        </md-tab>
+        <md-tab label="doctor">
+          <md-content class="md-padding">
+       
+		<br>
+            <md-input-container class="md-icon-float md-block">
+		<label>Email</label> <input ng-model="email" type="email"
+			ng-required="true"> </md-input-container> <md-input-container
+			class="md-icon-float  md-block""> <label>Name</label>
+
+		<input ng-model="name" type="text" ng-required="true"> </md-input-container> <md-input-container
+			class="md-icon-float md-block"> <md-radio-group
+			ng-model="gender"> <md-radio-button value="male"
+			class="md-primary">Male</md-radio-button> <md-radio-button
+			value="female"> Female </md-radio-button> <md-radio-button
+			value="other">Other</md-radio-button> </md-radio-group> </md-input-container> <md-input-container
+			class="md-icon-float md-block"> <md-datepicker
+			ng-model="dob" md-placeholder="Enter Birth date">
+		</md-datepicker>
+		</md-input-container> <md-input-container class="md-icon-float  md-block">
+		<label>State</label> <input ng-model="state" type="text"> </md-input-container> <md-input-container
+			class="md-icon-float  md-block"> <label>County</label>
+		<input ng-model="county" type="text"> </md-input-container> 
+		 <label>Qualifications:</label>
+		<div  ng-repeat="item in qualifications">
+			<md-checkbox ng-checked="exists(item, selectedQualifications)"
+				ng-click="toggle(item, selectedQualifications)"> {{ item }} 
+				 </md-checkbox>
+		</div>
+		<br>
+			 <label>Specialization:</label>
+		<div  ng-repeat="item in specializations">
+			<md-checkbox ng-checked="exists(item, selectedSpecializations)"
+				ng-click="toggle(item, selectedSpecializations)"> {{ item }}</md-checkbox>
+		</div>
+		<br>
+		<md-input-container class="md-icon-float md-block"">
+		<label>Password</label> <input ng-model="password" type="password"
+			ng-required="true"> </md-input-container> 
+		
+          </md-content>
+        </md-tab>
+    
+      </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="cancel()" >
+        Cancel
+      </md-button>
+      <md-button ng-disabled="myForm.$invalid" type="submit" class="md-raised md-primary" ng-click="signup()" style="margin-right:20px;" >
+        Submit
+      </md-button>
+    </md-dialog-actions>
+  </form>
+
+</md-dialog>
+</script>
+</div>
+
+</body>
+</html>
+
+

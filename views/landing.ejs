@@ -1,0 +1,714 @@
+<html>
+
+<head>
+	<title>
+		<%= title %>
+	</title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="/node_modules/angular-material/angular-material.min.css" />
+	<script src="/node_modules/angular/angular.min.js"></script>
+	<script src="/node_modules/angular-animate/angular-animate.js"></script>
+	<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+	<script src="/node_modules/angular-material/angular-material.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	angular.module('myApp', ['ngMaterial'])
+	.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
+	  $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+	  $scope.showTabDialog = function(ev) {
+	    $mdDialog.show({
+	      controller: DialogController,
+	      templateUrl: 'tabDialog.tmpl.html',
+	      parent: angular.element(document.body),
+	      targetEvent: ev,
+	      clickOutsideToClose:true
+	    })
+	        .then(function(answer) {
+	          $scope.status = 'You said the information was "' + answer + '".';
+	        }, function() {
+	          $scope.status = 'You cancelled the dialog.';
+	        });
+	  };
+	  $scope.showLoginDialog = function(ev) {
+		  console.log("Login called");
+		    $mdDialog.show({
+		      controller: LoginController,
+		      templateUrl: 'loginDialog.tmpl.html',
+		      parent: angular.element(document.body),
+		      targetEvent: ev,
+		      clickOutsideToClose:true
+		    })
+		        .then(function(answer) {
+		          $scope.status = 'You said the information was "' + answer + '".';
+		        }, function() {
+		          $scope.status = 'You cancelled the dialog.';
+		        });
+		  };
+	  $scope.dataArray = [
+      {
+        src: '/images/doctors2.jpg'
+      },
+      {
+        src: '/images/alternative1.jpg'
+      },
+      {
+        src: '/images/circleOfHope.jpg'
+      }
+    ];
+	}).config(function($mdThemingProvider) {
+		$mdThemingProvider.definePalette('cancer-care-palette', {
+			   
+		    '100': '754B57',
+		    '200': 'BA99A2',
+		    '300': 'D1B8BF',
+		    '50': 'ffebee',
+		    '400': 'ef5350',
+		    '500': 'f44336',
+		    '600': 'e53935',
+		    '700': 'd32f2f',
+		    '800': 'c62828',
+		    '900': 'b71c1c',
+		    'A100': 'ff8a80',
+		    'A200': 'ff5252',
+		    'A400': 'ff1744',
+		    'A700': 'd50000',
+		    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+		                                        // on this palette should be dark or light
+
+		    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+		     '200', '300', '400', 'A100'],
+		    'contrastLightColors': undefined 
+		
+		  });
+
+
+			$mdThemingProvider.theme('default')
+		.primaryPalette('cancer-care-palette',{'default':'100'})
+	.accentPalette('cancer-care-palette',{'default':'200'});
+	})
+	
+	function LoginController($window,$scope,$mdDialog,$http,$mdToast){
+		$scope.selectedIndex=0;
+	  	$scope.hide = function() {
+	  		console.log($scope.selectedIndex);
+	    	$mdDialog.hide(answer);
+	  	};
+	  	$scope.cancel = function() {
+		  	console.log($scope.selectedIndex);
+	    	$mdDialog.cancel("cancel");
+	  	};
+	  	$scope.login = function() {
+	  		console.log($scope.selectedIndex);
+		  	if($scope.selectedIndex==0){
+			  	$scope.type="user";
+		  	}else if($scope.selectedIndex==1){
+			  	$scope.type="doctors";
+		  	}
+			console.log("Function called");
+			   $http.post('/login', { 
+				   email:$scope.email, 
+				   password: $scope.password, 
+				   type:$scope.type
+				   }
+			   ).success(function (response) {
+                 console.log(response);
+                 if($scope.type=="user"){
+                	 $window.location.href='/patientProfile';
+                 }else{
+                	 $window.location.href='/doctorProfile';
+                 }
+                 
+            }).error(function(err){
+            	$scope.showToast("Unauthorized");
+              
+            });	
+		  	
+	  	};
+	      $scope.showToast = function(message) {
+              $mdToast.show(
+                 $mdToast.simple()
+                    .textContent(message)                       
+                    .hideDelay(3000)
+              );
+           };
+	}
+	function DialogController($scope, $mdDialog,$http,$mdToast) {
+		$scope.selectedIndex=0;
+	  	$scope.hide = function() {
+	  		console.log($scope.selectedIndex);
+	    	$mdDialog.hide(answer);
+	  	};
+	  	$scope.cancel = function() {
+		  	console.log($scope.selectedIndex);
+	    	$mdDialog.cancel("cancel");
+	  	};
+	  	$scope.signup = function() {
+		  	console.log($scope.selectedIndex);
+		  	if($scope.selectedIndex==0){
+			  	$scope.signupPatient();
+		  	}else if($scope.selectedIndex==1){
+			  	$scope.signupDoctor();
+		  	}
+		  	
+	  	};
+		$scope.types=["unsure","small cell","large cell"];
+		$scope.stages=["1","2","3","4","unsure"];
+		$scope.signupDoctor=function() {
+			console.log("Function called");
+			$http.post('/doctorRegister', { 
+				   name: $scope.name , 
+				   state:$scope.state, 
+				   email:$scope.email, 
+				   password: $scope.password, 
+				   gender:$scope.gender, 
+				   county:$scope.county,
+				   dob:$scope.dob,
+				   qualifications:$scope.selectedQualifications,
+				   gender:$scope.gender,
+				   specializations:$scope.selectedSpecializations
+				   }
+			  ).success(function (response) {
+					console.log(response);
+                	if(response.status_code==200)
+                    	$mdDialog.hide(response);
+                	else  if(response.status_code==400){	                    	
+                    	$scope.showToast("Username already exists");
+               		}else{
+                    	$scope.showToast("An internal error occured sorry for inconvinience");
+                	}
+               });			            
+		};
+		$scope.signupPatient=function() {
+			console.log("Function called");
+			   $http.post('/register', { 
+				   name: $scope.name , 
+				   state:$scope.state, 
+				   email:$scope.email, 
+				   password: $scope.password, 
+				   gender:$scope.gender, 
+				   county:$scope.county,
+				   dob:$scope.dob,
+				   cancer_type:$scope.cancer_type,
+				   gender:$scope.gender,
+				   stage:$scope.stage,
+				   treatments:$scope.selectedTreatments
+				   }
+			   ).success(function (response) {
+                    console.log(response);
+                    if(response.status_code==200)
+                    	$mdDialog.hide(response);
+                    else  if(response.status_code==400){
+                    	
+                    	$scope.showToast("Username already exists");
+                    }else{
+                    	$scope.showToast("An internal error occured sorry for inconvinience");
+                    }                    	
+               });			            
+		};
+	    $scope.qualifications = ["MD","PHD"];
+	    $scope.treatments=["Chemotherapy","Radiotherapy","Surgery"];
+	      $scope.selectedQualifications = [];
+	      $scope.selectedSpecializations=[];
+	      $scope.selectedTreatments=[];
+	      $scope.specializations=["General Oncology","Radiology","Cancer Diagnostics","Medical Oncology"];
+	      $scope.toggle = function (item, list) {
+	        var idx = list.indexOf(item);
+	        if (idx > -1) {
+	          list.splice(idx, 1);
+	        }
+	        else {
+	          list.push(item);
+	        }
+	      };
+
+	      $scope.exists = function (item, list) {
+	        return list.indexOf(item) > -1;
+	      };
+	      $scope.showToast = function(message) {
+              $mdToast.show(
+                 $mdToast.simple()
+                    .textContent(message)                       
+                    .hideDelay(3000)
+              );
+           };
+	}
+		</script>
+</head>
+
+<body ng-app="myApp" ng-controller="AppCtrl">
+<div class="navbar">
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+  <a href="#login" style="float:right" ng-click="showLoginDialog($event)">Login</a>
+  <a href="#signup" style="float:right" ng-click="showTabDialog($event)">Signup</a>
+</div>
+	<div id="main">
+
+		<!-- Intro -->
+		<div id="top">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel"  data-interval="3000">
+  <!-- Indicators -->
+  <ol class="carousel-indicators" style="padding-bottom:2%;">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+	<li data-target="#myCarousel" data-slide-to="3"></li>
+    <li data-target="#myCarousel" data-slide-to="4"></li>
+	<li data-target="#myCarousel" data-slide-to="4"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img class="carousel-image" src="/images/circleOfHope.jpg" alt="Circle Of Hope">
+	  <div class="carousel-caption">
+        <p style="float:right; font-size:4vh">~ A platform for lung cancer patients giving hope, guidance and care!</p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="carousel-image" src="/images/alternative1.jpg" alt="Alternate Medicines">
+    </div>
+
+    <div class="item">
+      <img class="carousel-image" src="/images/Alternative2.jpg" alt="Lifestyle">
+    </div>
+
+	<div class="item">
+      <img class="carousel-image" src="/images/surviving.jpg" alt="Alternate Medicines">
+    </div>
+
+	<div class="item">
+      <img class="carousel-image" src="/images/alternative.jpg" alt="Alternate Medicines">
+    </div>
+
+	<div class="item">
+      <img class="carousel-image" src="/images/care.jpg" alt="Alternate Medicines">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+		</div>
+
+		<!-- Portfolio -->
+		<section id="portfolio" class="two">
+			<div class="container landing-container">
+				<header>
+					<h4>Welcome to the club you didn’t ask to join. We know you’re pissed. </h4>
+					<h4>And that’s OK. We’ve been there, too. </h4>
+					<h4>We connect you with your community and </h4>
+					<h4>strive to make it all suck a little less.</h4>
+
+					<h2 class="heading">What can we help you with you ask?</h2>
+					<h3><span class="heading">Circle of Hope</span> provides you with <span class="heading">personalised recommendations</span> for the following</h3>
+				</header>
+				<div class="row">
+					<div class="4u 12u$(mobile)">
+						<article class="item">
+							<div style="height:40%; width:100%;">
+						<div class="landing-card landing-effect__hover">
+						<div class="landing-card__front">
+						<img src="/images/lifestyle2.jpeg"/ height="100%" width="100%">
+						</div>
+						<div class="landing-card__back">
+							<div class="card-title">LIFESTYLE</div>
+							<p class="card-content">
+										How to lead a better life with cancer?	
+							</p>
+						</div>
+						</div>
+
+							</div>
+						</article>
+						<article class="item">
+							<div style="height:50%; width:100%;">
+							<div class="landing-card landing-effect__hover">
+						<div class="landing-card__front">
+						<img src="/images/doctors2.jpg"/ height="100%" width="100%">
+						</div>
+						<div class="landing-card__back">
+							<div class="card-title">DOCTORS</div>
+							<p class="card-content">
+								Find a professional who can answer your questions		
+							</p>
+						</div>
+						</div>
+							</div>
+						</article>
+					</div>
+					<div class="4u 12u$(mobile)">
+						<article class="item">
+							<div style="height:45%; width:100%;">
+							<div class="landing-card landing-effect__hover">
+						<div class="landing-card__front">
+						<img src="/images/support3.jpg"/ height="100%" width="100%">
+						</div>
+						<div class="landing-card__back">
+							<div class="card-title">SUPPORT GROUPS</div>
+							<p class="card-content">
+								Want to speak to people who are fighting a battle same as yours?		
+							</p>
+						</div>
+						</div>
+							</div>
+						</article>
+						<article class="item">
+								<div style="height:45%; width:100%;">
+							<div class="landing-card landing-effect__hover">
+						<div class="landing-card__front">
+						<img src="/images/research.jpg"/ height="100%" width="100%">
+						</div>
+						<div class="landing-card__back">
+							<div class="card-title">LATEST NEWS</div>
+							<p class="card-content">
+								Know the latest findings in the area of lung cancer research		
+							</p>
+						</div>
+						</div>
+							</div>
+						</article>
+					</div>
+					<div class="4u$ 12u$(mobile)">
+						<article class="item">
+							
+							<div style="height:40%; width:100%;">
+							<div class="landing-card landing-effect__hover">
+						<div class="landing-card__front">
+						<img src="/images/survive.jpg"/ height="100%" width="100%">
+						</div>
+						<div class="landing-card__back">
+							<div class="card-title">SURVIVOR STORIES</div>
+							<p class="card-content">
+								You are <strong>STRONGER</strong> than you think.		
+							</p>
+						</div>
+						</div>
+							</div>
+						</article>
+						<article class="item">
+							<div style="height:50%; width:100%;">
+							<div class="landing-card landing-effect__hover">
+						<div class="landing-card__front">
+						<img src="/images/alternative3.jpg"/ height="100%" width="100%">
+						</div>
+						<div class="landing-card__back">
+							<div class="card-title">ALTERNATIVE TREATMENTS</div>
+							<p class="card-content">
+								Know your options apart from conventional treatments		
+							</p>
+						</div>
+						</div>
+							</div>
+						</article>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- About Me -->
+		<section id="about" class="three">
+			<div class="container landing-container">
+
+				<header class="heading">
+					<h1>What is Circle Of Hope</h1>
+				</header>
+
+				<a href="#" class="image featured"><img src="/images/lungcancer.jpg" alt="About Circle of Hope" style="height:40%"/></a>
+
+				<h3>
+
+<p class="heading">Our <u>mission</u> is to empower those affected by lung cancer by:</p>
+  <ul>  
+	<li>building community</li>
+	<li>improving quality of life</li>
+	<li>providing meaningful survivorship</li>
+	<li>suggesting alternate treatment options</li>
+  </ul>
+<p class="heading">
+Our <u>vision</u> is no survivor alone. 
+</p>
+<p class="heading">
+Our <u>charter</u> is to ensure that no one affected by lung cancer go unaware of the 
+appropriate support resources they are entitled to so they can get busy living.</p>
+				</h3>
+
+				<h2><span class="heading" ng-click="showTabDialog($event)"><u>Sign up</u></span> to get <span class="heading">personalised
+					</span> recommendations!</h2>
+			</div>
+		</section>
+
+		<!-- Contact -->
+		<section id="contact" class="four">
+			<div class="container landing-container">
+
+				<header>
+					<h2>Contact Us</h2>
+				</header>
+<p>
+				<h3>Have a question? Feel free to reach out to us!</h3>
+</p>
+
+				<form method="post" action="#">
+					<div class="row">
+						<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
+						<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
+						<div class="12u$">
+							<textarea name="message" placeholder="Message"></textarea>
+						</div>
+						<div class="12u$">
+							<input type="submit" value="Send Message" />
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Footer -->
+	<div id="footer" class="landing-container">
+
+		<!-- Copyright -->
+		<ul class="copyright">
+			<li>&copy; CircleOfHope 2017. All rights reserved.</li>
+		</ul>
+
+	</div>
+<script type="text/ng-template" id="tabDialog.tmpl.html">
+<md-dialog aria-label="Mango (Fruit)" style="width:50%">
+  <form name="myForm" style="font-size:80%;">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Registration</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+        <md-tab label="patient" >
+          <md-content class="md-padding">
+            
+	
+			<br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Email</label>
+				
+				<input ng-model="email" type="email" ng-required="true">
+			</md-input-container>		
+			<md-input-container class="md-icon-float  md-block"">
+				<label>Name</label>
+		
+				<input ng-model="name" type="text" ng-required="true">
+			</md-input-container>
+			
+			<md-input-container class="md-icon-float md-block" >
+				<md-radio-group ng-model="gender">
+      				<md-radio-button  value="male" class="md-primary">Male</md-radio-button>
+      				<md-radio-button  value="female"> Female </md-radio-button>
+      				<md-radio-button  value="other">Other</md-radio-button>
+    			</md-radio-group>
+			</md-input-container>
+			
+			<md-input-container class="md-icon-float md-block">		
+			 <md-datepicker  ng-model="dob" md-placeholder="Enter Birth date"r></md-datepicker>	
+			 </md-input-container>				
+			<md-input-container class="md-icon-float  md-block">
+				<label>State</label>
+				<input ng-model="state" type="text">
+			</md-input-container>
+			<md-input-container class="md-icon-float  md-block">
+				<label>County</label>	
+				<input ng-model="county" type="text" >
+			</md-input-container>
+			<br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Type of Lung Cancer</label>		
+				<md-select ng-model="cancer_type">		
+            		<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
+          		</md-select>
+			<br>
+			</md-input-container>
+						<md-input-container class="md-icon-float md-block">
+				<label>Stage of Lung Cancer</label>		
+				<md-select ng-model="stage">		
+            		<md-option ng-value="stage"  ng-repeat="stage in stages" >{{stage}}</md-option>       		
+          		</md-select>
+			</md-input-container>
+			<br>
+	 		<label>Current Treatments:</label>
+			<div  ng-repeat="item in treatments">
+			<md-checkbox ng-checked="exists(item, selectedTreatments)"
+				ng-click="toggle(item, selectedTreatments)"> {{ item }} 
+				 </md-checkbox>
+				</div>
+		<br>
+			<md-input-container class="md-icon-float md-block"">
+				<label>Password</label>
+				<input ng-model="password" type="password" ng-required="true">
+			</md-input-container>	
+		
+          </md-content>
+        </md-tab>
+        <md-tab label="doctor">
+          <md-content class="md-padding">
+       
+		<br>
+            <md-input-container class="md-icon-float md-block">
+		<label>Email</label> <input ng-model="email" type="email"
+			ng-required="true"> </md-input-container> <md-input-container
+			class="md-icon-float  md-block""> <label>Name</label>
+
+		<input ng-model="name" type="text" ng-required="true"> </md-input-container> <md-input-container
+			class="md-icon-float md-block"> <md-radio-group
+			ng-model="gender"> <md-radio-button value="male"
+			class="md-primary">Male</md-radio-button> <md-radio-button
+			value="female"> Female </md-radio-button> <md-radio-button
+			value="other">Other</md-radio-button> </md-radio-group> </md-input-container> <md-input-container
+			class="md-icon-float md-block"> <md-datepicker
+			ng-model="dob" md-placeholder="Enter Birth date" >
+		</md-datepicker>
+		</md-input-container> <md-input-container class="md-icon-float  md-block">
+		<label>State</label> <input ng-model="state" type="text"> </md-input-container> <md-input-container
+			class="md-icon-float  md-block"> <label>County</label>
+		<input ng-model="county" type="text"> </md-input-container> 
+		 <label>Qualifications:</label>
+		<div  ng-repeat="item in qualifications">
+			<md-checkbox ng-checked="exists(item, selectedQualifications)"
+				ng-click="toggle(item, selectedQualifications)"> {{ item }} 
+				 </md-checkbox>
+		</div>
+		<br>
+			 <label>Specialization:</label>
+		<div  ng-repeat="item in specializations">
+			<md-checkbox ng-checked="exists(item, selectedSpecializations)"
+				ng-click="toggle(item, selectedSpecializations)"> {{ item }}</md-checkbox>
+		</div>
+		<br>
+		<md-input-container class="md-icon-float md-block"">
+		<label>Password</label> <input ng-model="password" type="password"
+			ng-required="true"> </md-input-container> 
+		
+          </md-content>
+        </md-tab>
+    
+      </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="cancel()" >
+        Cancel
+      </md-button>
+      <md-button ng-disabled="myForm.$invalid" type="submit" class="md-raised md-primary" ng-click="signup()" style="margin-right:20px;" >
+        Submit
+      </md-button>
+    </md-dialog-actions>
+  </form>
+
+</md-dialog>
+</script>
+		
+		
+<script type="text/ng-template" id="loginDialog.tmpl.html">
+<md-dialog style="width:50%">
+  <form name="loginForm" style="font-size:80%;">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Login</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
+        <md-tab label="patient" >
+          <md-content class="md-padding">
+            <br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Patient Email</label>
+				
+				<input ng-model="email" type="email" ng-required="true">
+			</md-input-container>		
+	
+			<md-input-container class="md-icon-float md-block">
+				<label>Patient Password</label>
+				<input ng-model="password" type="password" ng-required="true">
+			</md-input-container>	
+			
+	
+		
+          </md-content>
+        </md-tab>
+        <md-tab label="doctor">
+                   <md-content class="md-padding">
+            <br>
+			<md-input-container class="md-icon-float md-block">
+				<label>Doctor Email</label>
+				
+				<input ng-model="email" type="email" ng-required="true">
+			</md-input-container>		
+	
+			<md-input-container class="md-icon-float md-block">
+				<label>Doctor Password</label>
+				<input ng-model="password" type="password" ng-required="true">
+			</md-input-container>	
+			
+	
+		
+          </md-content>
+        </md-tab>
+    
+      </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="cancel()" >
+        Cancel
+      </md-button>
+      <md-button ng-disabled="loginForm.$invalid" type="submit" class="md-raised md-primary" ng-click="login()" style="margin-right:20px;" >
+        Login <i ng-show="selectedIndex==1" class="fa fa-stethoscope"></i>
+      </md-button>
+    </md-dialog-actions>
+  </form>
+
+</md-dialog>
+</script>
+	<!-- Scripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery.scrolly.min.js"></script>
+	<script src="/assets/js/jquery.scrollzer.min.js"></script>
+	<script src="/assets/js/skel.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/assets/js/main.js"></script>
+</body>
+
+</html>

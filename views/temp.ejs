@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>Register</title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.js"></script>
+<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="/node_modules/angular-material/angular-material.min.js"></script>
+<link rel="stylesheet"; href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
+<script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
+<script>
+		angular.module('tempApp', ['ngMaterial',"ngTable"])
+		.controller('tempCtrl', function($http,$scope, $mdDialog, $mdMedia) {
+			$scope.types=["unsure","small cell","large cell"];
+			$scope.stages=["1","2","3","4","unsure"];
+		    $scope.treatments=["Chemotherapy","Radiotherapy","Surgery"];
+				$scope.getProfileInfo=function(){
+					 $http.get('/getProfileInfo').success(function (response) {
+		                    console.log($scope.user=response.result);              
+		                  
+		                })  
+				};
+				$scope.updateProfileInfo=function(){
+					$scope.user.type="user";
+					console.log($scope.user)
+					$http.post('/updateProfileInfo',$scope.user).success(function(response){
+						console.log("successfully updated");
+					})
+				}
+			      $scope.toggle = function (item, list) {
+				        var idx = list.indexOf(item);
+				        if (idx > -1) {
+				          list.splice(idx, 1);
+				        }
+				        else {
+				          list.push(item);
+				        }
+				      };
+
+				      $scope.exists = function (item, list) {
+				        return list.indexOf(item) > -1;
+				      };
+		});
+		</script>
+
+
+</head>
+<body ng-app="tempApp">
+	<div ng-controller="tempCtrl" class="md-padding" ng-init="getProfileInfo()">	
+	      <md-card>
+              <md-card-header>
+              <md-card-avatar>
+            <img class="md-user-avatar" src="images/avatar.jpg"/>
+          </md-card-avatar>
+          <md-card-header-text>
+       
+            <span class="md-subhead"></span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+         <table style="width:80%;margin:20px;"ng-table="vm.tableParams" class="table table-bordered" >
+    		<tr >
+        		<td >   <md-input-container class="md-block">
+          <label>Name</label>
+          <input ng-model="user.name">
+        </md-input-container>
+        		</td>
+        		<td >   <md-input-container class="md-block">
+          <label>Email</label>
+          <input disabled ng-model="user.email">
+        </md-input-container>
+        		</td>
+        		
+    		</tr>
+    		<tr >
+        		<td ><md-input-container class="md-block">
+          <label>State</label>
+          <input ng-model="user.state">
+        </md-input-container></td>
+        <td ><md-input-container class="md-block">
+          <label>County</label>
+          <input ng-model="user.county">
+        </md-input-container></td>
+        	
+    		</tr>
+    	
+    	
+    		<tr > <td ><md-input-container class="md-block">
+          <label>Gender</label>
+          <input ng-model="user.gender">
+        </md-input-container></td>
+        		  
+        		
+    		</tr>
+    		<tr>
+    			<td>
+    					<md-input-container class="md-icon-float md-block">
+				<label>Type of Lung Cancer</label>		
+				<md-select ng-model="user.cancer_type">		
+            		<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
+          		</md-select>
+          		
+			
+			</md-input-container>
+			</td>
+			<td>	<md-input-container class="md-icon-float md-block">
+				<label>Stage of Lung Cancer</label>		
+				<md-select ng-model="user.stage">		
+            		<md-option ng-value="user.stage"  ng-repeat="stage in stages" >{{stage}}</md-option>       		
+          		</md-select>
+			</md-input-container></td>
+			</tr>
+			
+			<tr><td>
+	 		<label>Current Treatments:</label>
+			<div  ng-repeat="item in treatments">
+			<md-checkbox ng-checked="exists(item, user.treatments)"
+				ng-click="toggle(item, user.treatments)"> {{ item }} 
+				 </md-checkbox>
+				</div>
+				</td>
+    		</tr>
+    	
+		</table>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary" ng-click="updateProfileInfo()">Update</md-button>
+        </md-card-actions>
+      </md-card>
+	</div>
+</body>
+</html>
+
+

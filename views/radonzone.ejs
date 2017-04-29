@@ -1,0 +1,229 @@
+
+<html>
+<head>
+<title><%= title %></title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="/assets/css/main.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.js"></script>
+<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="/node_modules/angular-material/angular-material.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js"
+	type="text/javascript"></script>
+<script>
+			angular.module('myApp',['ngMaterial','googlechart'])
+				.run(function(){
+					console.log("Ready angular");
+				}).controller('myController',function($scope,$http){	
+					$scope.generalMessage=false;				
+					$scope.getRadonInfo=function(){	
+						$scope.generalMessage=true;
+						if(typeof $scope.user!='undefined')
+						 {
+							$scope.zone1=0;
+							$scope.zone2=0;
+							$scope.zone3=0;
+							$http.get('/radonInfo').success(function (response) {
+		                    console.log(response.data);
+		                    for(var zone in response.data.stateZonesCount){
+		                    	console.log(response.data.stateZonesCount[zone]);
+		                    	if(response.data.stateZonesCount[zone]._id==1)
+		                    		$scope.zone1=response.data.stateZonesCount[zone].count;
+		                    	else if(response.data.stateZonesCount[zone]._id==2)
+		                    		$scope.zone2=response.data.stateZonesCount[zone].count;
+		                    	else if(response.data.stateZonesCount[zone]._id==3)
+		                    		$scope.zone3=response.data.stateZonesCount[zone].count;
+		                    }
+		                    var chart2={};
+							chart2.type = "PieChart";
+							chart2.data={"cols": [
+							                      {id: "t", label: "Radon Level", type: "string"},
+							                      {id: "s", label: "Radon Zone", type: "string"}
+							                  ], "rows": [
+							                      {c: [
+							                          {v: "High Risk"},
+							                          {v: $scope.zone1},
+							                      ]},
+							                    
+							                      {c: [
+							                          {v: "Medium Risk"},
+							                          {v: $scope.zone2}
+							                      ]},
+							                      {c: [
+							                          {v: "Low Risk"},
+							                          {v: $scope.zone3},
+							                      ]}
+							                     
+							                  ]};
+							chart2.options={'title':"Percentage of Radonzones in your state"}
+		                    $scope.chart=chart2;	                	                  
+		                })   
+						 }
+						else{
+							$http.get('/radoninfoGeneral').success(function (response) {
+			                    console.log(response.data);
+								var chart1={};
+								chart1.type = "GeoChart";
+								chart1.data=[  ['State', 'Radon Level'],
+								               ];							
+								chart1.options={
+						        		region:'US',
+						        		displayMode: 'regions',
+						        		resolution: 'provinces',
+						        	colorAxis: {colors: ['yellow', 'orange', 'red']}
+						        };
+			                    for(var i=0;i<response.data.length;i++)
+			                    {
+			                    	chart1.data.push([response.data[i].code,response.data[i].level]);		                    	
+			                    }        
+			                    console.log(chart1.data);
+			                    $scope.chart=chart1;			                  
+			                })   
+						}							        
+					}					
+				})
+		</script>
+
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+	<!-- Header -->
+	<div id="header">
+
+		<div class="top">
+
+			<!-- Logo -->
+			<div id="logo">
+				<span class="image avatar48"><img src="/images/avatar.jpg"
+					alt="" /></span>
+				<h1 id="title">Jane Doe</h1>
+				<p>Welcome to <%= title %></p>
+			</div>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<!--
+
+								Prologue's nav expects links in one of two formats:
+
+								1. Hash link (scrolls to a different section within the page)
+
+								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+
+								2. Standard link (sends the user to another page/site)
+
+								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
+
+							-->
+				<ul>
+					<li><a href="#top" id="top-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+					<li><a href="#recommendations" id="recommendations-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
+					<li><a href="#lifestyle" id="lifestyle-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-heart-o">Lifestyle</span></a></li>
+					<li><a href="#latestNews" id="news-link"
+						class="skel-layers-ignoreHref"><span
+							class="icon fa-newspaper-o">Latest News</span></a></li>
+					<li><a href="#doctors" id="doctors-link"
+						class="skel-layers-ignoreHref"><span
+							class="icon fa-stethoscope">Doctors</span></a></li>
+					<li><a href="#profile" id="profile-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-user">Profile</span></a></li>
+				</ul>
+			</nav>
+
+		</div>
+
+		<div class="bottom">
+
+			<!-- Social Icons -->
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span
+						class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+				<li><a href="#" class="icon fa-dribbble"><span
+						class="label">Dribbble</span></a></li>
+				<li><a href="#" class="icon fa-envelope"><span
+						class="label">Email</span></a></li>
+			</ul>
+
+		</div>
+
+	</div>
+
+	<!-- Main -->
+	<div id="main" class="main-profile">
+
+		<!-- Intro -->
+
+		<!--  Recommendations -->
+		<section id="recommendations" class="two">
+
+
+			<md-card> 
+			<md-card-header> 
+			
+			<md-card-header-text>
+			<h2 ng-show="generalMessage">Radon Levels in the United States</h2>
+			</md-card-header-text> 
+			</md-card-header> 
+			<md-card-content style="font-size:16px;width:80%;">
+			<div google-chart chart="chart"></div>
+
+
+			<div ng-show="generalMessage">
+			<h3>Did you know?</h3>
+			<strong>According to the U.S. Environmental Protection
+				Agency (EPA) a radon level at or above 4 picocuries per liter
+				(pCi/L) of air is dangerous</strong>
+				Radon decays quickly, giving off tiny
+			radioactive particles. When inhaled, these radioactive particles can
+			damage the cells that line the lung. Long-term exposure to radon can
+			lead to lung cancer, only cancer proved to be associated with
+			inhaling radon. There has been a suggestion of increased risk of
+			leukemia associated with radon exposure in adults and children;
+			however, the evidence is not conclusive.Cigarette smoking is the most
+			common cause of lung cancer. Radon represents a far smaller risk for
+			this disease, but it is the second leading cause of lung cancer in
+			the United States. Scientists estimate that 15,000 to 22,000 lung
+			cancer deaths in the United States each year are related to radon. 
+			</div>
+			<md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Show Radon gas information</md-button>
+
+			</md-card-content>  </md-card>
+		</section>
+	</div>
+
+	<!-- Footer -->
+	<div id="footer-profile">
+
+		<!-- Copyright -->
+		<ul class="copyright">
+			<li>&copy; CancerCare 2017. All rights reserved.</li>
+		</ul>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery.scrolly.min.js"></script>
+	<script src="/assets/js/jquery.scrollzer.min.js"></script>
+	<script src="/assets/js/skel.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/assets/js/main.js"></script>
+
+</body>
+</html>
