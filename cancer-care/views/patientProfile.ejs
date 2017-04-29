@@ -295,7 +295,7 @@ $scope.doctorInfo=[];
 		$scope.personalizedRadonInfo="";
 		$scope.getRadonInfo=function(){	
 			$scope.generalMessage=true;
-			if(typeof $scope.user.state!='undefined'&&typeof $scope.user.county!='undefined')
+			if($scope.user.state!=""&&$scope.user.county!="")
 			 {
 				$scope.zone1=0;
 				$scope.zone2=0;
