@@ -1,12 +1,23 @@
 var mongo = require("./mongo");
 var mongoURL = "mongodb://295ATreatments:295A@ds123381.mlab.com:23381/treatments";
 
-exports.getCamTreatments=function(req,res)
+exports.getRecommendations=function(req,res)
 {
+	console.log("user info" + req.user);
+	//pwb=req.user.PWB;
+	pwb=req.user.PWB;;
+	swb=req.user.SWB;
+	ewb=req.user.EWB;
+	fwb=req.user.FWB;
+	var collection= pwb<swb && pwb<ewb && pwb<fwb ? 'pwb' : (swb<ewb && swb<fwb ? 'swb' : (ewb<fwb ? 'ewb' : 'fwb'));
+//	var collection="swb";
 	mongo.connect(mongoURL,function(){
+		console.log("Factor "+collection);
+
 		console.log('Connected to mongo at: ' + mongoURL);
-		var coll = mongo.collection('TreatmentInfo');
-		coll.find().toArray(function(err,response){
+		var coll = mongo.collection(collection);
+
+		coll.findOne(function(err, response) {
 			if(err)
 			{
 				console.log("error in getting cam treatments");
@@ -14,7 +25,17 @@ exports.getCamTreatments=function(req,res)
 				console.log("in response"+response.length);
 				res.send({"result":response});
 			}
-		})
+		});
+		
+		//		.toArray(function(err,response){
+//			if(err)
+//			{
+//				console.log("error in getting cam treatments");
+//			}else{
+//				console.log("in response"+response.length);
+//				res.send({"result":response});
+//			}
+//		})
 	})
 
 

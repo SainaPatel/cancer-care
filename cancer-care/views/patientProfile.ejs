@@ -244,8 +244,31 @@ $scope.doctorInfo=[];
 			});
 		};
 
-		$scope.getCamTreatments = function() {
+		$scope.getRecommendations=function(){
 			$http({
+				method : 'GET',
+				url : '/getRecommendations',
+				data : {}
+			}).success(function(data) {
+				console.log("in success" + data.result.length);
+				var result=data.result;
+				$scope.treatments=result.treatments;
+				console.log("Treatments "+$scope.treatments);
+				$scope.foodDetails=result.food;
+				console.log("Treatments "+JSON.stringify($scope.foodDetails));
+
+				$scope.LifestyleDetails=result.lifestyle;
+				console.log("Treatments "+JSON.stringify($scope.LifestyleDetails));
+
+			});
+			$scope.showTreatments = false;
+			$scope.showFoodDetails = false;
+			$scope.showLifestyleDetails = false;
+
+		};
+		
+		/* $scope.getCamTreatments = function() {
+			 $http({
 				method : 'GET',
 				url : '/getCamTreatments',
 				data : {}
@@ -256,12 +279,12 @@ $scope.doctorInfo=[];
 				var result = data.result;
 				$scope.treatments = result;
 
-			});
+			}); 
 			$scope.showTreatments = false;
-		};
+		}; */
 
-		$scope.getFoodDetails = function() {
-			$http({
+		/* $scope.getFoodDetails = function() {
+			 $http({
 				method : 'GET',
 				url : '/getFoodDetails',
 				data : {}
@@ -272,11 +295,11 @@ $scope.doctorInfo=[];
 				var result = data.result;
 				$scope.foodDetails = result;
 
-			});
+			}); 
 			$scope.showFoodDetails = false;
-		};
+		}; */
 
-		$scope.getLifestyleDetails = function() {
+		/* $scope.getLifestyleDetails = function() {
 			$http({
 				method : 'GET',
 				url : '/getLifestyleDetails',
@@ -290,9 +313,10 @@ $scope.doctorInfo=[];
 
 			});
 			$scope.showLifestyleDetails = false;
-		};
-		$scope.generalMessage=false;	
+		};*/
+		
 		$scope.personalizedRadonInfo="";
+		$scope.generalMessage=false;				
 		$scope.getRadonInfo=function(){	
 			$scope.generalMessage=true;
 			if($scope.user.state!=""&&$scope.user.county!="")
@@ -582,8 +606,9 @@ $scope.doctorInfo=[];
 	}
 </script>
 </head>
-<body ng-app="myApp" ng-controller="PatientController as p"
-	ng-init="createMap(37.2213560,-121.8698660); getDoctors();  getProfileInfo(); getCamTreatments(); getFoodDetails(); getLifestyleDetails(); getArticles();">
+
+<body ng-app="myApp" ng-controller="PatientController" ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles()">
+
 	<!-- Header -->
 	<div id="header">
 
@@ -1078,7 +1103,7 @@ $scope.doctorInfo=[];
 			<div flex id="googleMap" style="width: 700px; height: 500px;"
 				align="right"></div>
 				
-				<div flex ng-model="clickedMarker" ng-show="showInfo">
+				<div flex ng-model="clickedMarker" ng-show="showInfo" class="treatment-heading">
 					Name : {{clickedMarker.name}} </br>
 					<div ng-repeat="doctor in clickedMarker.doctors">
 						Doctor Name: {{doctor.first_name}} {{doctor.last_name}}</br> Title :
