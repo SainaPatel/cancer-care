@@ -60,7 +60,7 @@ exports.getRadonInfoGeneral = function (req, res) {
 
 
 exports.getArticles = function (req, res) {
-	console.log("getLifestyleArticles called:" +req.user.PWBArray[0]);
+	console.log("getLifestyleArticles called:" +req.user.treatments);
 
 	var keywords = [];
 	if(req.user.PWBArray[0] < 3){ 
@@ -96,7 +96,19 @@ exports.getArticles = function (req, res) {
 		console.log("Keywords" +keywords);
 	}
 	
+	req.user.treatments.forEach(function(item){
+		var treatment = "/" +item+ "/";
+		keywords.push(treatment);
+		console.log("Keywords:" +keywords);
+	});
 
+	if(req.user.Type != undefined){
+		var type = "/" +req.user.Type+ "/";
+		keywords.push(type);
+		console.log("Keywords:" +keywords);
+	}
+
+	keywords.push("/General/");
 	//var keywords = ["/General/", "/Depression/"];
 	
 	var rx = [];
