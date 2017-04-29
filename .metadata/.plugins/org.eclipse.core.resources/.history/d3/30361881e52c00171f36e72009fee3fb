@@ -43,7 +43,7 @@ exports.getRecommendations=function(req,res)
 	fwb=req.user.FWB;
 	 collection= pwb<swb && pwb<ewb && pwb<fwb ? 'pwb' : (swb<ewb && swb<fwb ? 'swb' : (ewb<fwb ? 'ewb' : 'fwb'));
 	}else{
-		collection="general";
+		collection="pwb";
 	}
 	
 //	var collection="swb";

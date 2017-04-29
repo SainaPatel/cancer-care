@@ -5043,3 +5043,8 @@ Caused by: tern.TernException: TernError: No type found at the given position.
 	at tern.server.nodejs.NodejsTernServer.request(NodejsTernServer.java:127)
 	at tern.server.protocol.TernResultsProcessorsFactory.makeRequestAndProcess(TernResultsProcessorsFactory.java:42)
 	... 2 more
+
+!ENTRY org.eclipse.ui 4 0 2017-04-29 07:10:53.643
+!MESSAGE Unhandled event loop exception
+!STACK 0
+java.lang.NullPointerException
