@@ -127,7 +127,8 @@ app.get('/getProfileInfo',profile.getProfileInfo);
 app.post('/updateProfileInfo',profile.updateProfileInfo);
 
 //app.get('/getLifestyleDetails',cam.getLifestyleDetails);
-
-http.createServer(app).listen(process.env.PORT || 3000, function(){
-	console.log('Express server listening on port ' + app.get('port'));
+var port=process.env.PORT || 3000;
+http.createServer(app).listen(port, function(){
+	//console.log('Express server listening on port ' + app.get('port'));
+	console.log('Express server listening on port ' + port);
 });
