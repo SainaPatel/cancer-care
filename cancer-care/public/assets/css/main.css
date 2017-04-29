@@ -11,10 +11,19 @@
 */
 
 /* Reset */
+.heading{
+	color:#5B0E20;
+	font-weight: 600;
+}
+
+.carousel-image{
+	width: 100% !important;
+	height: 90% !important;
+}
 .navbar {
   overflow: hidden;
   background-color: rgba(96,13,41,0.75);
-  position: fixed;
+  position: fixed !important;
   top: 0;
   width: 100%;
   z-index: 3;
@@ -33,10 +42,11 @@
 
 .navbar a:hover{
 	font-weight: 600;
+	text-decoration: none;
 }
 
 .landing-container{
-	padding: 5% 0%;
+	padding: 5vh 12vw !important;
 }
 .landing-card {
   position: relative;
@@ -98,14 +108,14 @@
 .card-title{
 	 padding: 2% 2% 2% 2%;
 	 font-weight:600; 
-	 font-size:1em;
+	 font-size:3vh;
 	 height: 20%;
 	 background-color: #87113D;
 	 color: white;
 }
 .card-content{
 	padding: 1em 1em 1em 1em;
-	font-size:1em; 
+	font-size:5vh; 
 	text-align: center;
 	line-height:normal;
 	color: black;
@@ -1512,11 +1522,11 @@ body {
 /* Basic */
 body {
 	background: #fff;
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Source Sans Pro', sans-serif !important;
 	font-size: 19pt;
 	font-weight: 300;
 	line-height: 1.75em;
-	color: #888;
+	color: #888 !important;
 }
 
 body.is-loading * {
@@ -1585,7 +1595,8 @@ header>p {
 }
 
 footer {
-	margin: 2em 0 0 0;
+	margin: 0 0 0 0;
+	color: white !important;
 }
 
 strong, b {
@@ -2128,7 +2139,7 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 /* Footer */
 #footer {
 	text-align: center;
-	background-color: #dce3e2;
+	background-color: #77394E;
 	padding: 3em 0 4em 0;
 	box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0
 		rgba(0, 0, 0, 0.025);
@@ -2148,6 +2159,7 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 #footer .copyright {
 	cursor: default;
 	margin: 0;
+	color: white !important;
 }
 
 #footer .copyright li {
@@ -2228,23 +2240,23 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 }
 
 #main>section.two {
-	background-color: #f5fafa;
+	background-color: white;
 }
 
 #main>section.three {
-	background-color: #ecf1f1;
+	background-color: white;
 }
 
 #main>section.four {
-	background-color: #e8edec;
+	background-color:white;
 }
 
 #main>section.five {
-	background-color: #e8edec;
+	background-color: white;
 }
 
 #main>section.six {
-	background-color: #e8edec;
+	background-color: white;
 }
 
 /* Wide */
@@ -2321,11 +2333,6 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 		left: 100%;
 		margin-left: -1.25em;
 		line-height: 2.25em;
-	}
-
-	/* Footer */
-	#footer {
-		margin-left: 20%;
 	}
 
 	/* Main */
