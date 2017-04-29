@@ -59,9 +59,46 @@ exports.getRadonInfoGeneral = function (req, res) {
 
 
 
-exports.getLifestyleArticles = function (req, res) {
-	console.log("getLifestyleArticles called");
-	var keywords = ["/General/", "/Depression/"];
+exports.getArticles = function (req, res) {
+	console.log("getLifestyleArticles called:" +req.user.PWBArray[0]);
+
+	var keywords = [];
+	if(req.user.PWBArray[0] < 3){ 
+		keywords.push("/Tired/");
+		console.log("Keywords" +keywords); 
+	}
+	if(req.user.PWBArray[1] < 3){ 
+		keywords.push("/Nausea/"); 
+		console.log("Keywords" +keywords);
+	}
+	if(req.user.PWBArray[3] < 3){ 
+		keywords.push("/Pain/"); 
+		console.log("Keywords" +keywords);
+	}
+	if(req.user.LCSArray[0] < 3){ 
+		keywords.push("/Breathing/"); 
+		console.log("Keywords" +keywords);
+	}
+	if(req.user.LCSArray[1] < 3){ 
+		keywords.push("/appetite/"); 
+		console.log("Keywords" +keywords);
+	}
+	if(req.user.LCSArray[2] < 3){ 
+		keywords.push("/Cough/"); 
+		console.log("Keywords" +keywords);
+	}
+	if(req.user.LCSArray[3] < 3){ 
+		keywords.push("/Hair/"); 
+		console.log("Keywords" +keywords);
+	}
+	if(req.user.LCSArray[4] < 3){ 
+		keywords.push("/appetite/"); 
+		console.log("Keywords" +keywords);
+	}
+	
+
+	//var keywords = ["/General/", "/Depression/"];
+	
 	var rx = [];
 	keywords.forEach(function name(value) {
 		var v = value.replace(/\//ig, "");

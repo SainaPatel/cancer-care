@@ -87,7 +87,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
-app.get('/getLifestyleArticles', passport.authenticationMiddleware(),recommendation.getLifestyleArticles);
+app.get('/getArticles', passport.authenticationMiddleware(),recommendation.getArticles);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
 app.get('/successLogin',function(req,res){
 	res.status(200).send("success");
@@ -96,7 +96,7 @@ app.get('/faliureLogin',function(req,res){
 	res.status(401).send("Unauthorized");
 });
 app.get('/patientProfile',passport.authenticationMiddleware(),function(req,res){
-	res.render('patientProfile', { title: 'Circle of Hope' });
+	res.render('patientProfile', { title: 'Circle of Hope', user: req.user });
 });
 app.get('/doctorProfile',passport.authenticationMiddleware(),function(req,res){
 	res.render('doctorProfile', { title: 'Circle of Hope' });
