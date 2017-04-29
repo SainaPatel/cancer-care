@@ -128,6 +128,6 @@ app.post('/updateProfileInfo',profile.updateProfileInfo);
 
 //app.get('/getLifestyleDetails',cam.getLifestyleDetails);
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(process.env.PORT || 3000, function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
