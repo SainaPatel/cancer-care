@@ -1,0 +1,711 @@
+
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+<title><%= title %></title>
+<link rel='stylesheet' href='/stylesheets/style.css' />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="/assets/css/main.css" />
+<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<link rel="stylesheet"
+	href="/node_modules/angular-material/angular-material.min.css" />
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.js"></script>
+<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="/node_modules/angular-material/angular-material.min.js"></script>
+
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD06FRmOIpOsvUxrEXiwllrtQfLLVML2r4&libraries=places"></script>
+
+<script>
+	var app = angular.module('myApp', [ 'ngMaterial' ]).run(function() {
+		console.log("Ready angular");
+	})
+
+	app.controller("PatientController", function($scope, $http) {
+		$scope.showCancerInfo1 = false;
+		$scope.showCancerInfo2 = false;
+		$scope.showCancerInfo3 = false;
+		$scope.showCard = true;
+		//var marker;
+		var map;
+		var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+		$scope.createMap = function(Latitude, Longitude) {
+			//var markers=[[37.791198,-122.431769],[37.66554,-122.47586],[37.94366,-122.53337],[37.3558630,-121.8505680],[37.2583720,-121.9188660],[37.4975170,-122.2710600],[37.3785350,-122.0865850],[37.3189150,-121.9416230],[37.3558630,-121.8505680],[37.3132070,-121.9334580],[37.3280060,-121.9370740],[37.2520720,-121.9463300],[37.3630490,-121.8531090],[37.2533940,-121.9516570],[37.4357880,-122.1765360],[37.3132070,-121.9334580],[37.3157330,-121.9371280],[37.3325120,-121.9089420],[37.3526400,-122.0492810],[37.3132070,-121.9334580],[37.2637820,-121.8775830],[37.2637820,-121.8775830]];
+			var mapProp = {
+				// var position=getLocation();
+				center : new google.maps.LatLng(Latitude, Longitude),
+				zoom : 10,
+				mapTypeId : google.maps.MapTypeId.ROADMAP,
+			};
+			/* if(typeof position.title=="undefined")
+				{ */
+			map = new google.maps.Map(document.getElementById("googleMap"),
+					mapProp);
+			mark = new google.maps.Marker({
+				position : new google.maps.LatLng(Latitude, Longitude),
+				map : map,
+				title : 'You are here',
+				label : 'You are here'
+			})
+			/* var marker=new google.maps.Marker({
+				position : new google.maps.LatLng(37.66554,-122.47586),
+				map:map
+			}); */
+			//marker.setMap(map)
+			/*  markers.forEach(function(marker){
+					console.log("filtered" + marker[0]);
+				new google.maps.Marker({
+					position : new google.maps.LatLng(marker[0],marker[1]),
+					map: map
+				});
+				}) */
+		}
+
+		$scope.getDoctors = function() {
+			$http({
+				method : 'POST',
+				url : '/getDoctors',
+				data : {
+					"state" : "California",
+					"lat" : 37.3418790,
+					"lon" : -121.9242500
+				}
+			}).success(
+
+					function(data) {
+						//	window.alert("In Success");
+						//console.log("data" + data.result[0].lattitude);
+						$scope.showInfo = false;
+						console.log("in success" + data.result.length
+								+ " info boolean" + $scope.showInfo);
+						var result = data.result;
+
+						result.forEach(function(marker) {
+							console.log("filtered" + marker);
+							mark = new google.maps.Marker({
+								position : new google.maps.LatLng(
+										marker.visit_address.lat,
+										marker.visit_address.lon),
+								map : map
+							});
+
+							$scope.markerClick(mark, marker);
+							/* google.maps.event.addListener(mark, "click",
+									function(event) {
+										alert(this.position);
+										$scope.info=mark.visit_address.city;
+										console.log("info of place"+info);
+									}); */
+						})
+
+						//return $scope.result;
+					}).error(function(error) {
+				alert("error");
+			});
+		};
+
+		$scope.markerClick = function(marker, filtered) {
+			google.maps.event.addListener(marker, 'click', function() {
+				/* 				console.log("inside marker add event" + filtered.address);
+				 */
+				console.log("showInfo" + $scope.showInfo);
+					$scope.showInfo = false;
+				$scope.showInfo = true;
+				$scope.clickedMarker=filtered;
+
+				$scope.name = filtered.name;
+				$scope.doctorInfo = filtered.doctors;
+				console.log($scope.doctorInfo.length);
+				value = filtered.visit_address.city;
+				console.log("city info " + $scope.name + " infoboolean "
+						+ $scope.showInfo);
+				/* $scope.clickedSpace = filtered;
+				//console.log("title inside" + $scope.value);
+				document.getElementById("space").innerHTML = filtered.address;
+				document.getElementById("availableFrom").innerHTML = filtered.availableFrom;
+				document.getElementById("availableTo").innerHTML = filtered.availableTo;
+				
+				
+				console.log("clickedSpace1"+$scope.clickedSpace); */
+			});
+			//console.log("title outside" + $scope.value);
+
+		};
+
+		//get lifestyle articles
+		$scope.getLifestyleArticles = function() {
+			console.log("Lifestyle articles Called");
+			$http.get('/getLifestyleArticles').success(function(data) {
+				console.log("Back" + JSON.stringify(data));
+				$scope.suggestions = data;
+				$scope.articles = data;
+			});
+		};
+
+		$scope.getCamTreatments = function() {
+			$http({
+				method : 'GET',
+				url : '/getCamTreatments',
+				data : {}
+			}).success(function(data) {
+				//	window.alert("In Success");
+				//console.log("data" + data.result[0].lattitude);
+				console.log("in success" + data.result.length);
+				var result = data.result;
+				$scope.treatments = result;
+
+			});
+			$scope.showTreatments = false;
+		};
+
+		$scope.getFoodDetails = function() {
+			$http({
+				method : 'GET',
+				url : '/getFoodDetails',
+				data : {}
+			}).success(function(data) {
+				//	window.alert("In Success");
+				//console.log("data" + data.result[0].lattitude);
+				console.log("in success" + data.result.length);
+				var result = data.result;
+				$scope.foodDetails = result;
+
+			});
+			$scope.showFoodDetails = false;
+		};
+
+		$scope.getLifestyleDetails = function() {
+			$http({
+				method : 'GET',
+				url : '/getLifestyleDetails',
+				data : {}
+			}).success(function(data) {
+				//	window.alert("In Success");
+				//console.log("data" + data.result[0].lattitude);
+				console.log("in success" + data.result.length);
+				var result = data.result;
+				$scope.LifestyleDetails = result;
+
+			});
+			$scope.showLifestyleDetails = false;
+		};
+
+	});
+</script>
+</head>
+<body ng-app="myApp" ng-controller="PatientController"
+	ng-init="createMap(37.2213560,-121.8698660); getDoctors(); getCamTreatments(); getFoodDetails(); getLifestyleDetails(); getLifestyleArticles();">
+	<!-- Header -->
+	<div id="header">
+
+		<div class="top">
+
+			<!-- Logo -->
+			<div id="logo">
+				<span class="image avatar48"><img src="/images/avatar.jpg"
+					alt="" /></span>
+				<h1 id="title">Jane Doe</h1>
+				<p>Welcome to <%= title %></p>
+			</div>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<!--
+
+								Prologue's nav expects links in one of two formats:
+
+								1. Hash link (scrolls to a different section within the page)
+
+								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+
+								2. Standard link (sends the user to another page/site)
+
+								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
+
+							-->
+				<ul>
+					<li><a href="#top" id="top-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+					<li><a href="#cancerInfo" id="cancerinfo-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-th">Cancer
+								Information</span></a></li>
+					<li><a href="#cancerInfo" id="recommendations-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
+					<li><a href="#lifestyle" id="lifestyle-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-heart-o"
+							ng-click="getLifestyleArticles()">Lifestyle</span></a></li>
+					<li><a href="#latestNews" id="news-link"
+						class="skel-layers-ignoreHref"><span
+							class="icon fa-newspaper-o">Latest News</span></a></li>
+					<li><a href="#doctors" id="doctors-link"
+						class="skel-layers-ignoreHref"><span
+							class="icon fa-stethoscope">Doctors</span></a></li>
+					<li><a href="#contact_us" id="profile-link"
+						class="skel-layers-ignoreHref"><span class="icon fa-user">Contact
+								Us</span></a></li>
+				</ul>
+			</nav>
+
+		</div>
+
+		<div class="bottom">
+
+			<!-- Social Icons -->
+			<ul class="icons">
+				<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon fa-facebook"><span
+						class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+				<li><a href="#" class="icon fa-dribbble"><span
+						class="label">Dribbble</span></a></li>
+				<li><a href="#" class="icon fa-envelope"><span
+						class="label">Email</span></a></li>
+			</ul>
+
+		</div>
+
+	</div>
+
+	<!-- Main -->
+	<div id="main" class="main-profile">
+
+		<!-- Intro -->
+		<section id="top" class="patient dark cover">
+			<div class="container">
+
+				<header>
+					<h2 class="main_font">
+						You beat cancer by How You Live, Why You Live and in the manner in
+						which you live
+						</p>
+				</header>
+
+				<!-- <footer>
+								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
+							</footer> -->
+
+			</div>
+		</section>
+		<!--  CancerInfo -->
+		<section id="cancerInfo" class="two">
+			<div class="container">
+
+				<header>
+					<h2>About Cancer</h2>
+				</header>
+
+				<div ng-show="showCancerInfo1" style="text-align: justify">
+					<b class="infoTextHeader">What is Non Small Cell Lung Cancer?</b></br>
+					Non-small-cell lung cancer is a catchall term for all lung cancers
+					that are the not small-cell type. About 80% to 85% of lung cancers
+					are non-small cell lung cancer (NSCLC). </br> <b class="infoTextHeader">
+						SubTypes</b></br> 1. Adenocarcinoma : These cancers start in early versions
+					of the cells that would normally secrete substances such as mucus.
+					It is more common in women than in men, and it is more likely to
+					occur in younger people than other types of lung
+					cancer.Adenocarcinoma is usually found in outer parts of the lung.
+					Though it tends to grow slower than other types of lung cancer and
+					is more likely to be found before it has spread, this varies from
+					patient to patient. People with a type of adenocarcinoma called
+					adenocarcinoma in situ (previously called bronchioloalveolar
+					carcinoma) tend to have a better outlook than those with other
+					types of lung cancer. </br> 2. Squamous cell (epidermoid) carcinoma :
+					hese cancers start in early versions of squamous cells, which are
+					flat cells that line the inside of the airways in the lungs. They
+					are often linked to a history of smoking and tend to be found in
+					the central part of the lungs, near a main airway (bronchus) </br> 3.
+					Large cell (undifferentiated) carcinoma :It can appear in any part
+					of the lung. It tends to grow and spread quickly, which can make it
+					harder to treat. A subtype of large cell carcinoma, known as large
+					cell neuroendocrine carcinoma, is a fast-growing cancer that is
+					very similar to small cell lung cancer.</br> <b class="infoTextHeader">
+						Stages</b></br> Stage I: The cancer is located only in the lungs and has
+					not spread to any lymph nodes.</br> Stage II: The cancer is in the lung
+					and nearby lymph nodes.</br> Stage III: Cancer is found in the lung and
+					in the lymph nodes in the middle of the chest, also described as
+					locally advanced disease. Stage III has two subtypes:</br> If the cancer
+					has spread only to lymph nodes on the same side of the chest where
+					the cancer started, it is called stage IIIA.</br> If the cancer has
+					spread to the lymph nodes on the opposite side of the chest, or
+					above the collar bone, it is called stage IIIB.</br> Stage IV: This is
+					the most advanced stage of lung cancer, and is also described as
+					advanced disease. This is when the cancer has spread to both lungs,
+					to fluid in the area around the lungs, or to another part of the
+					body, such as the liver or other organs.</br> <b class="infoTextHeader">
+						Symptoms</b></br> 1. A cough that does not go away or gets worse </br> 2.
+					Coughing up blood or rust-colored sputum (spit or phlegm) </br> 3. Chest
+					pain that is often worse with deep breathing, coughing, or laughing
+					</br> 4. Hoarseness </br> 5. Weight loss and loss of appetite </br> 6. Shortness
+					of breath </br> 7. Feeling tired or weak </br> 8. Infections such as
+					bronchitis and pneumonia that don’t go away or keep coming back </br> 9.
+					New onset of wheezing </br> <b class="infoTextHeader"> Treatments</b></br>
+					Depending on the stage of the cancer and other factors, treatment
+					options for people with NSCLC can include:</br> 1. Surgery</br> 2.
+					Radiofrequency ablation (RFA)</br> 3. Radiation therapy</br> 4. Chemotherapy</br>
+					5. Targeted therapies</br> 6. Immunotherapy</br> <a class="infoTextHeader"
+						ng-click="showCancerInfo1=!showCancerInfo1; showCard=!showCard">
+						Go Back </a>
+				</div>
+
+
+				<div ng-show="showCancerInfo2" style="text-align: justify">
+					<b class="infoTextHeader">What is Small Cell Lung Cancer?</b></br> Small
+					cell lung cancer is a disease in which malignant (cancer) cells
+					form in the tissues of the lung. Small cell lung cancer accounts
+					for the remaining 15 percent of lung cancers in the United States.
+					They tend to grow more quickly than NSCLC tumors.</br> <b
+						class="infoTextHeader">Stages</b></br> Limited stage: In this stage,
+					cancer is found on one side of the chest, involving just one part
+					of the lung and nearby lymph nodes.</br> Extensive stage: In this stage,
+					cancer has spread to other regions of the chest or other parts of
+					the body.</br> <b class="infoTextHeader">Symptoms</b></br> 1. Fatigue </br> 2.
+					Cough </br> 3. Shortness of breath </br> 4. Chest pain, if a tumor spreads to
+					the lining of the lung or other parts of the body near the lungs </br>
+					5. Loss of appetite </br> 6. Unexplained weight loss </br> 7. Coughing up
+					phlegm or mucus </br> 8. Coughing up bood </br> <b class="infoTextHeader">Treatments</b></br>
+					1. Chemotherapy </br> 2. Radiation Therapy </br> 3. Surgery </br> <a
+						class="infoTextHeader"
+						ng-click="showCancerInfo2=!showCancerInfo2; showCard=!showCard">
+						Go Back </a>
+				</div>
+
+				<div ng-show="showCancerInfo3" style="text-align: justify">
+					<b class="infoTextHeader">What is Metastatic Lung Cancer?</b></br> When
+					cancer cells travel from primary site to other organs in the body,
+					it’s called metastasis. Metastatic lung cancer is a
+					life-threatening condition that develops when cancer in another
+					area of the body metastasizes, or spreads, to the lung. This is
+					different from having a cancer that first started in the lung (a
+					primary lung cancer). In that case, the cancer is made up of lung
+					cells that have become cancerous. </br> Primary tumors that commonly
+					spread to the lungs include:</br> 1. bladder cancer</br> 2. breast cancer</br> 3.
+					colon cancer</br> 4. kidney cancer </br> 5. neuroblastoma </br> 6. prostate cancer
+					</br> 7. sarcoma </br> 8. Wilms’ tumor </br> <b class="infoTextHeader">
+						Symptoms </b></br> Metastatic lung cancer doesn’t always cause symptoms.
+					When symptoms do develop, they can be difficult to identify. This
+					is because the symptoms may be similar to health conditions other
+					than cancer. </br>The symptoms of metastatic lung cancer can include:</br> 1.
+					a persistent cough coughing up blood or bloody phlegm </br> 2. chest
+					pain </br> 3.shortness of breath </br> 4. wheezing </br>5. weakness</br> 6. sudden
+					weight loss </br> <b class="infoTextHeader"> Treatments </b></br>The goal of
+					treatment is to control the growth of the cancer or to relieve any
+					symptoms. There are numerous different treatments available, and
+					your specific treatment plan will depend on various factors. The
+					most common treatments which doctors recommend are :</br> 1.
+					Chemotherapy </br> 2. Radiation Therapy </br> 3. Surgery </br> 4. Hormone Therapy
+					</br> 5. Biological Therapy </br> 6. Radiofrequency ablation (RFA)</br> <a
+						class="infoTextHeader"
+						ng-click="showCancerInfo3=!showCancerInfo3; showCard=!showCard">
+						Go Back </a>
+				</div>
+
+				<div class="section__content clearfix" ng-show="showCard">
+					<div class="card effect__click">
+						<div class="image fit card__front">
+							<img class="types_cancer" src="/images/5842696.jpg" alt="" /> <span
+								class="card__text">Non Small Cell Lung Cancer</span>
+						</div>
+						<div class="card__back">
+							<span class="card__text__back">What is NSCLC ? </br> Sub-Types
+								</br> Symptoms </br> Treatments
+							</span><br> <br> <a href="#" class="card__text__back__read"
+								ng-click="showCancerInfo1=!showCancerInfo1; showCard=!showCard">Read
+								&#8594;</a>
+						</div>
+					</div>
+				</div>
+				<div class="section__content clearfix" ng-show="showCard">
+					<div class="card effect__click">
+						<div class="image fit card__front">
+							<img class="types_cancer" src="/images/sclc.jpg" alt="" /> <span
+								class="card__text"> Small Cell Lung Cancer</span>
+						</div>
+						<div class="card__back">
+							<span class="card__text__back">What is SCLC? </br> Stages </br>
+								Symptoms </br> Treatments
+							</span><br> <br> <a href="#" class="card__text__back__read"
+								ng-click="showCancerInfo2=!showCancerInfo2; showCard=!showCard">Read
+								&#8594;</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="section__content clearfix" ng-show="showCard">
+					<div class="card effect__click">
+						<div class="image fit card__front">
+							<img class="types_cancer" src="/images/mestatic1.jpeg" alt="" />
+							<span class="card__text">Metastatic Lung Cancer</span>
+						</div>
+						<div class="card__back">
+							<span class="card__text__back">What is Metastatic Lung
+								Cancer?</br> Symptoms </br> Treatments
+							</span><br> <br> <a href="#" class="card__text__back__read"
+								ng-click="showCancerInfo3=!showCancerInfo3; showCard=!showCard">Read
+								&#8594;</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<section id="recommendations" class="three">
+			<div class="container">
+
+				<header>
+					<h2>Recommendations</h2>
+				</header>
+				Explore our various recommendations on alternative treatments,
+				lifestyle and food, to improve your qualilty of life. These
+				recommendations are personlized based on your profile. Give us as
+				much information as possible for better recommendations.
+
+			</div>
+		</section>
+
+		<section id="altTreatments" class="three"
+			ng-click="showTreatments=!showTreatments"
+			style="border: 2px solid black">
+			<div class="container">
+
+				<header class="recommendations-header">
+					<h3>Complementary and Alternative Medications</h3>
+				</header>
+
+
+				<div ng-repeat="treatment in treatments" ng-show="showTreatments">
+					<div class="treatment-heading">{{treatment.name}}</div>
+					<!-- 					<div class="article-description">{{treatment.description}}</div>
+ -->
+					<p class="treatment-text">
+						<img class="treatment-image" src="{{treatment.image}}" alt=""
+							align="right" /> {{treatment.description}}
+					</p>
+					<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
+				</div>
+			</div>
+			<!-- <div id="Treatment1">
+				
+				<img id="Treatment1Image"> 
+				</div>
+				
+				<div id="Treatment2">
+				
+				<img id="Treatment2Image"> 
+				</div>
+				
+				<div id="Treatment3">
+				
+				<img id="Treatment3Image"> 
+				</div> -->
+		</section>
+
+		<section id="altFood" class="three"
+			ng-click="showFoodDetails=!showFoodDetails"
+			style="border: 2px solid black">
+			<div class="container">
+
+				<header class="recommendations-header">
+					<h3>Food</h3>
+				</header>
+
+
+				<div ng-repeat="food in foodDetails" ng-show="showFoodDetails">
+					<div class="treatment-heading">{{food.name}}</div>
+					<!-- 					<div class="article-description">{{treatment.description}}</div>
+ -->
+					<p class="treatment-text">
+						<img class="treatment-image" src="{{food.image}}" alt=""
+							align="left" /> {{food.description}}
+					</p>
+					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+				</div>
+			</div>
+			<!-- <div id="Treatment1">
+				
+				<img id="Treatment1Image"> 
+				</div>
+				
+				<div id="Treatment2">
+				
+				<img id="Treatment2Image"> 
+				</div>
+				
+				<div id="Treatment3">
+				
+				<img id="Treatment3Image"> 
+				</div> -->
+		</section>
+
+		<section id="altLifestyle" class="three"
+			ng-click="showLifestyleDetails=!showLifestyleDetails"
+			style="border: 2px solid black">
+			<div class="container">
+
+				<header class="recommendations-header">
+					<h3>LifeStyle</h3>
+				</header>
+				<div ng-show="showLifestyleDetails">
+					Along with medications you lifestyle plays a very important role
+					towards your health. Incorporate the following recommendations in
+					your day to day activities to lead a healthier life.
+					<div ng-repeat="lifestyle in LifestyleDetails">
+						<div class="treatment-heading">{{lifestyle.name}}</div>
+						<!-- 					<div class="article-description">{{treatment.description}}</div>
+ -->
+						<p class="treatment-text">
+							<img class="treatment-image" src="{{lifestyle.image}}" alt=""
+								align="right" /> {{lifestyle.description}}
+						</p>
+						<a href="{{lifestyle.link1}}" class="treatment-link">{{lifestyle.link1}}</a>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="Treatment1">
+				
+				<img id="Treatment1Image"> 
+				</div>
+				
+				<div id="Treatment2">
+				
+				<img id="Treatment2Image"> 
+				</div>
+				
+				<div id="Treatment3">
+				
+				<img id="Treatment3Image"> 
+				</div> -->
+		</section>
+		<!-- Portfolio -->
+		<section id="lifestyle" class="three">
+			<div class="container">
+
+				<header>
+					<h2>Lifestyle</h2>
+				</header>
+				<div ng-repeat="article in articles.data">
+
+					<div class="article-heading">{{article.Summary}}</div>
+					<div class="article-link">
+						<a href={{article.Link}} target="_blank">{{article.Link}}</a>
+					</div>
+					<div class="article-description">{{article.description}}</div>
+
+				</div>
+
+			</div>
+		</section>
+
+		<!-- Latest News -->
+		<section id="latestNews" class="four">
+			<div class="container">
+
+				<header>
+					<h2>Latest News</h2>
+				</header>
+
+				<div class="news news_font">
+					OncoMed's lung cancer drug fails mid-stage study, shares tumble <a
+						href="http://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font
+						color="black" width="100%">&#8594;</font></a>
+				</div>
+				</br>
+				<div class="news news_font">
+					New Treatments for Lung Cancer <a
+						href="http://health.usnews.com/health-care/patient-advice/articles/2017-04-18/new-treatments-for-lung-cancer"><font
+						color="black" width="100%">&#8594;</font></a>
+				</div>
+				</br>
+				<div class="news news_font">
+					OncoMed stock drops 25% after lung cancer drug misses in mid-stage
+					clinical trial <a
+						href="http://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font
+						color="black" width="100%">&#8594;</font></a>
+				</div>
+
+			</div>
+		</section>
+
+
+		<!-- Doctors -->
+		<section id="doctors" class="five">
+			<div class="container">
+
+				<header>
+					<h2>Doctors</h2>
+				</header>
+				<div ng-model="clickedMarker">
+					Name : {{name}} </br>
+					<div ng-repeat="doctor in doctorInfo">
+						Doctor Name: {{doctor.first_name}} {{doctor.last_name}}</br> Title :
+						{{doctor.title}}
+					</div>
+				</div>
+			</div>
+
+			<div id="googleMap" style="width: 700px; height: 500px;"
+				align="right"></div>
+
+		</section>
+
+		<!-- Profile -->
+		<section id="contact_us" class="six">
+			<div class="container">
+
+				<header>
+					<h2>Contact Us</h2>
+				</header>
+
+				<form method="post" action="#">
+					<div class="row">
+						<div class="6u 12u$(mobile)">
+							<input type="text" name="name" placeholder="Name" />
+						</div>
+						<div class="6u$ 12u$(mobile)">
+							<input type="text" name="email" placeholder="Email" />
+						</div>
+						<div class="12u$">
+							<textarea name="message" placeholder="Message"></textarea>
+						</div>
+						<div class="12u$">
+							<input type="submit" value="Send Message" />
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Footer -->
+	<div id="footer-profile">
+
+		<!-- Copyright -->
+		<ul class="copyright">
+			<li>&copy; CancerCare 2017. All rights reserved.</li>
+		</ul>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery.scrolly.min.js"></script>
+	<script src="/assets/js/jquery.scrollzer.min.js"></script>
+	<script src="/assets/js/skel.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/assets/js/main.js"></script>
+
+</body>
+</html>
