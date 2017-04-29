@@ -88,9 +88,8 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
 app.get('/getLifestyleArticles', passport.authenticationMiddleware(),recommendation.getLifestyleArticles);
-app.get('/radoninfoGeneral',passport.authenticationMiddleware(),recommendation.getRadonInfoGeneral);
+app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
 app.get('/successLogin',function(req,res){
-
 	res.status(200).send("success");
 });
 app.get('/faliureLogin',function(req,res){

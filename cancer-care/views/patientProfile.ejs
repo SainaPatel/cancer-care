@@ -515,6 +515,7 @@
 						which you live
 						</p>
 				</header>
+				<md-button type="submit" ng-click="showFACTL($event)" class="md-raised md-accent">Answer quick questions to access your Quality of Life</md-button>
 
 				<!-- <footer>
 								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
@@ -773,14 +774,14 @@
               <md-card-header>
               <md-card-avatar>
             <img class="md-user-avatar" src="images/avatar.jpg"/>
+            
           </md-card-avatar>
           <md-card-header-text>
-       
-            <span class="md-subhead"></span>
+       Profile
           </md-card-header-text>
         </md-card-header>
-        <md-card-content>
-         <table style="width:80%;margin:20px;"ng-table="vm.tableParams" class="table table-bordered" >
+        <md-card-content style="font-size:16px;width:80%;">
+         <table ng-table="vm.tableParams" class="table table-bordered" >
     		<tr >
         		<td >   <md-input-container class="md-block">
           <label>Name</label>
@@ -835,11 +836,11 @@
 			
 			<tr><td>
 	 		<label>Current Treatments:</label>
-			<div  ng-repeat="item in profile.treatments">
+			<span  ng-repeat="item in profile.treatments">
 			<md-checkbox ng-checked="exists(item, user.treatments)"
 				ng-click="toggle(item, user.treatments)"> {{ item }} 
 				 </md-checkbox>
-				</div>
+				</span>
 				</td>
     		</tr>
     	
@@ -849,7 +850,7 @@
           <md-button class="md-raised md-primary" ng-click="updateProfileInfo()">Update</md-button>
         </md-card-actions>
       </md-card>
-		<md-button type="submit" ng-click="showFACTL($event)" class="md-raised md-primary">Answer questions to access Quality of Life</md-button>
+		
 		</section>
 	<!--  <section id="contact_us" class="six">
 			<div class="container">
@@ -894,12 +895,12 @@
 	<!-- Scripts -->
 		<script type="text/ng-template" id="FACTL.tmpl.html">
 		<md-dialog  style="width:50%">
-		<md-toolbar layout="row" layout-align="center center" md-colors="{color:'accent'}" >Questionare</md-toolbar>
+		
 			<md-content style="padding:20px;" ng-repeat="questionSet in questions" ng-show="currentType == $index">
-				<h2>{{questionSet.type}}</h2>
+				<h3 md-colors="{color:'primary'}">{{questionSet.type}}</h3>
 				<md-content ng-repeat="question in questionSet.questions" ng-show="currentStep == $index">
 				{{question}}
-				<md-input-container class="md-block" style="margin-left:50px;">
+				<md-input-container style="line-height:16px" class="md-block" style="margin-left:50px;">
 					<md-radio-group ng-model="answer" ng-change="saveclick(questionSet.questions.length,answer)" ng-required="true">
       					<md-radio-button value="0" class="md-primary">Not at all</md-radio-button>
       					<md-radio-button value="1">A little bit </md-radio-button>

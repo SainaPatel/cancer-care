@@ -11,7 +11,7 @@ exports.addFACTL=function(req,res){
 	var FACTG=req.body.PWB+req.body.FWB+req.body.SWB+req.body.EWB;
 	var FACTL=req.body.PWB+req.body.FWB+req.body.SWB+req.body.EWB+req.body.LCS;
 	mongo.connect(mongoURL,function() {
-	mongo.collection('user').update({"email":req.body.email},
+	mongo.collection('user').update({"email":req.user.email},
 			{$set:
 				{
 					"PWB":req.body.PWB,
