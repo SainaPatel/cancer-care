@@ -14,6 +14,7 @@
     "mongodb": "^2.0.43",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "2.4.2"
+    "serve-favicon": "2.4.2",
+    "angular-jk-carousel":"0.5.0"
   }
 }
