@@ -65,7 +65,37 @@
         src: '/images/circleOfHope.jpg'
       }
     ];
-	});
+	}).config(function($mdThemingProvider) {
+		$mdThemingProvider.definePalette('cancer-care-palette', {
+			   
+		    '100': '754B57',
+		    '200': 'BA99A2',
+		    '300': 'D1B8BF',
+		    '50': 'ffebee',
+		    '400': 'ef5350',
+		    '500': 'f44336',
+		    '600': 'e53935',
+		    '700': 'd32f2f',
+		    '800': 'c62828',
+		    '900': 'b71c1c',
+		    'A100': 'ff8a80',
+		    'A200': 'ff5252',
+		    'A400': 'ff1744',
+		    'A700': 'd50000',
+		    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+		                                        // on this palette should be dark or light
+
+		    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+		     '200', '300', '400', 'A100'],
+		    'contrastLightColors': undefined 
+		
+		  });
+
+
+			$mdThemingProvider.theme('default')
+		.primaryPalette('cancer-care-palette',{'default':'100'})
+	.accentPalette('cancer-care-palette',{'default':'200'});
+	})
 	
 	function LoginController($window,$scope,$mdDialog,$http,$mdToast){
 		$scope.selectedIndex=0;

@@ -113,15 +113,15 @@ app.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
 });
-app.post('/addFACTL',profile.addFACTL);
+app.post('/addFACTL',passport.authenticationMiddleware(),profile.addFACTL);
 app.post('/doctorRegister',registration.doctorRegister);
-app.post('/getDoctors',doctors.getDoctors);
-app.get('/getCamTreatments',cam.getCamTreatments);
-app.get('/getFoodDetails',cam.getFoodDetails);
-app.get('/getProfileInfo',profile.getProfileInfo);
-app.post('/updateProfileInfo',profile.updateProfileInfo);
+app.post('/getDoctors',passport.authenticationMiddleware(),doctors.getDoctors);
+app.get('/getCamTreatments',passport.authenticationMiddleware(),cam.getCamTreatments);
+app.get('/getFoodDetails',passport.authenticationMiddleware(),cam.getFoodDetails);
+app.get('/getProfileInfo',passport.authenticationMiddleware(),profile.getProfileInfo);
+app.post('/updateProfileInfo',passport.authenticationMiddleware(),profile.updateProfileInfo);
 
-app.get('/getLifestyleDetails',cam.getLifestyleDetails);
+app.get('/getLifestyleDetails',passport.authenticationMiddleware(),cam.getLifestyleDetails);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
