@@ -11,7 +11,7 @@ exports.addFACTL=function(req,res){
 	var FACTG=req.body.PWB+req.body.FWB+req.body.SWB+req.body.EWB;
 	var FACTL=req.body.PWB+req.body.FWB+req.body.SWB+req.body.EWB+req.body.LCS;
 	mongo.connect(mongoURL,function() {
-	mongo.collection('user').update({"email":req.body.email},
+	mongo.collection('user').update({"email":req.user.email},
 			{$set:
 				{
 					"PWB":req.body.PWB,
@@ -21,7 +21,8 @@ exports.addFACTL=function(req,res){
 					"LCS":req.body.LCS,
 					"FACTL_TOI":FACTL_TOI,
 					"FACTG":FACTG,
-					"FACTL":FACTL
+					"FACTL":FACTL,
+					"answers":req.body.answers
 				}
 			},
 			function(err, user) { 
@@ -41,3 +42,49 @@ exports.addFACTL=function(req,res){
 	
 	res.send("respond with a resource");
 };
+
+exports.getProfileInfo=function(req,res){
+	
+	if(typeof req.user!='undefined'){
+		console.log(req.user);
+		json_responses.status_code=200;
+		json_responses.result=req.user;
+		res.send(json_responses);
+	}else{
+		json_responses.status_code=500;
+		json_responses.data="no results";
+		res.send(json_responses);
+	}
+	
+};
+
+exports.updateProfileInfo=function(req,res){
+	
+	mongo.connect(mongoURL,function() {
+		mongo.collection(req.body.type).update({"email":req.body.email},
+				{$set:
+					{
+						"name":req.body.name,
+						"state":req.body.state,
+						"county": req.body.county,
+						"gender":req.body.gender,
+						"cancer_type":req.body.cancer_type,
+						"treatments":req.body.treatments,
+						"stage":req.body.stage
+					}
+				},
+				function(err, user) { 
+			if (user) {
+				json_responses.status_code=200;
+				console.log('success');
+				res.send( json_responses);
+
+			} else {
+				json_responses.status_code=500;
+				console.log(err);
+				res.send(json_responses);
+			}
+	  	});
+
+		});
+}

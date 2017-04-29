@@ -88,9 +88,8 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
 app.get('/getLifestyleArticles', passport.authenticationMiddleware(),recommendation.getLifestyleArticles);
-app.get('/radoninfoGeneral',passport.authenticationMiddleware(),recommendation.getRadonInfoGeneral);
+app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
 app.get('/successLogin',function(req,res){
-
 	res.status(200).send("success");
 });
 app.get('/faliureLogin',function(req,res){
@@ -119,7 +118,11 @@ app.post('/doctorRegister',registration.doctorRegister);
 app.post('/getDoctors',doctors.getDoctors);
 app.get('/getCamTreatments',cam.getCamTreatments);
 app.get('/getFoodDetails',cam.getFoodDetails);
+app.get('/getProfileInfo',profile.getProfileInfo);
+app.post('/updateProfileInfo',profile.updateProfileInfo);
+
 app.get('/getLifestyleDetails',cam.getLifestyleDetails);
+
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });

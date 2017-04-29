@@ -3,20 +3,33 @@ var lifestylemongoURL = "mongodb://cmpe295lifestyle:cmpe295@ds111771.mlab.com:11
 var mongoURL = "mongodb://cmpe295:cmpe295@ds161630.mlab.com:61630/radon";
 var json_responses = {};
 
+
 exports.getRadonInfo = function (req, res) {
-	var county = "Alameda";
-	var state = "California";
+	var county = req.user.county;
+	var state = req.user.state;
 	mongo.connect(mongoURL, function () {
 		var coll = mongo.collection('regions');
-		coll.find({
-			"state": state,
-			"county": county
-		}).toArray(function (err, regions) {
+		coll.findOne({
+			"state": "California",
+			"county": "Alameda"
+		},{fields:{radon:1}},function (err, regions) {
 			if (regions) {
-				json_responses.status_code = 200;
-				json_responses.data = regions;
-				console.log(regions);
-				res.send(json_responses);
+				coll.aggregate( [{ $match: { "state": "California" } },{$group:{_id:"$radon",count :  { $sum : 1 }}}]).toArray(function (err1, result) {
+					if (result) {
+						console.log(result);
+						json_responses.status_code = 200;
+						regions.stateZonesCount=result;
+						json_responses.data = regions;			
+						console.log(regions);
+						res.send(json_responses);	
+						
+					} else {
+						json_responses.status_code = 400;
+						console.log(err1);
+						res.send(json_responses);
+					}
+				});
+			
 			} else {
 				json_responses.status_code = 500;
 				console.log(err);
@@ -43,6 +56,8 @@ exports.getRadonInfoGeneral = function (req, res) {
 		});
 	});
 };
+
+
 
 exports.getLifestyleArticles = function (req, res) {
 	console.log("getLifestyleArticles called");
