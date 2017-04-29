@@ -61,7 +61,7 @@ exports.getRadonInfoGeneral = function (req, res) {
 
 exports.getLifestyleArticles = function (req, res) {
 	console.log("getLifestyleArticles called");
-	var keywords = ["/Health/", "/Depression/"];
+	var keywords = ["/General/", "/Depression/"];
 	var rx = [];
 	keywords.forEach(function name(value) {
 		var v = value.replace(/\//ig, "");

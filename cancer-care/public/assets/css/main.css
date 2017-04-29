@@ -128,6 +128,11 @@
     font-size: large;
 }
 
+.article-description{
+	text-align: left;
+	font-size: medium;
+}
+
 .treatment-heading {
 	text-align: left;
 	color: #754B57;
