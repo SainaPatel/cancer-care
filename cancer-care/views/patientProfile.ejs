@@ -236,7 +236,8 @@
 			});
 			$scope.showLifestyleDetails = false;
 		};
-		$scope.generalMessage=false;				
+		$scope.generalMessage=false;	
+		$scope.personalizedRadonInfo="";
 		$scope.getRadonInfo=function(){	
 			$scope.generalMessage=true;
 			if(typeof $scope.user!='undefined')
@@ -277,7 +278,8 @@
 				                     
 				                  ]};
 				chart2.options={'title':"Percentage of Radonzones in your state"}
-	            $scope.chart=chart2;	                	                  
+	            $scope.chart=chart2;
+				$scope.personalizedRadonInfo="Your county "+$scope.user.county+" has radon level "+response.data.radon;
 	        })   
 			 }
 			else{
@@ -326,13 +328,13 @@
 					{
 						"type":"Physical Well Being",
 						"questions":[
-     								"Do you have a lack of energy?",
-									"Do you have nausea?",
-									"Because of my physical condition,do you have trouble meeting the needs of my family?",
-									"Do you have pain?",
-									"Are you bothered by side effects of treatment",
-									"Do you feel ill",
-									"Are you forced to spend time in bed",
+     								"I have a lack of energy?",
+									"I have nausea?",
+									"Because of my physical condition,I have trouble meeting the needs of your family?",
+									"I have pain?",
+									"I am bothered by side effects of treatment",
+									"I feel ill",
+									"I am forced to spend time in bed",
 									]
 					},
 					{
@@ -401,25 +403,25 @@
 			var EWB=$scope.answers.slice(14,20);
 			var FWB=$scope.answers.slice(20,27)
 			var LCS=$scope.answers.slice(27);
-			PWB=calculatePWB(PWB);
-			SWB=calculateSWB(SWB);
-			EWB=calculateSWB(EWB);
-			FWB=calculateFWB(FWB);
-			LCS=calculateLCS(LCS);
-			console.log(SWB+"\n");
-			console.log(EWB+"\n");
-			console.log(FWB+"\n");
-			console.log(LCS+"\n");
+			 PWB=calculatePWB(PWB), 
+			   SWB=calculateSWB(SWB), 
+			   EWB=calculateEWB(EWB), 
+			   FWB=calculateFWB(FWB), 
+			   LCS=calculateLCS(LCS),
 			console.log($scope.answers+"\n");
 			$http.post('/addFACTL', { 
 		
 				   email: "donita.almeida@gmail.com" , 
 				   PWB:PWB, 
 				   SWB:SWB, 
-				   EWB: EWB, 
+				   EWB:EWB, 
 				   FWB:FWB, 
 				   LCS:LCS,
-				   answers:$scope.answers
+				   PWBArray:$scope.PWBArray,
+					SWBArray:$scope.SWBArray,
+					EWBArray:$scope.EWBArray,
+					FWBArray:$scope.FWBArray,
+					LCSArray:$scope.LCSArray,
 				   }
 			   ).success(function (response) {
                     console.log(response);
@@ -427,12 +429,16 @@
                });
 		}
 		function calculatePWB(PWB){
+		
+			$scope.PWBArray=[];
 			var count=PWB.length;
 			var result=0;
 			for(var value in PWB){
 				if(value==-1){
 					count--;
+					$scope.PWBArray.push(-1);
 				}else{
+					$scope.PWBArray.push(4-value);
 					result+=4-value;
 				}
 			}
@@ -440,12 +446,15 @@
 			return result;
 		}
 		function calculateSWB(SWB){
+			$scope.SWBArray=[];
 			var count=SWB.length;
 			var result=0;
 			for(var value in SWB){
 				if(value==-1){
+					$scope.SWBArray.push(-1);
 					count--;
 				}else{
+					$scope.SWBArray.push(parseInt(value));
 					result+=parseInt(value);
 				}
 			}
@@ -453,15 +462,19 @@
 			return result;
 		}
 		function calculateEWB(EWB){
+			$scope.EWBArray=[];
 			var count=EWB.length;
 			var result=0;
 			for(var i=0;i<EWB.length;i++){
 				if(EWB[i]==-1){
+					$scope.EWBArray.push(-1);
 					count--;
 				}else{
 					if(i==1){
+						$scope.EWBArray.push(EWB[i]);
 						result+=EWB[i];
 					}else{								
+						$scope.EWBArray.push(4-EWB[i]);
 						result+=4-EWB[i];								
 					}
 				}							
@@ -470,12 +483,15 @@
 			return result;
 		}
 		function calculateFWB(FWB){
+			$scope.FWBArray=[];
 			var count=FWB.length;
 			var result=0;
 			for(var value in FWB){
 				if(value==-1){
+					$scope.FWBArray.push(-1);
 					count--;
 				}else{
+					$scope.FWBArray.push(parseInt(value));
 					result+=parseInt(value);
 				}
 			}
@@ -484,15 +500,20 @@
 			
 		}
 		function calculateLCS(LCS){
+			$scope.LCSArray=[];
 			var count=LCS.length;
 			var result=0;
 			for(var i=0;i<LCS.length;i++){
 				if(LCS[i]==-1){
+					$scope.LCSArray.push(-1);
 					count--;
+					
 				}else{
 					if(i==2||i==4||i==6){
+						$scope.LCSArray.push(LCS[i])
 						result+=LCS[i];
 					}else{								
+						$scope.LCSArray.push(4-LCS[i]);
 						result+=4-LCS[i];								
 					}
 				}							
@@ -764,7 +785,7 @@
 			</div>
 		</section>
 
-		<section id="altTreatments" class="three"
+		<section style="border-style:none;margin:15px;" id="altTreatments" class="three"
 			ng-click="showTreatments=!showTreatments"
 			style="border: 2px solid black">
 			<div class="container">
@@ -800,8 +821,8 @@
 				<img id="Treatment3Image"> 
 				</div> -->
 		</section>
-
-		<section id="altFood" class="three"
+		
+		<section style="border-style:none;margin:15px;"  id="altFood" class="three"
 			ng-click="showFoodDetails=!showFoodDetails"
 			style="border: 2px solid black">
 			<div class="container">
@@ -837,8 +858,8 @@
 				<img id="Treatment3Image"> 
 				</div> -->
 		</section>
-
-		<section id="altLifestyle" class="three"
+	
+		<section style="border-style:none;margin:15px;" id="altLifestyle" class="three"
 			ng-click="showLifestyleDetails=!showLifestyleDetails"
 			style="border: 2px solid black">
 			<div class="container">
@@ -877,7 +898,8 @@
 				<img id="Treatment3Image"> 
 				</div> -->
 		</section>
-				<section id="radonInfo" class="three"
+		
+				<section style="border-style:none;margin:15px;" id="radonInfo" class="three"
 			
 			style="border: 2px solid black">
 		
@@ -898,6 +920,7 @@
 
 			<div ng-show="generalMessage">
 			<h3>Did you know?</h3>
+			{{personalizedRadonInfo}}
 			<strong>According to the U.S. Environmental Protection
 				Agency (EPA) a radon level at or above 4 picocuries per liter
 				(pCi/L) of air is dangerous</strong>

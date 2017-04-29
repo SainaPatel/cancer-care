@@ -22,7 +22,11 @@ exports.addFACTL=function(req,res){
 					"FACTL_TOI":FACTL_TOI,
 					"FACTG":FACTG,
 					"FACTL":FACTL,
-					"answers":req.body.answers
+					"PWBArray":req.body.PWBArray,
+					"SWBArray":req.body.SWBArray,
+					"EWBArray":req.body.EWBArray,
+					"FWBArray":req.body.FWBArray,
+					"LCSArray":req.body.LCSArray
 				}
 			},
 			function(err, user) { 
