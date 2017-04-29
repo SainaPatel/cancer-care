@@ -63,7 +63,9 @@ exports.getArticles = function (req, res) {
 	console.log("getLifestyleArticles called:" +req.user.treatments);
 
 	var keywords = [];
-	if(req.user.PWBArray[0] < 3){ 
+	if(typeof req.user.PWBArray !== 'undefined')
+	{
+		if(req.user.PWBArray[0] < 3){ 
 		keywords.push("/Tired/");
 		console.log("Keywords" +keywords); 
 	}
@@ -79,6 +81,9 @@ exports.getArticles = function (req, res) {
 		keywords.push("/Breathing/"); 
 		console.log("Keywords" +keywords);
 	}
+	}
+	if(typeof req.user.LCSArray !== 'undefined')
+	{
 	if(req.user.LCSArray[1] < 3){ 
 		keywords.push("/appetite/"); 
 		console.log("Keywords" +keywords);
@@ -95,14 +100,14 @@ exports.getArticles = function (req, res) {
 		keywords.push("/appetite/"); 
 		console.log("Keywords" +keywords);
 	}
-	
+	}
 	req.user.treatments.forEach(function(item){
 		var treatment = "/" +item+ "/";
 		keywords.push(treatment);
 		console.log("Keywords:" +keywords);
 	});
 
-	if(req.user.Type != undefined){
+	if(typeof req.user.Type !== 'undefined'){
 		var type = "/" +req.user.Type+ "/";
 		keywords.push(type);
 		console.log("Keywords:" +keywords);
