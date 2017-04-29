@@ -86,9 +86,9 @@ if ('development' == app.get('env')) {
 }
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/radoninfo',recommendation.getRadonInfo);
+app.get('/radoninfo',passport.authenticationMiddleware(),recommendation.getRadonInfo);
 app.get('/getLifestyleArticles', passport.authenticationMiddleware(),recommendation.getLifestyleArticles);
-app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
+app.get('/radoninfoGeneral',passport.authenticationMiddleware(),recommendation.getRadonInfoGeneral);
 app.get('/successLogin',function(req,res){
 	res.status(200).send("success");
 });
@@ -96,7 +96,7 @@ app.get('/faliureLogin',function(req,res){
 	res.status(401).send("Unauthorized");
 });
 app.get('/patientProfile',passport.authenticationMiddleware(),function(req,res){
-	res.render('patientProfile', { title: 'Circle of Hope' });
+	res.render('patientProfile', { title: 'Circle of Hope',user:req.user });
 });
 app.get('/doctorProfile',passport.authenticationMiddleware(),function(req,res){
 	res.render('doctorProfile', { title: 'Circle of Hope' });
@@ -113,15 +113,15 @@ app.get('/logout', function(req, res){
 	req.logout();
 	res.redirect('/');
 });
-app.post('/addFACTL',profile.addFACTL);
+app.post('/addFACTL',passport.authenticationMiddleware(),profile.addFACTL);
 app.post('/doctorRegister',registration.doctorRegister);
-app.post('/getDoctors',doctors.getDoctors);
-app.get('/getCamTreatments',cam.getCamTreatments);
-app.get('/getFoodDetails',cam.getFoodDetails);
-app.get('/getProfileInfo',profile.getProfileInfo);
-app.post('/updateProfileInfo',profile.updateProfileInfo);
+app.post('/getDoctors',passport.authenticationMiddleware(),doctors.getDoctors);
+app.get('/getCamTreatments',passport.authenticationMiddleware(),cam.getCamTreatments);
+app.get('/getFoodDetails',passport.authenticationMiddleware(),cam.getFoodDetails);
+app.get('/getProfileInfo',passport.authenticationMiddleware(),profile.getProfileInfo);
+app.post('/updateProfileInfo',passport.authenticationMiddleware(),profile.updateProfileInfo);
 
-app.get('/getLifestyleDetails',cam.getLifestyleDetails);
+app.get('/getLifestyleDetails',passport.authenticationMiddleware(),cam.getLifestyleDetails);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

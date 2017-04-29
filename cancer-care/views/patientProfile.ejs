@@ -293,7 +293,7 @@ $scope.doctorInfo=[];
 		$scope.personalizedRadonInfo="";
 		$scope.getRadonInfo=function(){	
 			$scope.generalMessage=true;
-			if(typeof $scope.user!='undefined')
+			if(typeof $scope.user.state!='undefined'&&typeof $scope.user.county!='undefined')
 			 {
 				$scope.zone1=0;
 				$scope.zone2=0;
@@ -594,7 +594,7 @@ $scope.doctorInfo=[];
 			<div id="logo">
 				<span class="image avatar48"><img src="/images/avatar.jpg"
 					alt="" /></span>
-				<h1 id="title">Jane Doe</h1>
+				<h1 id="title">{{user.name}}</h1>
 				<p>Welcome to <%= title %></p>
 			</div>
 
@@ -1070,25 +1070,27 @@ $scope.doctorInfo=[];
 
 		<!-- Doctors -->
 		<section id="doctors" class="five">
-			<div class="container">
-
-				<header>
+		<header>
 					<h2>Doctors</h2>
 				</header>
-				<div ng-model="clickedMarker" ng-show="showInfo">
+			<div class="container" layout="row" layout-sm="column">
+
+				
+			<div flex id="googleMap" style="width: 700px; height: 500px;"
+				align="right"></div>
+				
+				<div flex ng-model="clickedMarker" ng-show="showInfo">
 					Name : {{clickedMarker.name}} </br>
 					<div ng-repeat="doctor in clickedMarker.doctors">
 						Doctor Name: {{doctor.first_name}} {{doctor.last_name}}</br> Title :
 						{{doctor.title}}
 					</div>
 				</div>
-			</div>
+			
 
-			<div id="googleMap" style="width: 700px; height: 500px;"
-				align="right"></div>
-
+</div>
 		</section>
-
+<br>
 		<!-- Profile -->
 		<section id="profile" class="six">
 			
