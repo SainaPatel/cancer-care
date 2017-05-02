@@ -67,7 +67,7 @@
 
 	app.controller("PatientController", function($window,$scope, $http, $mdDialog, $mdMedia) {
 		$scope.profile={};
-		$scope.profile.types=["unsure","small cell","large cell"];
+		$scope.profile.types=["unsure","small cell","non-small cell"];
 		$scope.profile.stages=["1","2","3","4","unsure"];
 	    $scope.profile.treatments=["Chemotherapy","Radiotherapy","Surgery"];
 			$scope.getProfileInfo=function(){
@@ -607,7 +607,7 @@ $scope.doctorInfo=[];
 </script>
 </head>
 
-<body ng-app="myApp" ng-controller="PatientController" ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles()">
+<body ng-app="myApp" ng-controller="PatientController" ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles();">
 
 	<!-- Header -->
 	<div id="header">
@@ -620,25 +620,14 @@ $scope.doctorInfo=[];
 					alt="" /></span>
 				<h1 id="title">{{user.name}}</h1>
 				<p>Welcome to <%= title %></p>
+				 <p><a id="logout-link" ng-href="#" ng-click="logout();">Logout</a></p>
 			</div>
 
 			<!-- Nav -->
 			<nav id="nav">
-				<!--
-
-								Prologue's nav expects links in one of two formats:
-
-								1. Hash link (scrolls to a different section within the page)
-
-								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
-
-								2. Standard link (sends the user to another page/site)
-
-								   <li><a href="https://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
-
-							-->
+		
 				<ul>
-					<li><a id="logout-link" ng-href="#" ng-click="logout();">Logout</a></li>
+					
 					<li><a href="#top" id="top-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
 					<li><a href="#cancerInfo" id="cancerinfo-link"
@@ -863,7 +852,7 @@ $scope.doctorInfo=[];
 
 			</div>
 		</section>
-
+<!-- 
 		<section id="recommendations" class="three">
 			<div class="container">
 
@@ -877,7 +866,7 @@ $scope.doctorInfo=[];
 
 			</div>
 		</section>
-
+ 
 
 		<section style="border-style:none;margin:15px;" id="altTreatments" class="three"
 			style="border: 2px solid black">
@@ -891,8 +880,7 @@ $scope.doctorInfo=[];
 
 				<div ng-repeat="treatment in treatments" ng-show="showTreatments">
 					<div class="treatment-heading">{{treatment.name}}</div>
-					<!-- 					<div class="article-description">{{treatment.description}}</div>
- -->
+
 					<p class="treatment-text">
 						<img class="treatment-image" src="{{treatment.image}}" alt=""
 							align="right" /> {{treatment.description}}
@@ -900,20 +888,7 @@ $scope.doctorInfo=[];
 					<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
 				</div>
 			</div>
-			<!-- <div id="Treatment1">
-				
-				<img id="Treatment1Image"> 
-				</div>
-				
-				<div id="Treatment2">
-				
-				<img id="Treatment2Image"> 
-				</div>
-				
-				<div id="Treatment3">
-				
-				<img id="Treatment3Image"> 
-				</div> -->
+	
 		</section>
 
 		
@@ -928,8 +903,7 @@ $scope.doctorInfo=[];
 
 				<div ng-repeat="food in foodDetails" ng-show="showFoodDetails">
 					<div class="treatment-heading">{{food.name}}</div>
-					<!-- 					<div class="article-description">{{treatment.description}}</div>
- -->
+		
 					<p class="treatment-text">
 						<img class="treatment-image" src="{{food.image}}" alt=""
 							align="left" /> {{food.description}}
@@ -937,20 +911,7 @@ $scope.doctorInfo=[];
 					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
 				</div>
 			</div>
-			<!-- <div id="Treatment1">
-				
-				<img id="Treatment1Image"> 
-				</div>
-				
-				<div id="Treatment2">
-				
-				<img id="Treatment2Image"> 
-				</div>
-				
-				<div id="Treatment3">
-				
-				<img id="Treatment3Image"> 
-				</div> -->
+
 		</section>
 
 
@@ -967,8 +928,7 @@ $scope.doctorInfo=[];
 					your day to day activities to lead a healthier life.
 					<div ng-repeat="lifestyle in LifestyleDetails">
 						<div class="treatment-heading">{{lifestyle.name}}</div>
-						<!-- 					<div class="article-description">{{treatment.description}}</div>
- -->
+
 						<p class="treatment-text">
 							<img class="treatment-image" src="{{lifestyle.image}}" alt=""
 								align="right" /> {{lifestyle.description}}
@@ -977,20 +937,7 @@ $scope.doctorInfo=[];
 					</div>
 				</div>
 			</div>
-			<!-- <div id="Treatment1">
-				
-				<img id="Treatment1Image"> 
-				</div>
-				
-				<div id="Treatment2">
-				
-				<img id="Treatment2Image"> 
-				</div>
-				
-				<div id="Treatment3">
-				
-				<img id="Treatment3Image"> 
-				</div> -->
+	
 		</section>
 		
 				<section style="border-style:none;margin:15px;" id="radonInfo" class="three"
@@ -1035,8 +982,61 @@ $scope.doctorInfo=[];
 			</md-card-content>  </md-card>
 			</div>
 		
-		</section>
-		<!-- Portfolio -->
+		</section>-->
+		
+		<section id="recommendations" ng-cloak style="margin:5%;">
+		<md-header><h2>Recommendations</h2></md-header>
+		
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Treatments">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Treatments</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+        </md-content>
+      </md-tab>
+      <md-tab label="Food">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Food</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
+          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
+          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+        </md-content>
+      </md-tab>
+      <md-tab label="Lifestyle">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Lifestyle</h1>
+          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+        </md-content>
+      </md-tab>
+        <md-tab label="Radon">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Radon risk in your area</h1>
+          <md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Get Info</md-button>
+          			<div ng-show="generalMessage">
+          			<div google-chart chart="chart"></div>
+			<h3>Did you know?</h3>
+			{{personalizedRadonInfo}}
+			<strong>According to the U.S. Environmental Protection
+				Agency (EPA) a radon level at or above 4 picocuries per liter
+				(pCi/L) of air is dangerous</strong>
+				Radon decays quickly, giving off tiny
+			radioactive particles. When inhaled, these radioactive particles can
+			damage the cells that line the lung. Long-term exposure to radon can
+			lead to lung cancer, only cancer proved to be associated with
+			inhaling radon. There has been a suggestion of increased risk of
+			leukemia associated with radon exposure in adults and children;
+			however, the evidence is not conclusive.Cigarette smoking is the most
+			common cause of lung cancer. Radon represents a far smaller risk for
+			this disease, but it is the second leading cause of lung cancer in
+			the United States. Scientists estimate that 15,000 to 22,000 lung
+			cancer deaths in the United States each year are related to radon. 
+			</div>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</section>
 		<section id="lifestyle" class="three">
 			<div class="container">
 
