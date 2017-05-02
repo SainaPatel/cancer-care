@@ -326,6 +326,7 @@ $scope.doctorInfo=[];
 				$scope.zone3=0;
 				$http.get('/radonInfo').success(function (response) {
 	            console.log(response.data);
+	            $scope.stateContacts=response.data.contacts;
 	            for(var zone in response.data.stateZonesCount){
 	            	console.log(response.data.stateZonesCount[zone]);
 	            	if(response.data.stateZonesCount[zone]._id==1)
@@ -1011,10 +1012,18 @@ $scope.doctorInfo=[];
       </md-tab>
         <md-tab label="Radon">
         <md-content class="md-padding">
-          <h1 class="md-display-2">Radon risk in your area</h1>
+          <h1 class="md-display-2">Radon risk in your area <%=user.state%></h1>
           <md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Get Info</md-button>
           			<div ng-show="generalMessage">
           			<div google-chart chart="chart"></div>
+          			<div ng-show="stateContacts">
+          			 Radon measurement and mitigation services near you:
+          			<md-list flex>
+          			<md-list-item ng-repeat="contact in stateContacts">
+          			<a ng-href="{{contact.url}}">{{contact.title}}</a> 
+          			</<md-list-item>
+          			</md-list>
+          			</div>
 			<h3>Did you know?</h3>
 			{{personalizedRadonInfo}}
 			<strong>According to the U.S. Environmental Protection
