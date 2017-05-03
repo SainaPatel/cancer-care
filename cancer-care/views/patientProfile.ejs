@@ -22,11 +22,18 @@
 <script src="/node_modules/angular-material/angular-material.min.js"></script>
 <style>
 .myList:hover{
-	background-color:BA99A2;
-	color:white;
+	background-color:lightgrey;
+	
 }
-.myList a:hover{
-	color:white;
+
+.radonList li{
+display: list-item;
+list-style-type: disc;
+  text-align: left;
+}
+
+.radonList{
+margin:5%;
 }
 </style>
 <script
@@ -372,7 +379,7 @@ $scope.doctorInfo=[];
 				                  ]};
 				chart2.options={'title':"Percentage of Radonzones in your state"}
 	            $scope.chart=chart2;
-				$scope.personalizedRadonInfo="Your county "+$scope.user.county+" has radon level "+response.data.radon;
+				$scope.personalizedRadonInfo="Your county "+$scope.user.county+" in your state "+$scope.user.state+" has radon Zone "+response.data.radon;
 	        })   
 			 }
 			else{
@@ -982,21 +989,15 @@ $scope.doctorInfo=[];
 
 			<div ng-show="generalMessage">
 			<h3>Did you know?</h3>
-			{{personalizedRadonInfo}}
-			<strong>According to the U.S. Environmental Protection
-				Agency (EPA) a radon level at or above 4 picocuries per liter
-				(pCi/L) of air is dangerous</strong>
-				Radon decays quickly, giving off tiny
-			radioactive particles. When inhaled, these radioactive particles can
-			damage the cells that line the lung. Long-term exposure to radon can
-			lead to lung cancer, only cancer proved to be associated with
-			inhaling radon. There has been a suggestion of increased risk of
-			leukemia associated with radon exposure in adults and children;
-			however, the evidence is not conclusive.Cigarette smoking is the most
-			common cause of lung cancer. Radon represents a far smaller risk for
-			this disease, but it is the second leading cause of lung cancer in
-			the United States. Scientists estimate that 15,000 to 22,000 lung
-			cancer deaths in the United States each year are related to radon. 
+			<ul >
+			<li style=>{{personalizedRadonInfo}}</li>
+			<li>According to the U.S. Environmental Protection Agency (EPA) a radon level at or above 4 picocuries per liter(pCi/L) of air is dangerous</li>
+			<li>Radon decays quickly, giving off tiny radioactive particles which when inhaled can damage the cells that line the lung. </li>
+			<li>Long-term exposure to radon can lead to lung cancer.</li>
+			<li>There has been a suggestion of increased risk of leukemia associated with radon exposure in adults and children.</li>
+			<li>Radon is the second leading cause of lung cancer in the United States.Scientists estimate that 15,000 to 22,000 lung</li>
+			cancer deaths in the United States each year are related to radon. </li>
+			</ul>
 			</div>
 			<md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Show Radon gas information</md-button>
 
@@ -1037,29 +1038,22 @@ $scope.doctorInfo=[];
           			<div ng-show="generalMessage">
           			<div google-chart chart="chart"></div>
           			<div ng-show="stateContacts">
-          			<span class="icon fa-info-circle"> Radon measurement and mitigation services near you:</span> 
+          			<span class="icon fa-info-circle"> {{personalizedRadonInfo}}.</span> 
+          			 <p>Following are some Radon measurement and mitigation services near you:</p>
           			<md-list  flex>
           			<md-list-item class="myList" ng-repeat="contact in stateContacts">
-          			<a ng-href="{{contact.url}}">{{contact.title}}</a> 
+          			<img height="30rem" width="30rem" src="/images/environment.png"> <a target="_blank" ng-href="{{contact.url}}">{{contact.title}}</a> 
           			</<md-list-item>
           			</md-list>
           			</div>
 			<h3>Did you know?</h3>
-			{{personalizedRadonInfo}}
-			<strong>According to the U.S. Environmental Protection
-				Agency (EPA) a radon level at or above 4 picocuries per liter
-				(pCi/L) of air is dangerous</strong>
-				Radon decays quickly, giving off tiny
-			radioactive particles. When inhaled, these radioactive particles can
-			damage the cells that line the lung. Long-term exposure to radon can
-			lead to lung cancer, only cancer proved to be associated with
-			inhaling radon. There has been a suggestion of increased risk of
-			leukemia associated with radon exposure in adults and children;
-			however, the evidence is not conclusive.Cigarette smoking is the most
-			common cause of lung cancer. Radon represents a far smaller risk for
-			this disease, but it is the second leading cause of lung cancer in
-			the United States. Scientists estimate that 15,000 to 22,000 lung
-			cancer deaths in the United States each year are related to radon. 
+			<ul class="radonList">
+			<li>According to the U.S. Environmental Protection Agency (EPA) a radon level at or above 4 picocuries per liter(pCi/L) of air is dangerous</li>
+			<li>Radon decays quickly, giving off tiny radioactive particles which when inhaled can damage the cells that line the lung. </li>
+			<li>There has been a suggestion of increased risk of leukemia associated with radon exposure in adults and children.</li>
+			<li>Radon is the second leading cause of lung cancer in the United States.Scientists estimate that 15,000 to 22,000 lung cancer deaths in the United States each year are related to radon.</li>
+			
+			</ul>
 			</div>
         </md-content>
       </md-tab>
