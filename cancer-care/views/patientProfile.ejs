@@ -16,13 +16,19 @@
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 <link rel="stylesheet"
 	href="/node_modules/angular-material/angular-material.min.css" />
-<link rel="stylesheet"
-	href="/node_modules/angular-material/angular-material.min.css" />
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/node_modules/angular-animate/angular-animate.js"></script>
 <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 <script src="/node_modules/angular-material/angular-material.min.js"></script>
-
+<style>
+.myList:hover{
+	background-color:BA99A2;
+	color:white;
+}
+.myList a:hover{
+	color:white;
+}
+</style>
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD06FRmOIpOsvUxrEXiwllrtQfLLVML2r4&libraries=places"></script>
 
@@ -65,7 +71,14 @@
 	.accentPalette('cancer-care-palette',{'default':'200'});
 	})
 
-	app.controller("PatientController", function($window,$scope, $http, $mdDialog, $mdMedia) {
+	app.controller("PatientController", function($window,$scope, $http, $mdDialog, $mdMedia,$mdToast) {
+	      $scope.showToast = function(message) {
+              $mdToast.show(
+                 $mdToast.simple()
+                    .textContent(message)                       
+                    .hideDelay(3000)
+              );
+           };
 		$scope.profile={};
 		$scope.profile.types=["unsure","small cell","non-small cell"];
 		$scope.profile.stages=["1","2","3","4","unsure"];
@@ -390,7 +403,14 @@ $scope.doctorInfo=[];
 	
 	function FACTLController($scope, $mdDialog,$http,$mdToast,answers) {
 		
-	  	$scope.hide = function() {
+	      $scope.showToast = function(message) {
+              $mdToast.show(
+                 $mdToast.simple()
+                    .textContent(message)                       
+                    .hideDelay(3000)
+              );
+           };
+		$scope.hide = function() {
 	  		
 	    	$mdDialog.hide(answer);
 	  	};
@@ -1017,9 +1037,9 @@ $scope.doctorInfo=[];
           			<div ng-show="generalMessage">
           			<div google-chart chart="chart"></div>
           			<div ng-show="stateContacts">
-          			 Radon measurement and mitigation services near you:
-          			<md-list flex>
-          			<md-list-item ng-repeat="contact in stateContacts">
+          			<span class="icon fa-info-circle"> Radon measurement and mitigation services near you:</span> 
+          			<md-list  flex>
+          			<md-list-item class="myList" ng-repeat="contact in stateContacts">
           			<a ng-href="{{contact.url}}">{{contact.title}}</a> 
           			</<md-list-item>
           			</md-list>
