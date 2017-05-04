@@ -1270,7 +1270,7 @@
 				<tr>
 					<td style="width: 50%; padding:2px" >Recipes
 					<div ng-repeat="recipe in food.recipes" >
-				<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
+				<div ng-click="showRecipes($event,recipe)">{{recipe.title}}</div>
 					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
 					<b class="books_text"> by {{book.author}}</b>
 					<div class="books_text"> Price : {{book.price}} </div> -->
@@ -1279,7 +1279,7 @@
 					</td>
 					<td>
 					Buying Links
-					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" width="25" height="25"/> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
+					<div ng-repeat="buy in food.buying_links"><img src="{{buy.image}}" width="200" height="200"/> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
 					</td>
 				</tr>
 

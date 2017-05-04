@@ -1270,7 +1270,7 @@
 				<tr>
 					<td style="width: 50%; padding:2px" >Recipes
 					<div ng-repeat="recipe in food.recipes" >
-				<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
+				<div ng-click="showRecipes($event,recipe)">{{recipe.title}}</div>
 					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
 					<b class="books_text"> by {{book.author}}</b>
 					<div class="books_text"> Price : {{book.price}} </div> -->
@@ -1279,7 +1279,6 @@
 					</td>
 					<td>
 					Buying Links
-					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" width="25" height="25"/> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
 					</td>
 				</tr>
 
@@ -1289,20 +1288,7 @@
       <md-tab label="Lifestyle">
         <md-content class="md-padding">
           <h1 class="md-display-2">Lifestyle</h1>
-          <div>
-					Along with medications your lifestyle plays a very important role
-					towards your health. Incorporate the following recommendations in
-					your day to day activities to lead a healthier life.</br>
-					<div ng-repeat="lifestyle in LifestyleDetails">
-						<div class="treatment-heading">{{lifestyle.name}}</div>
-
-						<p class="treatment-text">
-							<img class="treatment-image" src="{{lifestyle.image}}" alt=""
-								align="right" /> {{lifestyle.description}}
-						</p>
-						<a href="{{lifestyle.link1}}" class="treatment-link">{{lifestyle.link1}}</a>
-					</div>
-				</div>
+          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
         </md-content>
       </md-tab>
         <md-tab label="Radon">
