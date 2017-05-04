@@ -126,7 +126,7 @@ app.get('/getRecommendations',cam.getRecommendations);
 //app.get('/getFoodDetails',cam.getFoodDetails);
 app.get('/getProfileInfo',profile.getProfileInfo);
 app.post('/updateProfileInfo',profile.updateProfileInfo);
-
+app.post('/getTreatmentLocations',cam.getTreatmentLocations);
 //app.get('/getLifestyleDetails',cam.getLifestyleDetails);
 
 http.createServer(app).listen(app.get('port'), function(){

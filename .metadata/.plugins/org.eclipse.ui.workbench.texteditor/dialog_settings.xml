@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="articles" key="selection"/>
+		<item value="Factor" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="articles"/>
-			<item value="getLifestyleArticles"/>
-			<item value="getArticles"/>
-			<item value="article"/>
-			<item value="showFoodDetails"/>
+			<item value="factor"/>
 			<item value="header"/>
-			<item value="h3"/>
-			<item value="container"/>
+			<item value="footer"/>
+			<item value="showTre"/>
+			<item value="user info"/>
+			<item value="$scop"/>
+			<item value="$scope"/>
+			<item value="NewData"/>
 		</list>
 		<list key="replacehistory">
 			<item value="/images"/>
