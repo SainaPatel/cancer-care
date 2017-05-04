@@ -133,6 +133,46 @@
 	font-size: medium;
 }
 
+.img-circle{
+	display: inline-block;
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+}
+
+.support-groups{
+	display: inline-block;
+	margin-right: 10%;
+	text-align: center !important;
+	margin-top: 5%;
+	margin-bottom: 5%;
+}
+
+.support-groups .article-heading{
+	text-align: center;
+}
+
+.social{
+	display: inline-block;
+	margin-right: 10%;
+	text-align: center !important;
+	margin-bottom: 5%;
+	width: 20%;
+	padding-top: 0px;
+}
+
+.social .article-heading{
+	text-align: center;
+}
+
+.fa-phone{
+	font-size: small;
+}
+
+.fa-external-link{
+	font-size: small;
+}
+
 .treatment-heading {
 	text-align: left;
 	color: #754B57;

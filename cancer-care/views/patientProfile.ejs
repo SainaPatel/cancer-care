@@ -257,6 +257,19 @@ $scope.doctorInfo=[];
 			});
 		};
 
+		//get supportGroups
+			$scope.getSupportGroups = function() {
+			console.log("getSupportGroups Called");
+			$http({
+				method: 'GET',
+				url: '/getSupportGroups/',
+				data: {}
+		}).success(function(data) {
+				console.log("Back" + JSON.stringify(data.social));
+				$scope.supportGroups = data;
+			});
+		};
+
 		$scope.getRecommendations=function(){
 			$http({
 				method : 'GET',
@@ -1041,7 +1054,7 @@ $scope.doctorInfo=[];
           			<md-list  flex>
           			<md-list-item class="myList" ng-repeat="contact in stateContacts">
           			<a ng-href="{{contact.url}}">{{contact.title}}</a> 
-          			</<md-list-item>
+          			<md-list-item>
           			</md-list>
           			</div>
 			<h3>Did you know?</h3>
@@ -1060,6 +1073,24 @@ $scope.doctorInfo=[];
 			this disease, but it is the second leading cause of lung cancer in
 			the United States. Scientists estimate that 15,000 to 22,000 lung
 			cancer deaths in the United States each year are related to radon. 
+			</div>
+        </md-content>
+      </md-tab>
+	        <md-tab ng-click="getSupportGroups()" label="Support Groups">
+        <md-content class="md-padding">
+          <h4 class="heading">Support groups in <%=user.state%> and Social media groups</h4>
+          	<div class="support-groups" ng-repeat="group in supportGroups.data">
+					<img src="/images/support-icon.jpg" class="img-circle" width="200" height="200">
+					<div class="article-heading">{{group.Name}}</div>
+					<div class="article-description">{{group.Address}}</div>
+					<div class="article-description"><span class="icon fa fa-phone"></span>     {{group.Phone}}</div>
+					<div class="article-link">
+						<span class="icon fa fa-external-link"></span><a href={{group.Link}} target="_blank">     {{group.Link}}</a>
+					</div>		
+          	</div>
+			<div class="social" ng-repeat="social in supportGroups.social">
+					<div class="article-heading"><a href={{social.Link}} target="_blank">{{social.Name}}</a></div>
+					<div class="article-description">{{social.Description}}</div>
 			</div>
         </md-content>
       </md-tab>
