@@ -23,6 +23,7 @@
 <style>
 
 
+
 .radonList li{
 display: list-item;
 list-style-type: disc;
@@ -31,10 +32,13 @@ list-style-type: disc;
 
 .radonList{
 margin:5%;
+
 }
 </style>
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD06FRmOIpOsvUxrEXiwllrtQfLLVML2r4&libraries=places"></script>
+<script src="/node_modules/ngmap/build/scripts/ng-map.min.js"></script>
+
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js"
@@ -137,215 +141,306 @@ margin:5%;
 		          $scope.status = 'You cancelled the dialog.';
 		        });
 		  };
-		$scope.showCancerInfo1 = false;
-		$scope.showCancerInfo2 = false;
-		$scope.showCancerInfo3 = false;
-		$scope.showCard = true;
-		$scope.showInfo = false;
-		//var marker;
-		var map;
-		var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-		$scope.createMap = function(Latitude, Longitude) {
-			//var markers=[[37.791198,-122.431769],[37.66554,-122.47586],[37.94366,-122.53337],[37.3558630,-121.8505680],[37.2583720,-121.9188660],[37.4975170,-122.2710600],[37.3785350,-122.0865850],[37.3189150,-121.9416230],[37.3558630,-121.8505680],[37.3132070,-121.9334580],[37.3280060,-121.9370740],[37.2520720,-121.9463300],[37.3630490,-121.8531090],[37.2533940,-121.9516570],[37.4357880,-122.1765360],[37.3132070,-121.9334580],[37.3157330,-121.9371280],[37.3325120,-121.9089420],[37.3526400,-122.0492810],[37.3132070,-121.9334580],[37.2637820,-121.8775830],[37.2637820,-121.8775830]];
-			var mapProp = {
-				// var position=getLocation();
-				center : new google.maps.LatLng(Latitude, Longitude),
-				zoom : 10,
-				mapTypeId : google.maps.MapTypeId.ROADMAP,
-			};
-			/* if(typeof position.title=="undefined")
-				{ */
-			map = new google.maps.Map(document.getElementById("googleMap"),
-					mapProp);
-			mark = new google.maps.Marker({
-				position : new google.maps.LatLng(Latitude, Longitude),
-				map : map,
-				title : 'You are here',
-				label : 'You are here'
-			})
-			/* var marker=new google.maps.Marker({
-				position : new google.maps.LatLng(37.66554,-122.47586),
-				map:map
-			}); */
-			//marker.setMap(map)
-			/*  markers.forEach(function(marker){
-					console.log("filtered" + marker[0]);
-				new google.maps.Marker({
-					position : new google.maps.LatLng(marker[0],marker[1]),
-					map: map
-				});
-				}) */
-		}
-
-		$scope.getDoctors = function() {
-			$http({
-				method : 'POST',
-				url : '/getDoctors',
-				data : {
-					"state" : "California",
-					"lat" : 37.3418790,
-					"lon" : -121.9242500
-				}
-			}).success(
-
-					function(data) {
-						//	window.alert("In Success");
-						//console.log("data" + data.result[0].lattitude);
-						console.log("in success" + data.result.length
-								+ " info boolean" + $scope.showInfo);
-						var result = data.result;
-
-						result.forEach(function(marker) {
-							console.log("filtered" + marker);
+	
+						$scope.showCancerInfo1 = false;
+						$scope.showCancerInfo2 = false;
+						$scope.showCancerInfo3 = false;
+						$scope.showCard = true;
+						$scope.showInfo = false;
+						//var marker;
+						var map;
+						var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+						$scope.createMap = function(Latitude, Longitude) {
+							//var markers=[[37.791198,-122.431769],[37.66554,-122.47586],[37.94366,-122.53337],[37.3558630,-121.8505680],[37.2583720,-121.9188660],[37.4975170,-122.2710600],[37.3785350,-122.0865850],[37.3189150,-121.9416230],[37.3558630,-121.8505680],[37.3132070,-121.9334580],[37.3280060,-121.9370740],[37.2520720,-121.9463300],[37.3630490,-121.8531090],[37.2533940,-121.9516570],[37.4357880,-122.1765360],[37.3132070,-121.9334580],[37.3157330,-121.9371280],[37.3325120,-121.9089420],[37.3526400,-122.0492810],[37.3132070,-121.9334580],[37.2637820,-121.8775830],[37.2637820,-121.8775830]];
+							var mapProp = {
+								// var position=getLocation();
+								center : new google.maps.LatLng(Latitude,
+										Longitude),
+								zoom : 10,
+								mapTypeId : google.maps.MapTypeId.ROADMAP,
+							};
+							/* if(typeof position.title=="undefined")
+								{ */
+							map = new google.maps.Map(document
+									.getElementById("googleMap"), mapProp);
 							mark = new google.maps.Marker({
-								position : new google.maps.LatLng(
-										marker.visit_address.lat,
-										marker.visit_address.lon),
-								map : map
+								position : new google.maps.LatLng(Latitude,
+										Longitude),
+								map : map,
+								title : 'You are here',
+								label : 'You are here'
+							})
+
+							/* map2= new google.maps.Map(document.getElementById("googleMap2"),
+									mapProp);
+							mark1 = new google.maps.Marker({
+								position : new google.maps.LatLng(Latitude, Longitude),
+								map : map2,
+								title : 'You are here',
+								label : 'You are here'
+							}) */
+							/* var marker=new google.maps.Marker({
+								position : new google.maps.LatLng(37.66554,-122.47586),
+								map:map
+							}); */
+							//marker.setMap(map)
+							/*  markers.forEach(function(marker){
+									console.log("filtered" + marker[0]);
+								new google.maps.Marker({
+									position : new google.maps.LatLng(marker[0],marker[1]),
+									map: map
+								});
+								}) */
+						}
+
+						$scope.createMap2 = function(Latitude, Longitude, id) {
+							//var markers=[[37.791198,-122.431769],[37.66554,-122.47586],[37.94366,-122.53337],[37.3558630,-121.8505680],[37.2583720,-121.9188660],[37.4975170,-122.2710600],[37.3785350,-122.0865850],[37.3189150,-121.9416230],[37.3558630,-121.8505680],[37.3132070,-121.9334580],[37.3280060,-121.9370740],[37.2520720,-121.9463300],[37.3630490,-121.8531090],[37.2533940,-121.9516570],[37.4357880,-122.1765360],[37.3132070,-121.9334580],[37.3157330,-121.9371280],[37.3325120,-121.9089420],[37.3526400,-122.0492810],[37.3132070,-121.9334580],[37.2637820,-121.8775830],[37.2637820,-121.8775830]];
+							console.log("id in createMap2"+id);
+							var mapProp1 = {
+								// var position=getLocation();
+								center : new google.maps.LatLng(Latitude,
+										Longitude),
+								zoom : 10,
+								mapTypeId : google.maps.MapTypeId.ROADMAP,
+							};
+							/*  if(typeof position.title=="undefined")
+								{  */
+							map1 = new google.maps.Map(document
+									.getElementById(id), mapProp1);
+							mark1 = new google.maps.Marker({
+								position : new google.maps.LatLng(Latitude,
+										Longitude),
+								map : map1,
+								title : 'You are here',
+								label : 'You are here'
+							})
+						}
+
+						$scope.getDoctors = function() {
+							$http({
+								method : 'POST',
+								url : '/getDoctors',
+								data : {
+									"state" : "California",
+									"lat" : 37.3418790,
+									"lon" : -121.9242500
+								}
+							})
+									.success(
+
+											function(data) {
+												//	window.alert("In Success");
+												//console.log("data" + data.result[0].lattitude);
+												console.log("in success"
+														+ data.result.length
+														+ " info boolean"
+														+ $scope.showInfo);
+												var result = data.result;
+
+												result
+														.forEach(function(
+																marker) {
+															console
+																	.log("filtered"
+																			+ marker);
+															mark = new google.maps.Marker(
+																	{
+																		position : new google.maps.LatLng(
+																				marker.visit_address.lat,
+																				marker.visit_address.lon),
+																		map : map
+																	});
+
+															$scope.markerClick(
+																	mark,
+																	marker);
+															/* google.maps.event.addListener(mark, "click",
+																	function(event) {
+																		alert(this.position);
+																		$scope.info=mark.visit_address.city;
+																		console.log("info of place"+info);
+																	}); */
+														})
+
+												//return $scope.result;
+											}).error(function(error) {
+										alert("error");
+									});
+						};
+						$scope.doctorInfo = [];
+						$scope.markerClick = function(marker, filtered) {
+							google.maps.event
+									.addListener(
+											marker,
+											'click',
+											function(event) {
+												/* 				console.log("inside marker add event" + filtered.address);
+												 */
+												console.log("showInfo"
+														+ $scope.showInfo);
+												$scope.showInfo = false;
+												$scope.showInfo = true;
+												$scope.clickedMarker = filtered;
+
+												$scope.name = filtered.name;
+												$scope.doctorInfo = filtered.doctors;
+												$scope.$apply();
+												console
+														.log($scope.doctorInfo.length);
+												value = filtered.visit_address.city;
+												console.log("city info "
+														+ $scope.name
+														+ " infoboolean "
+														+ $scope.showInfo);
+												console
+														.log("doctor info"
+																+ JSON
+																		.stringify($scope.doctorInfo));
+												/* $scope.clickedSpace = filtered;
+												//console.log("title inside" + $scope.value);
+												document.getElementById("space").innerHTML = filtered.address;
+												document.getElementById("availableFrom").innerHTML = filtered.availableFrom;
+												document.getElementById("availableTo").innerHTML = filtered.availableTo;
+												
+												
+												console.log("clickedSpace1"+$scope.clickedSpace); */
+											});
+							//console.log("title outside" + $scope.value);
+
+						};
+
+						//get lifestyle articles
+						$scope.getArticles = function() {
+							console.log("Get Articles Called");
+							$http({
+								method : 'GET',
+								url : '/getArticles/',
+								data : {}
+							}).success(function(data) {
+								console.log("Back" + JSON.stringify(data));
+								$scope.suggestions = data;
+								$scope.articles = data;
 							});
+						};
 
-							$scope.markerClick(mark, marker);
-							/* google.maps.event.addListener(mark, "click",
-									function(event) {
-										alert(this.position);
-										$scope.info=mark.visit_address.city;
-										console.log("info of place"+info);
-									}); */
-						})
+						//get supportGroups
+						$scope.getSupportGroups = function() {
+						console.log("getSupportGroups Called");
+						$http({
+							method: 'GET',
+							url: '/getSupportGroups/',
+							data: {}
+					}).success(function(data) {
+							console.log("Back" + JSON.stringify(data.social));
+							$scope.supportGroups = data;
+						});
+					};
 
-						//return $scope.result;
-					}).error(function(error) {
-				alert("error");
-			});
-		};
-$scope.doctorInfo=[];
-		$scope.markerClick = function(marker, filtered) {
-			google.maps.event.addListener(marker, 'click', function(event) {
-				/* 				console.log("inside marker add event" + filtered.address);
-				 */
-				console.log("showInfo" + $scope.showInfo);
-				$scope.showInfo = false;
-				$scope.showInfo = true;
-				$scope.clickedMarker = filtered;
+					
+						
+						$scope.getRecommendations = function() {
+							$http({
+								method : 'GET',
+								url : '/getRecommendations',
+								data : {}
+							})
+									.success(
+											function(data) {
+												console.log("in success"
+														+ data.result.length);
+												var result = data.result;
+												$scope.treatments = result.treatments;
+												console.log("Treatments "
+														+ $scope.treatments);
+												$scope.foodDetails = result.food;
+												console
+														.log("Treatments "
+																+ JSON
+																		.stringify($scope.foodDetails));
 
-				$scope.name = filtered.name;
-				$scope.doctorInfo = filtered.doctors;
-				$scope.$apply();
-				console.log($scope.doctorInfo.length);
-				value = filtered.visit_address.city;
-				console.log("city info " + $scope.name + " infoboolean "
-						+ $scope.showInfo);
-				console.log("doctor info"+JSON.stringify($scope.doctorInfo));
-				/* $scope.clickedSpace = filtered;
-				//console.log("title inside" + $scope.value);
-				document.getElementById("space").innerHTML = filtered.address;
-				document.getElementById("availableFrom").innerHTML = filtered.availableFrom;
-				document.getElementById("availableTo").innerHTML = filtered.availableTo;
-				
-				
-				console.log("clickedSpace1"+$scope.clickedSpace); */
-			});
-			//console.log("title outside" + $scope.value);
+												$scope.LifestyleDetails = result.lifestyle;
+												console
+														.log("Treatments "
+																+ JSON
+																		.stringify($scope.LifestyleDetails));
 
-		};
+											});
+							$scope.showTreatments = false;
+							$scope.showFoodDetails = false;
+							$scope.showLifestyleDetails = false;
+							
 
-		//get lifestyle articles
-		$scope.getArticles = function() {
-			console.log("Get Articles Called");
-			$http({
-				method: 'GET',
-				url: '/getArticles/',
-				data: {}
-		}).success(function(data) {
-				console.log("Back" + JSON.stringify(data));
-				$scope.suggestions = data;
-				$scope.articles = data;
-			});
-		};
+						};
+						
+						$scope.showRecipes = function(ev,recipe) {
+						    $mdDialog.show({
+						      controller: DialogController,
+						      template : '<div class="treatment-heading" style="padding:10px">'+recipe.title+' </div><div style="padding:10px"> Description : '+recipe.description+' </br> Ingredients : '+recipe.ingredients+' </br> Method : '+recipe.method+'</div> ',
+						      parent: angular.element(document.body),
+						      targetEvent: ev,
+						      clickOutsideToClose:true,
+						      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+						    })
+						    .then(function(answer) {
+						      $scope.status = 'You said the information was "' + answer + '".';
+						    }, function() {
+						      $scope.status = 'You cancelled the dialog.';
+						    });
+						  };
+						  
+						 function DialogController($scope, $mdDialog) {
+							    $scope.hide = function() {
+							      $mdDialog.hide();
+							    };
 
-		//get supportGroups
-			$scope.getSupportGroups = function() {
-			console.log("getSupportGroups Called");
-			$http({
-				method: 'GET',
-				url: '/getSupportGroups/',
-				data: {}
-		}).success(function(data) {
-				console.log("Back" + JSON.stringify(data.social));
-				$scope.supportGroups = data;
-			});
-		};
+							    $scope.cancel = function() {
+							      $mdDialog.cancel();
+							    };
 
-		$scope.getRecommendations=function(){
-			$http({
-				method : 'GET',
-				url : '/getRecommendations',
-				data : {}
-			}).success(function(data) {
-				console.log("in success" + data.result.length);
-				var result=data.result;
-				$scope.treatments=result.treatments;
-				console.log("Treatments "+$scope.treatments);
-				$scope.foodDetails=result.food;
-				console.log("Treatments "+JSON.stringify($scope.foodDetails));
+							    $scope.answer = function(answer) {
+							      $mdDialog.hide(answer);
+							    };
+							  }
+						
+				var showMap=false;
+						$scope.getTreatmentLocations = function(treatmentName) {
+							
+						console.log("treatmentName "+treatmentName);
+							$http({
+								method : 'POST',
+								url : '/getTreatmentLocations',
+								data : {
+								"treatmentName" : treatmentName	
+								}
+								
+							})
+									.success(
+											function(data) {
+												var result = data.result;
+												console.log("result in getTreatmentLocations"+JSON.stringify(result));
+												result
+														.forEach(
+																function(marker) {
+																	console
+																			.log("filtered"
+																					+ marker);
+																	mark = new google.maps.Marker(
+																			{
+																				position : new google.maps.LatLng(
+																						marker.coordinates.latitude,
+																						marker.coordinates.longitude),
+																				map : map1
+																			});
 
-				$scope.LifestyleDetails=result.lifestyle;
-				console.log("Treatments "+JSON.stringify($scope.LifestyleDetails));
+																})
+														
+											}).error(function(error) {
+												alert("error");
+											});
+						}
 
-			});
-			$scope.showTreatments = false;
-			$scope.showFoodDetails = false;
-			$scope.showLifestyleDetails = false;
+						
 
-		};
-		
-		/* $scope.getCamTreatments = function() {
-			 $http({
-				method : 'GET',
-				url : '/getCamTreatments',
-				data : {}
-			}).success(function(data) {
-				//	window.alert("In Success");
-				//console.log("data" + data.result[0].lattitude);
-				console.log("in success" + data.result.length);
-				var result = data.result;
-				$scope.treatments = result;
-
-			}); 
-			$scope.showTreatments = false;
-		}; */
-
-		/* $scope.getFoodDetails = function() {
-			 $http({
-				method : 'GET',
-				url : '/getFoodDetails',
-				data : {}
-			}).success(function(data) {
-				//	window.alert("In Success");
-				//console.log("data" + data.result[0].lattitude);
-				console.log("in success" + data.result.length);
-				var result = data.result;
-				$scope.foodDetails = result;
-
-			}); 
-			$scope.showFoodDetails = false;
-		}; */
-
-		/* $scope.getLifestyleDetails = function() {
-			$http({
-				method : 'GET',
-				url : '/getLifestyleDetails',
-				data : {}
-			}).success(function(data) {
-				//	window.alert("In Success");
-				//console.log("data" + data.result[0].lattitude);
-				console.log("in success" + data.result.length);
-				var result = data.result;
-				$scope.LifestyleDetails = result;
-
-			});
-			$scope.showLifestyleDetails = false;
-		};*/
 		
 		$scope.personalizedRadonInfo="";
 		$scope.generalMessage=false;				
@@ -396,7 +491,8 @@ $scope.doctorInfo=[];
 	                $scope.chart=chart1;			                  
 	            })   
 			}							        
-		}
+		};
+		
 		$scope.createPieChart=function(response){
 			 for(var zone in response.data.stateZonesCount){
 	            	console.log(response.data.stateZonesCount[zone]);
@@ -430,241 +526,226 @@ $scope.doctorInfo=[];
 				                  ]};
 				chart2.options={'title':"Percentage of Radonzones in your state"}
 	            $scope.chart=chart2;
-		}
-		
+		};
+	});
 		
 
-	});
-					
+function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
+
+	$scope.showToast = function(message) {
+		$mdToast.show($mdToast.simple().textContent(message)
+				.hideDelay(3000));
+	};
+	$scope.hide = function() {
+
+		$mdDialog.hide(answer);
+	};
+	$scope.cancel = function() {
+
+		$mdDialog.cancel("cancel");
+	};
 	
-	function FACTLController($scope, $mdDialog,$http,$mdToast,answers) {
-		
-	      $scope.showToast = function(message) {
-              $mdToast.show(
-                 $mdToast.simple()
-                    .textContent(message)                       
-                    .hideDelay(3000)
-              );
-           };
-		$scope.hide = function() {
-	  		
-	    	$mdDialog.hide(answer);
-	  	};
-	  	$scope.cancel = function() {
-		  
-	    	$mdDialog.cancel("cancel");
-	  	};
-	  	$scope.edit = function() {
-		
-	  	};
-		$scope.currentStep=0;
-		$scope.currentType=0;
-		$scope.answers=[];
-		$scope.questions=[
-					{
-						"type":"Physical Well Being",
-						"questions":[
-     								"I have a lack of energy?",
-									"I have nausea?",
-									"Because of my physical condition,I have trouble meeting the needs of your family?",
-									"I have pain?",
-									"I am bothered by side effects of treatment",
-									"I feel ill",
-									"I am forced to spend time in bed",
-									]
-					},
-					{
-							"type":"Social Well Being",
-							"questions":["I feel close to my friends",
-										"I get emotional support from my family",
-										"I get support from my friends",
-										"My family has accepted my illness",
-										"I am satisfied with family communication about my illness",
-										"I feel close to my partner (or the person who is my main support)",
-										"I am satisfied with my sex life"]
-					},
-					{
-					 "type":"Emotional Well Being",
-						"questions":[
-									"I feel sad",
-									"I am satisfied with how I am coping with my illness",
-									"I am losing hope in the fight against my illness",
-									"I feel nervous",
-									"I worry about dying",
-									"I worry that my condition will get worse"]
-					},
-					{
-						"type":"Functional Well Being",
-						"questions":[	"I am able to work (include work at home)",
-										"My work (include work at home) is fulfilling",
-										"I am able to enjoy life",
-										"I have accepted my illness",
-										"I am sleeping well",
-										"I am enjoying the things I usually do for fun",
-										"I am content with the quality of my life right now"]
-					},
-					{
-						"type":"Additional Concerns",
-						"questions":["I have been short of breath",
-									"I am losing weight",
-									"My thinking is clear",
-									"I have been coughing",
-									"I am bothered by hair loss",
-									"I have a good appetite",
-									"Breathing is easy for me",
-									"Have you ever smoked?",
-									"I regret my smoking"]
-					}
-				];
-		$scope.saveclick = function (n,answer) {
-			if(typeof answer=='undefined')
+	$scope.edit = function() {
+
+
+		}
+
+		$scope.currentStep = 0;
+		$scope.currentType = 0;
+		$scope.answers = [];
+		$scope.questions = [
+				{
+					"type" : "Physical Well Being",
+					"questions" : [
+							"I have a lack of energy?",
+							"I have nausea?",
+							"Because of my physical condition,I have trouble meeting the needs of your family?",
+							"I have pain?",
+							"I am bothered by side effects of treatment",
+							"I feel ill", "I am forced to spend time in bed", ]
+				},
+				{
+					"type" : "Social Well Being",
+					"questions" : [
+							"I feel close to my friends",
+							"I get emotional support from my family",
+							"I get support from my friends",
+							"My family has accepted my illness",
+							"I am satisfied with family communication about my illness",
+							"I feel close to my partner (or the person who is my main support)",
+							"I am satisfied with my sex life" ]
+				},
+				{
+					"type" : "Emotional Well Being",
+					"questions" : [
+							"I feel sad",
+							"I am satisfied with how I am coping with my illness",
+							"I am losing hope in the fight against my illness",
+							"I feel nervous", "I worry about dying",
+							"I worry that my condition will get worse" ]
+				},
+				{
+					"type" : "Functional Well Being",
+					"questions" : [ "I am able to work (include work at home)",
+							"My work (include work at home) is fulfilling",
+							"I am able to enjoy life",
+							"I have accepted my illness", "I am sleeping well",
+							"I am enjoying the things I usually do for fun",
+							"I am content with the quality of my life right now" ]
+				},
+				{
+					"type" : "Additional Concerns",
+					"questions" : [ "I have been short of breath",
+							"I am losing weight", "My thinking is clear",
+							"I have been coughing",
+							"I am bothered by hair loss",
+							"I have a good appetite",
+							"Breathing is easy for me",
+							"Have you ever smoked?", "I regret my smoking" ]
+				} ];
+		$scope.saveclick = function(n, answer) {
+			if (typeof answer == 'undefined')
 				$scope.answers.push(-1);
 			else
 				$scope.answers.push(parseInt(answer));
-			if($scope.currentType==4&&$scope.currentStep==n-1){
-				$scope.end=true;
+			if ($scope.currentType == 4 && $scope.currentStep == n - 1) {
+				$scope.end = true;
+			} else if ($scope.currentStep == n - 1) {
+				$scope.currentType++;
+				$scope.currentStep = 0;
+			} else {
+				$scope.currentStep++;
 			}
-			else if($scope.currentStep==n-1){
-		    	$scope.currentType++;
-		    	$scope.currentStep=0;
-		    } 
-		    else{
-		    	$scope.currentStep++;
-		    }					    
-		}
-	
-		$scope.submitFACTL = function(){
-			var PWB=$scope.answers.slice(0,7);
-			var SWB=$scope.answers.slice(7,14);
-			var EWB=$scope.answers.slice(14,20);
-			var FWB=$scope.answers.slice(20,27)
-			var LCS=$scope.answers.slice(27);
-			 PWB=calculatePWB(PWB), 
-			   SWB=calculateSWB(SWB), 
-			   EWB=calculateEWB(EWB), 
-			   FWB=calculateFWB(FWB), 
-			   LCS=calculateLCS(LCS),
-			console.log($scope.answers+"\n");
-			$http.post('/addFACTL', { 
-		
-				   email: "donita.almeida@gmail.com" , 
-				   PWB:PWB, 
-				   SWB:SWB, 
-				   EWB:EWB, 
-				   FWB:FWB, 
-				   LCS:LCS,
-				   PWBArray:$scope.PWBArray,
-					SWBArray:$scope.SWBArray,
-					EWBArray:$scope.EWBArray,
-					FWBArray:$scope.FWBArray,
-					LCSArray:$scope.LCSArray,
-				   }
-			   ).success(function (response) {
-                    console.log(response);
-                    $mdDialog.hide(response);
-               });
-		}
-		function calculatePWB(PWB){
-		
-			$scope.PWBArray=[];
-			var count=PWB.length;
-			var result=0;
-			for(var value in PWB){
-				if(value==-1){
-					count--;
-					$scope.PWBArray.push(-1);
-				}else{
-					$scope.PWBArray.push(4-value);
-					result+=4-value;
-				}
-			}
-			result=(result*7)/count;
-			return result;
-		}
-		function calculateSWB(SWB){
-			$scope.SWBArray=[];
-			var count=SWB.length;
-			var result=0;
-			for(var value in SWB){
-				if(value==-1){
-					$scope.SWBArray.push(-1);
-					count--;
-				}else{
-					$scope.SWBArray.push(parseInt(value));
-					result+=parseInt(value);
-				}
-			}
-			result=(result*7)/count;
-			return result;
-		}
-		function calculateEWB(EWB){
-			$scope.EWBArray=[];
-			var count=EWB.length;
-			var result=0;
-			for(var i=0;i<EWB.length;i++){
-				if(EWB[i]==-1){
-					$scope.EWBArray.push(-1);
-					count--;
-				}else{
-					if(i==1){
-						$scope.EWBArray.push(EWB[i]);
-						result+=EWB[i];
-					}else{								
-						$scope.EWBArray.push(4-EWB[i]);
-						result+=4-EWB[i];								
-					}
-				}							
-			}
-			result=(result*7)/count;
-			return result;
-		}
-		function calculateFWB(FWB){
-			$scope.FWBArray=[];
-			var count=FWB.length;
-			var result=0;
-			for(var value in FWB){
-				if(value==-1){
-					$scope.FWBArray.push(-1);
-					count--;
-				}else{
-					$scope.FWBArray.push(parseInt(value));
-					result+=parseInt(value);
-				}
-			}
-			result=(result*7)/count;
-			return result;
-			
-		}
-		function calculateLCS(LCS){
-			$scope.LCSArray=[];
-			var count=LCS.length;
-			var result=0;
-			for(var i=0;i<LCS.length;i++){
-				if(LCS[i]==-1){
-					$scope.LCSArray.push(-1);
-					count--;
-					
-				}else{
-					if(i==2||i==4||i==6){
-						$scope.LCSArray.push(LCS[i])
-						result+=LCS[i];
-					}else{								
-						$scope.LCSArray.push(4-LCS[i]);
-						result+=4-LCS[i];								
-					}
-				}							
-			}
-			result=(result*7)/count;
-			return result;
 		}
 
-	
+		$scope.submitFACTL = function() {
+			var PWB = $scope.answers.slice(0, 7);
+			var SWB = $scope.answers.slice(7, 14);
+			var EWB = $scope.answers.slice(14, 20);
+			var FWB = $scope.answers.slice(20, 27)
+			var LCS = $scope.answers.slice(27);
+			PWB = calculatePWB(PWB), SWB = calculateSWB(SWB),
+					EWB = calculateEWB(EWB), FWB = calculateFWB(FWB),
+					LCS = calculateLCS(LCS), console.log($scope.answers + "\n");
+			$http.post('/addFACTL', {
+
+				email : "donita.almeida@gmail.com",
+				PWB : PWB,
+				SWB : SWB,
+				EWB : EWB,
+				FWB : FWB,
+				LCS : LCS,
+				PWBArray : $scope.PWBArray,
+				SWBArray : $scope.SWBArray,
+				EWBArray : $scope.EWBArray,
+				FWBArray : $scope.FWBArray,
+				LCSArray : $scope.LCSArray,
+			}).success(function(response) {
+				console.log(response);
+				$mdDialog.hide(response);
+			});
+		}
+		function calculatePWB(PWB) {
+
+			$scope.PWBArray = [];
+			var count = PWB.length;
+			var result = 0;
+			for ( var value in PWB) {
+				if (value == -1) {
+					count--;
+					$scope.PWBArray.push(-1);
+				} else {
+					$scope.PWBArray.push(4 - value);
+					result += 4 - value;
+				}
+			}
+			result = (result * 7) / count;
+			return result;
+		}
+		function calculateSWB(SWB) {
+			$scope.SWBArray = [];
+			var count = SWB.length;
+			var result = 0;
+			for ( var value in SWB) {
+				if (value == -1) {
+					$scope.SWBArray.push(-1);
+					count--;
+				} else {
+					$scope.SWBArray.push(parseInt(value));
+					result += parseInt(value);
+				}
+			}
+			result = (result * 7) / count;
+			return result;
+		}
+		function calculateEWB(EWB) {
+			$scope.EWBArray = [];
+			var count = EWB.length;
+			var result = 0;
+			for (var i = 0; i < EWB.length; i++) {
+				if (EWB[i] == -1) {
+					$scope.EWBArray.push(-1);
+					count--;
+				} else {
+					if (i == 1) {
+						$scope.EWBArray.push(EWB[i]);
+						result += EWB[i];
+					} else {
+						$scope.EWBArray.push(4 - EWB[i]);
+						result += 4 - EWB[i];
+					}
+				}
+			}
+			result = (result * 7) / count;
+			return result;
+		}
+		function calculateFWB(FWB) {
+			$scope.FWBArray = [];
+			var count = FWB.length;
+			var result = 0;
+			for ( var value in FWB) {
+				if (value == -1) {
+					$scope.FWBArray.push(-1);
+					count--;
+				} else {
+					$scope.FWBArray.push(parseInt(value));
+					result += parseInt(value);
+				}
+			}
+			result = (result * 7) / count;
+			return result;
+
+		}
+		function calculateLCS(LCS) {
+			$scope.LCSArray = [];
+			var count = LCS.length;
+			var result = 0;
+			for (var i = 0; i < LCS.length; i++) {
+				if (LCS[i] == -1) {
+					$scope.LCSArray.push(-1);
+					count--;
+
+				} else {
+					if (i == 2 || i == 4 || i == 6) {
+						$scope.LCSArray.push(LCS[i])
+						result += LCS[i];
+					} else {
+						$scope.LCSArray.push(4 - LCS[i]);
+						result += 4 - LCS[i];
+					}
+				}
+			}
+			result = (result * 7) / count;
+			return result;
+		}
 
 	}
 </script>
 </head>
 
-<body ng-app="myApp" ng-controller="PatientController" ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles();">
+
+<body ng-app="myApp" ng-controller="PatientController"
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles()">
 
 	<!-- Header -->
 	<div id="header">
@@ -677,14 +758,16 @@ $scope.doctorInfo=[];
 					alt="" /></span>
 				<h1 id="title">{{user.name}}</h1>
 				<p>Welcome to <%= title %></p>
-				 <p><a id="logout-link" ng-href="#" ng-click="logout();">Logout</a></p>
+				<p>
+					<a id="logout-link" ng-href="#" ng-click="logout();">Logout</a>
+				</p>
 			</div>
 
 			<!-- Nav -->
 			<nav id="nav">
-		
+
 				<ul>
-					
+
 					<li><a href="#top" id="top-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
 					<li><a href="#cancerInfo" id="cancerinfo-link"
@@ -739,7 +822,9 @@ $scope.doctorInfo=[];
 						which you live
 						</p>
 				</header>
-				<md-button type="submit" ng-click="showFACTL($event)" class="md-raised md-accent">Answer quick questions to access your Quality of Life</md-button>
+				<md-button type="submit" ng-click="showFACTL($event)"
+					class="md-raised md-accent">Answer quick questions to
+				access your Quality of Life</md-button>
 
 				<!-- <footer>
 								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
@@ -909,7 +994,7 @@ $scope.doctorInfo=[];
 
 			</div>
 		</section>
-<!-- 
+		<!-- 
 		<section id="recommendations" class="three">
 			<div class="container">
 
@@ -1034,26 +1119,84 @@ $scope.doctorInfo=[];
 			</div>
 		
 		</section>-->
-		
-		<section id="recommendations" ng-cloak style="margin:5%;">
-		<md-header><h2>Recommendations</h2></md-header>
-		
-  <md-content>
-    <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="Treatments">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Treatments</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
-        </md-content>
-      </md-tab>
-      <md-tab label="Food">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Food</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
+
+		<section id="recommendations" ng-cloak style="margin: 5%;">
+			<md-header>
+			<h2>Recommendations</h2>
+			</md-header>
+
+			<md-content> <md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="Treatments"> <md-content class="md-padding">
+			<h1 class="md-display-2">Treatments</h1>
+			<div ng-repeat="treatment in treatments">
+				<div class="treatment-heading">{{treatment.name}}</div>
+
+				<p class="treatment-text">
+					<img class="treatment-image" src="{{treatment.image}}" alt=""
+						align="right" /> {{treatment.description}}
+				</p>
+				<table style="width: 100%">
+				<tr>
+					<td style="width: 50%; padding:2px" >Books
+					<div ng-repeat="book in treatment.books" >
+					<!-- <table>
+					<tr>
+					<td>
+					<img class="books_image" src="{{book.image}}" />
+					</td>
+					<td>
+					<div>{{book.name}}</div>
+					</td>
+					</tr>
+					</table> -->
+					 <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
+					<b class="books_text"> by {{book.author}}</b>
+					<div class="books_text"> Price : {{book.price}} </div>
+					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
+					</div> 
+					</td>
+					<td><md-button class="md-raised md-primary"
+							ng-click="createMap2(37.3418790,-121.9242500,treatment.name);  getTreatmentLocations(treatment.name)">
+						Get Nearby Places for treatment</md-button>
+						<div flex id="{{treatment.name}}" style="width: 100%; height: 250px;"
+							align="right"></div></td>
+				</tr>
+
+			</table>
+<!-- 				<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
+ -->			</div>
+			<!-- 		            <ng-map center="[37.3418790,-121.9242500]" zoom-control="true" zoom="8" width="700px"> </ng-map>
+ -->
+			
+			</md-content> </md-tab> <md-tab label="Food"> <md-content class="md-padding">
+			<h1 class="md-display-2">Food</h1>
+			
+				<div ng-repeat="food in foodDetails">
+					<div class="treatment-heading">{{food.name}}</div>
+       <p class="treatment-text">
+						<img class="treatment-image" src="{{food.image}}" alt=""
+							align="left" /> {{food.description}}
+					</p>
+					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+					<table style="width: 100%">
+				<tr>
+					<td style="width: 50%; padding:2px" >Recipes
+					<div ng-repeat="recipe in food.recipes" >
+				<div ng-click="showRecipes($event,recipe)">{{recipe.title}}</div>
+					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
+					<b class="books_text"> by {{book.author}}</b>
+					<div class="books_text"> Price : {{book.price}} </div> -->
+					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
+					</div> 
+					</td>
+					<td>
+					Buying Links
+					</td>
+				</tr>
+
+			</table>
+				</div>
+			</md-content> </md-tab> 
       <md-tab label="Lifestyle">
         <md-content class="md-padding">
           <h1 class="md-display-2">Lifestyle</h1>
@@ -1095,7 +1238,7 @@ $scope.doctorInfo=[];
 			</ul>
 			</div>
         </md-content>
-      </md-tab>
+      </md-tab>	 
 	        <md-tab ng-click="getSupportGroups()" label="Support Groups">
         <md-content class="md-padding">
           <h4 class="heading">Support groups in <%=user.state%> and Social media groups</h4>
@@ -1117,6 +1260,7 @@ $scope.doctorInfo=[];
     </md-tabs>
   </md-content>
 </section>
+				
 		<section id="lifestyle" class="three">
 			<div class="container">
 
@@ -1126,12 +1270,12 @@ $scope.doctorInfo=[];
 				<div ng-repeat="article in articles.data">
 
 					<div class="article-heading">{{article.Summary}}</div>
-					<div class="article-description">{{article.Description}}
-						<span class="article-link">
-						<a href={{article.Link}} target="_blank">Read more...</a>
-					</span>
+					<div class="article-description">
+						{{article.Description}} <span class="article-link"> <a
+							href={{article.Link}} target="_blank">Read more...</a>
+						</span>
 					</div>
-					</div>
+				</div>
 
 			</div>
 		</section>
@@ -1169,114 +1313,87 @@ $scope.doctorInfo=[];
 
 		<!-- Doctors -->
 		<section id="doctors" class="five">
-		<header>
-					<h2>Doctors</h2>
-				</header>
+			<header>
+				<h2>Doctors</h2>
+			</header>
 			<div class="container" layout="row" layout-sm="column">
 
-				
-			<div flex id="googleMap" style="width: 700px; height: 500px;"
-				align="right"></div>
-				
-				<div flex ng-model="clickedMarker" ng-show="showInfo" class="treatment-heading">
+
+				<div flex id="googleMap" style="width: 700px; height: 500px;"
+					align="right"></div>
+
+				<div flex ng-model="clickedMarker" ng-show="showInfo"
+					class="treatment-heading">
 					Name : {{clickedMarker.name}} </br>
 					<div ng-repeat="doctor in clickedMarker.doctors">
 						Doctor Name: {{doctor.first_name}} {{doctor.last_name}}</br> Title :
 						{{doctor.title}}
 					</div>
 				</div>
-			
 
-</div>
+
+			</div>
 		</section>
-<br>
+		<br>
 		<!-- Profile -->
 		<section id="profile" class="six">
-			
-	<div class="container">
-			      <md-card>
-              <md-card-header>
-              <md-card-avatar>
-            <img class="md-user-avatar" src="images/avatar.jpg"/>
-            
-          </md-card-avatar>
-          <md-card-header-text>
-       Profile
-          </md-card-header-text>
-        </md-card-header>
-        <md-card-content style="font-size:16px;width:80%;">
-         <table ng-table="vm.tableParams" class="table table-bordered" >
-    		<tr >
-        		<td >   <md-input-container class="md-block">
-          <label>Name</label>
-          <input ng-model="user.name">
-        </md-input-container>
-        		</td>
-        		<td >   <md-input-container class="md-block">
-          <label>Email</label>
-          <input disabled ng-model="user.email">
-        </md-input-container>
-        		</td>
-        		
-    		</tr>
-    		<tr >
-        		<td ><md-input-container class="md-block">
-          <label>State</label>
-          <input ng-model="user.state">
-        </md-input-container></td>
-        <td ><md-input-container class="md-block">
-          <label>County</label>
-          <input ng-model="user.county">
-        </md-input-container></td>
-        	
-    		</tr>
-    	
-    	
-    		<tr > <td ><md-input-container class="md-block">
-          <label>Gender</label>
-          <input ng-model="user.gender">
-        </md-input-container></td>
-        		  
-        		
-    		</tr>
-    		<tr>
-    			<td>
-    					<md-input-container class="md-icon-float md-block">
-				<label>Type of Lung Cancer</label>		
-				<md-select ng-model="user.cancer_type">		
-            		<md-option ng-value="opt"  ng-repeat="opt in profile.types" >{{opt}}</md-option>       		
-          		</md-select>
-          		
-			
-			</md-input-container>
-			</td>
-			<td>	<md-input-container class="md-icon-float md-block">
-				<label>Stage of Lung Cancer</label>		
-				<md-select ng-model="user.stage">		
-            		<md-option ng-value="user.stage"  ng-repeat="stage in profile.stages" >{{stage}}</md-option>       		
-          		</md-select>
-			</md-input-container></td>
-			</tr>
-			
-			<tr><td>
-	 		<label>Current Treatments:</label>
-			<span  ng-repeat="item in profile.treatments">
-			<md-checkbox ng-checked="exists(item, user.treatments)"
-				ng-click="toggle(item, user.treatments)"> {{ item }} 
-				 </md-checkbox>
-				</span>
-				</td>
-    		</tr>
-    	
-		</table>
-        </md-card-content>
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button class="md-raised md-primary" ng-click="updateProfileInfo()">Update</md-button>
-        </md-card-actions>
-      </md-card>
-		
+
+			<div class="container">
+				<md-card> <md-card-header> <md-card-avatar>
+				<img class="md-user-avatar" src="images/avatar.jpg" /> </md-card-avatar> <md-card-header-text>
+				Profile </md-card-header-text> </md-card-header> <md-card-content style="font-size:16px;width:80%;">
+				<table ng-table="vm.tableParams" class="table table-bordered">
+					<tr>
+						<td><md-input-container class="md-block">
+							<label>Name</label> <input ng-model="user.name"> </md-input-container></td>
+						<td><md-input-container class="md-block">
+							<label>Email</label> <input disabled ng-model="user.email">
+							</md-input-container></td>
+
+					</tr>
+					<tr>
+						<td><md-input-container class="md-block">
+							<label>State</label> <input ng-model="user.state"> </md-input-container></td>
+						<td><md-input-container class="md-block">
+							<label>County</label> <input ng-model="user.county"> </md-input-container></td>
+
+					</tr>
+
+
+					<tr>
+						<td><md-input-container class="md-block">
+							<label>Gender</label> <input ng-model="user.gender"> </md-input-container></td>
+
+
+					</tr>
+					<tr>
+						<td><md-input-container class="md-icon-float md-block">
+							<label>Type of Lung Cancer</label> <md-select
+								ng-model="user.cancer_type"> <md-option
+								ng-value="opt" ng-repeat="opt in profile.types">{{opt}}</md-option>
+							</md-select> </md-input-container></td>
+						<td><md-input-container class="md-icon-float md-block">
+							<label>Stage of Lung Cancer</label> <md-select
+								ng-model="user.stage"> <md-option
+								ng-value="user.stage" ng-repeat="stage in profile.stages">{{stage}}</md-option>
+							</md-select> </md-input-container></td>
+					</tr>
+
+					<tr>
+						<td><label>Current Treatments:</label> <span
+							ng-repeat="item in profile.treatments"> <md-checkbox
+									ng-checked="exists(item, user.treatments)"
+									ng-click="toggle(item, user.treatments)"> {{ item
+								}} </md-checkbox>
+						</span></td>
+					</tr>
+
+				</table>
+				</md-card-content> <md-card-actions layout="row" layout-align="end center">
+				<md-button class="md-raised md-primary"
+					ng-click="updateProfileInfo()">Update</md-button> </md-card-actions> </md-card>
 		</section>
-	<!--  <section id="contact_us" class="six">
+		<!--  <section id="contact_us" class="six">
 			<div class="container">
 
 				<header>
@@ -1301,7 +1418,7 @@ $scope.doctorInfo=[];
 				</form>
 
 			</div>
-		</section>-->	
+		</section>-->
 
 	</div>
 
@@ -1314,10 +1431,10 @@ $scope.doctorInfo=[];
 		</ul>
 
 	</div>
-	
+
 
 	<!-- Scripts -->
-		<script type="text/ng-template" id="FACTL.tmpl.html">
+	<script type="text/ng-template" id="FACTL.tmpl.html">
 		<md-dialog  style="width:50%">
 		
 			<md-content style="padding:20px;" ng-repeat="questionSet in questions" ng-show="currentType == $index">
@@ -1348,6 +1465,25 @@ $scope.doctorInfo=[];
 </md-dialog>
 
 </script>
+
+	</script><script type="text/ng-template" id="recipes.tmpl.html"><md-dialog aria-label="Mango (Fruit)">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Mango (Fruit)</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+ <md-dialog-content>
+
+</md-dialog-content>
+</form>
+</script>
+
+
 	<script src="/assets/js/jquery.min.js"></script>
 	<script src="/assets/js/jquery.scrolly.min.js"></script>
 	<script src="/assets/js/jquery.scrollzer.min.js"></script>

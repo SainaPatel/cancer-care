@@ -185,7 +185,29 @@
 	text-align: left;
 	color: #0000ff;
 }
+.books_image{
+	width:100px;
+	height:100px;
+}
 
+.books_text{
+	font-size: medium;
+}
+
+.books_heading{
+	text-align: left;
+	color: #754B57;
+	font-weight: 600;
+		font-size: large;
+}
+
+.treatment-box {
+	border-style: ridge;
+	border-color:#808080;
+	    border-width: thin;
+	    padding: 2px;
+	
+}
 .treatment-image {
 	
     width: 200px;
