@@ -54,6 +54,25 @@
 		          $scope.status = 'You cancelled the dialog.';
 		        });
 		  };
+			 $scope.cardClick = function(ev) {
+		  console.log("Card click called");
+		    $mdDialog.show({
+		      controller: 'AppCtrl',
+		      templateUrl: 'cardClick.tmpl.html',
+		      parent: angular.element(document.body),
+		      targetEvent: ev,
+		      clickOutsideToClose:true
+		    })
+		        .then(function(answer) {
+		          $scope.status = 'You said the information was "' + answer + '".';
+		        }, function() {
+		          $scope.status = 'You cancelled the dialog.';
+		        });
+		  };
+			$scope.cancel = function() {
+		  	console.log($scope.selectedIndex);
+	    	$mdDialog.cancel("cancel");
+	  	};
 	  $scope.dataArray = [
       {
         src: '/images/doctors2.jpg'
@@ -257,7 +276,7 @@
 
 		<!-- Intro -->
 		<div id="top">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel"  data-interval="3000">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel"  data-interval="2000">
   <!-- Indicators -->
   <ol class="carousel-indicators" style="padding-bottom:2%;">
     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -314,9 +333,9 @@
 		<section id="portfolio" class="two">
 			<div class="container landing-container">
 				<header>
-					<h4>Welcome to the club you didn’t ask to join. We know you’re pissed. </h4>
-					<h4>And that’s OK. We’ve been there, too. </h4>
-					<h4>We connect you with your community and </h4>
+					<h4><span class="heading">Welcome</span> to the club you didn’t ask to join! We know you’re pissed. </h4>
+					<h4>And that’s <span class="heading">OK</span>. We’ve been there, too. </h4>
+					<h4>We <span class="heading">connect</span> you with your <span class="heading">community</span> and </h4>
 					<h4>strive to make it all suck a little less.</h4>
 
 					<h2 class="heading">What can we help you with you ask?</h2>
@@ -330,7 +349,7 @@
 						<div class="landing-card__front">
 						<img src="/images/lifestyle2.jpeg" height="100%" width="100%">
 						</div>
-						<div class="landing-card__back">
+						<div class="landing-card__back" ng-click="cardClick($event)">
 							<div class="card-title">LIFESTYLE</div>
 							<p class="card-content">
 										How to lead a better life with cancer?	
@@ -346,7 +365,7 @@
 						<div class="landing-card__front">
 						<img src="/images/doctors2.jpg" height="100%" width="100%">
 						</div>
-						<div class="landing-card__back">
+						<div class="landing-card__back" ng-click="cardClick($event)">
 							<div class="card-title">DOCTORS</div>
 							<p class="card-content">
 								Find a professional who can answer your questions		
@@ -363,7 +382,7 @@
 						<div class="landing-card__front">
 						<img src="/images/support3.jpg" height="100%" width="100%">
 						</div>
-						<div class="landing-card__back">
+						<div class="landing-card__back" ng-click="cardClick($event)">
 							<div class="card-title">SUPPORT GROUPS</div>
 							<p class="card-content">
 								Want to speak to people who are fighting a battle same as yours?		
@@ -378,7 +397,7 @@
 						<div class="landing-card__front">
 						<img src="/images/research.jpg"/ height="100%" width="100%">
 						</div>
-						<div class="landing-card__back">
+						<div class="landing-card__back" ng-click="cardClick($event)">
 							<div class="card-title">LATEST NEWS</div>
 							<p class="card-content">
 								Know the latest findings in the area of lung cancer research		
@@ -396,7 +415,7 @@
 						<div class="landing-card__front">
 						<img src="/images/survive.jpg" height="100%" width="100%">
 						</div>
-						<div class="landing-card__back">
+						<div class="landing-card__back" ng-click="cardClick($event)">
 							<div class="card-title">SURVIVOR STORIES</div>
 							<p class="card-content">
 								You are <strong>STRONGER</strong> than you think.		
@@ -411,7 +430,7 @@
 						<div class="landing-card__front">
 						<img src="/images/alternative3.jpg" height="100%" width="100%">
 						</div>
-						<div class="landing-card__back">
+						<div class="landing-card__back" ng-click="cardClick($event)">
 							<div class="card-title">ALTERNATIVE TREATMENTS</div>
 							<p class="card-content">
 								Know your options apart from conventional treatments		
@@ -520,7 +539,7 @@ appropriate support resources they are entitled to so they can get busy living.<
 				
 				<input ng-model="email" type="email" ng-required="true">
 			</md-input-container>		
-			<md-input-container class="md-icon-float  md-block"">
+			<md-input-container class="md-icon-float  md-block">
 				<label>Name</label>
 		
 				<input ng-model="name" type="text" ng-required="true">
@@ -567,7 +586,7 @@ appropriate support resources they are entitled to so they can get busy living.<
 				 </md-checkbox>
 				</div>
 		<br>
-			<md-input-container class="md-icon-float md-block"">
+			<md-input-container class="md-icon-float md-block">
 				<label>Password</label>
 				<input ng-model="password" type="password" ng-required="true">
 			</md-input-container>	
@@ -581,7 +600,7 @@ appropriate support resources they are entitled to so they can get busy living.<
             <md-input-container class="md-icon-float md-block">
 		<label>Email</label> <input ng-model="email" type="email"
 			ng-required="true"> </md-input-container> <md-input-container
-			class="md-icon-float  md-block""> <label>Name</label>
+			class="md-icon-float  md-block"> <label>Name</label>
 
 		<input ng-model="name" type="text" ng-required="true"> </md-input-container> <md-input-container
 			class="md-icon-float md-block"> <md-radio-group
@@ -695,6 +714,31 @@ appropriate support resources they are entitled to so they can get busy living.<
       </md-button>
       <md-button ng-disabled="loginForm.$invalid" type="submit" class="md-raised md-primary" ng-click="login()" style="margin-right:20px;" >
         Login <i ng-show="selectedIndex==1" class="fa fa-stethoscope"></i>
+      </md-button>
+    </md-dialog-actions>
+  </form>
+
+</md-dialog>
+</script>
+
+<script type="text/ng-template" id="cardClick.tmpl.html">
+<md-dialog style="width:50%">
+  <form name="cardClick">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 style="color:white">Circle of Hope</h2>
+      </div>
+    </md-toolbar>
+    <md-dialog-content style="padding:5%;">
+		 <h3>To know more and receive personalized suggestions <span class="heading" ng-click="showLoginDialog($event)">Login</span> to the application.
+			 <br><br>
+			If you are a new user, please <span class="heading" ng-click="showTabDialog($event)">Sign up!</span></h3>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-primary" ng-click="cancel()" >
+        Cancel
       </md-button>
     </md-dialog-actions>
   </form>

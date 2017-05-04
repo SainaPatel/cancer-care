@@ -1,5 +1,5 @@
 var mongo = require("./mongo");
-var lifestylemongoURL = "mongodb://cmpe295lifestyle:cmpe295@ds111771.mlab.com:11771/circleofhope";
+var supportArticlemongoURL = "mongodb://cmpe295lifestyle:cmpe295@ds111771.mlab.com:11771/circleofhope";
 var mongoURL = "mongodb://cmpe295:cmpe295@ds161630.mlab.com:61630/radon";
 var json_responses = {};
 
@@ -125,8 +125,9 @@ exports.getArticles = function (req, res) {
 		keywords.push(type);
 		console.log("Keywords:" +keywords);
 	}
-
+    if(keywords.length < 3){
 	keywords.push("/General/");
+	}
 	//var keywords = ["/General/", "/Depression/"];
 	
 	var rx = [];
@@ -135,7 +136,7 @@ exports.getArticles = function (req, res) {
 		rx.push(new RegExp(v));
 	});
 	console.log("Regex: " + rx);
-	mongo.connect(lifestylemongoURL, function () {
+	mongo.connect(supportArticlemongoURL, function () {
 		var coll = mongo.collection('articlesLifestyle');
 		coll.find({
 			"Keywords": { $in: rx }
@@ -152,6 +153,45 @@ exports.getArticles = function (req, res) {
 				console.log(err);
 				res.send(json_responses);
 			}
+		});
+	});
+};
+
+
+exports.getSupportGroups = function (req, res) {
+	console.log("getSupportGroups called:" +req.user.state);
+	var state = req.user.state;
+	//var state ="New York";		
+	mongo.connect(supportArticlemongoURL, function () {
+		var coll = mongo.collection('supportGroups');
+		coll.find({
+			"State": state
+		}).toArray(function (err, supportGroups) {
+			if (supportGroups) {
+				json_responses.status_code = 200;
+				json_responses.data = supportGroups;
+				console.log("Success!");
+				console.log(supportGroups);
+			} else {
+				json_responses.status_code = 500;
+				console.log("Error");
+				console.log(err);
+				//res.send(json_responses);
+			}
+					coll.find({
+						"State": "General"
+					}).toArray(function(err,social){
+				if(social){
+					json_responses.social = social;
+					console.log("Success!");
+					console.log(social);
+					res.send(json_responses);
+				} else{
+					console.log("Error");
+					console.log(err);
+					res.send(json_responses);
+				}
+			})
 		});
 	});
 };
