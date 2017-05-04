@@ -21,10 +21,7 @@
 <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 <script src="/node_modules/angular-material/angular-material.min.js"></script>
 <style>
-.myList:hover{
-	background-color:lightgrey;
-	
-}
+
 
 .radonList li{
 display: list-item;
@@ -105,6 +102,8 @@ margin:5%;
 				console.log($scope.user)
 				$http.post('/updateProfileInfo',$scope.user).success(function(response){
 					console.log("successfully updated");
+					$scope.showToast("successfully updated");
+					$window.location.reload();
 				})
 			}
 		      $scope.toggle = function (item, list) {
@@ -1040,9 +1039,17 @@ $scope.doctorInfo=[];
           			<div ng-show="stateContacts">
           			<span class="icon fa-info-circle"> {{personalizedRadonInfo}}.</span> 
           			 <p>Following are some Radon measurement and mitigation services near you:</p>
-          			<md-list  flex>
+          			<md-list  flex="row">
           			<md-list-item class="myList" ng-repeat="contact in stateContacts">
-          			<img height="30rem" width="30rem" src="/images/environment.png"> <a target="_blank" ng-href="{{contact.url}}">{{contact.title}}</a> 
+          			
+          			
+          			<div align="left" layout="column">
+          			<div layout="row"><img height="50rem" width="50rem" src="/images/environment.png"> <h3>{{contact.title}}</h3></div>
+
+          			{{contact.address}}<br>
+          			{{contact.phone}}         			          			
+          			<a target="_blank" ng-href="{{contact.url}}">{{contact.url}}</a> 
+          			</div>
           			</<md-list-item>
           			</md-list>
           			</div>
