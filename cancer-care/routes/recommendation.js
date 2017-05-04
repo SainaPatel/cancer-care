@@ -112,8 +112,9 @@ exports.getArticles = function (req, res) {
 		keywords.push(type);
 		console.log("Keywords:" +keywords);
 	}
-
+    if(keywords.length < 3){
 	keywords.push("/General/");
+	}
 	//var keywords = ["/General/", "/Depression/"];
 	
 	var rx = [];
