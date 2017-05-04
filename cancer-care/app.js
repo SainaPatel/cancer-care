@@ -90,6 +90,7 @@ app.get('/radoninfo',recommendation.getRadonInfo);
 app.get('/getArticles', passport.authenticationMiddleware(),recommendation.getArticles);
 app.get('/getSupportGroups', passport.authenticationMiddleware(),recommendation.getSupportGroups);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
+app.get('/radoninfoState',recommendation.getRadonInfoState);
 app.get('/successLogin',function(req,res){
 	res.status(200).send("success");
 });

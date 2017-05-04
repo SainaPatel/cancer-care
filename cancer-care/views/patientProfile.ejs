@@ -351,7 +351,8 @@ $scope.doctorInfo=[];
 		$scope.generalMessage=false;				
 		$scope.getRadonInfo=function(){	
 			$scope.generalMessage=true;
-			if($scope.user.state!=""&&$scope.user.county!="")
+			console.log($scope.user.state+" "+$scope.user.county);
+			if(typeof $scope.user.state!='undefined'&& $scope.user.state!=""&&typeof $scope.user.county!='undefined'&&$scope.user.county)
 			 {
 				$scope.zone1=0;
 				$scope.zone2=0;
@@ -359,7 +360,45 @@ $scope.doctorInfo=[];
 				$http.get('/radonInfo').success(function (response) {
 	            console.log(response.data);
 	            $scope.stateContacts=response.data.contacts;
-	            for(var zone in response.data.stateZonesCount){
+	    		$scope.createPieChart(response);
+				$scope.personalizedRadonInfo="Your county "+$scope.user.county+" in your state "+$scope.user.state+" has radon Zone "+response.data.radon;
+	        })   
+			 }
+			else if(typeof $scope.user.state!='undefined'&&$scope.user.state!=""){
+				$scope.zone1=0;
+				$scope.zone2=0;
+				$scope.zone3=0;
+				$http.get('/radonInfoState').success(function (response) {
+		            console.log(response.data);
+		            $scope.stateContacts=response.data.contacts;
+		    		$scope.createPieChart(response);
+				   })	
+				
+			}
+			else{
+				$http.get('/radoninfoGeneral').success(function (response) {
+	                console.log(response.data);
+					var chart1={};
+					chart1.type = "GeoChart";
+					chart1.data=[  ['State', 'Radon Level'],
+					               ];							
+					chart1.options={
+			        		region:'US',
+			        		displayMode: 'regions',
+			        		resolution: 'provinces',
+			        	colorAxis: {colors: ['yellow', 'orange', 'red']}
+			        };
+	                for(var i=0;i<response.data.length;i++)
+	                {
+	                	chart1.data.push([response.data[i].code,response.data[i].level]);		                    	
+	                }        
+	                console.log(chart1.data);
+	                $scope.chart=chart1;			                  
+	            })   
+			}							        
+		}
+		$scope.createPieChart=function(response){
+			 for(var zone in response.data.stateZonesCount){
 	            	console.log(response.data.stateZonesCount[zone]);
 	            	if(response.data.stateZonesCount[zone]._id==1)
 	            		$scope.zone1=response.data.stateZonesCount[zone].count;
@@ -391,31 +430,9 @@ $scope.doctorInfo=[];
 				                  ]};
 				chart2.options={'title':"Percentage of Radonzones in your state"}
 	            $scope.chart=chart2;
-				$scope.personalizedRadonInfo="Your county "+$scope.user.county+" in your state "+$scope.user.state+" has radon Zone "+response.data.radon;
-	        })   
-			 }
-			else{
-				$http.get('/radoninfoGeneral').success(function (response) {
-	                console.log(response.data);
-					var chart1={};
-					chart1.type = "GeoChart";
-					chart1.data=[  ['State', 'Radon Level'],
-					               ];							
-					chart1.options={
-			        		region:'US',
-			        		displayMode: 'regions',
-			        		resolution: 'provinces',
-			        	colorAxis: {colors: ['yellow', 'orange', 'red']}
-			        };
-	                for(var i=0;i<response.data.length;i++)
-	                {
-	                	chart1.data.push([response.data[i].code,response.data[i].level]);		                    	
-	                }        
-	                console.log(chart1.data);
-	                $scope.chart=chart1;			                  
-	            })   
-			}							        
 		}
+		
+		
 
 	});
 					
