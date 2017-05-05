@@ -70,6 +70,45 @@ exports.getRadonInfoGeneral = function (req, res) {
 	});
 };
 
+exports.getRadonInfoState = function (req, res) {
+
+	var state = req.user.state;
+	mongo.connect(mongoURL, function () {
+		var coll = mongo.collection('regions');
+				coll.aggregate( [{ $match: { "state": state } },{$group:{_id:"$radon",count :  { $sum : 1 }}}]).toArray(function (err1, result) {
+					if (result) {
+						console.log(result);
+					
+						mongo.collection('states').findOne({"state":state}, { "code": 1, "level": 1,"contacts":1 },function (err, state) {
+							if (state) {
+								var regions={};
+								console.log("state: "+state);		
+								json_responses.status_code = 200;
+								regions.stateZonesCount=result;
+								regions.stateLevel=state.level;
+								regions.contacts=state.contacts;
+								json_responses.data = regions;			
+								console.log(regions);
+								res.send(json_responses);	
+								
+							} else {
+								json_responses.status_code = 500;
+								console.log(err);
+								res.send(json_responses);
+							}
+						});
+					
+					} else {
+						json_responses.status_code = 400;
+						console.log(err1);
+						res.send(json_responses);
+					}
+				});
+			
+			
+		});
+	
+};
 
 
 exports.getArticles = function (req, res) {

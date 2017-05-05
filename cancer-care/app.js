@@ -91,6 +91,7 @@ app.get('/getArticles', passport.authenticationMiddleware(),recommendation.getAr
 app.get('/getDoctorArticles', passport.authenticationMiddleware(),doctors.getArticles);
 app.get('/getSupportGroups', passport.authenticationMiddleware(),recommendation.getSupportGroups);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
+app.get('/radoninfoState',recommendation.getRadonInfoState);
 app.get('/successLogin',function(req,res){
 	res.status(200).send("success");
 });
@@ -101,7 +102,7 @@ app.get('/patientProfile',passport.authenticationMiddleware(),function(req,res){
 	res.render('patientProfile', { title: 'Circle of Hope', user: req.user });
 });
 app.get('/doctorProfile',passport.authenticationMiddleware(),function(req,res){
-	res.render('doctorProfile', { title: 'Circle of Hope' });
+	res.render('doctorProfile', { title: 'Circle of Hope' , user: req.user});
 });
 app.post('/register',registration.patientRegister);
 //app.post('/login',registration.login);
@@ -127,7 +128,7 @@ app.get('/getRecommendations',cam.getRecommendations);
 //app.get('/getFoodDetails',cam.getFoodDetails);
 app.get('/getProfileInfo',profile.getProfileInfo);
 app.post('/updateProfileInfo',profile.updateProfileInfo);
-
+app.post('/getTreatmentLocations',cam.getTreatmentLocations);
 //app.get('/getLifestyleDetails',cam.getLifestyleDetails);
 
 http.createServer(app).listen(app.get('port'), function(){
