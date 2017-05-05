@@ -1079,6 +1079,7 @@ $scope.doctorInfo=[];
 	        <md-tab ng-click="getSupportGroups()" label="Support Groups">
         <md-content class="md-padding">
           <h4 class="heading">Support groups in <%=user.state%> and Social media groups</h4>
+		  <div>
           	<div class="support-groups" ng-repeat="group in supportGroups.data">
 					<img src="/images/support-icon.jpg" class="img-circle" width="200" height="200">
 					<div class="article-heading">{{group.Name}}</div>
@@ -1088,10 +1089,15 @@ $scope.doctorInfo=[];
 						<span class="icon fa fa-external-link"></span><a href={{group.Link}} target="_blank">     {{group.Link}}</a>
 					</div>		
           	</div>
+		  </div>
+		  <div>
 			<div class="social" ng-repeat="social in supportGroups.social">
+				<div>
 					<div class="article-heading"><a href={{social.Link}} target="_blank">{{social.Name}}</a></div>
 					<div class="article-description">{{social.Description}}</div>
+				</div>
 			</div>
+		  </div>
         </md-content>
       </md-tab>
     </md-tabs>

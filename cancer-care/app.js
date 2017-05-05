@@ -88,6 +88,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/radoninfo',recommendation.getRadonInfo);
 app.get('/getArticles', passport.authenticationMiddleware(),recommendation.getArticles);
+app.get('/getDoctorArticles', passport.authenticationMiddleware(),doctors.getArticles);
 app.get('/getSupportGroups', passport.authenticationMiddleware(),recommendation.getSupportGroups);
 app.get('/radoninfoGeneral',recommendation.getRadonInfoGeneral);
 app.get('/successLogin',function(req,res){

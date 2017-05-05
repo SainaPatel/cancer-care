@@ -21,13 +21,28 @@
 		<script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 		<script src="/node_modules/angular-material/angular-material.min.js"></script>
 		<script>
-			angular.module('myApp',['ngMaterial'])
+			var app = angular.module('myApp',['ngMaterial'])
 				.run(function(){
 					console.log("Ready angular");
 				})
+				
+	app.controller("DoctorController", function($window,$scope, $http) {
+				$scope.getArticles = function() {
+			console.log("Get Articles Called");
+			$http({
+				method: 'GET',
+				url: '/getDoctorArticles/',
+				data: {}
+		}).success(function(data) {
+				console.log("Back" + JSON.stringify(data));
+				$scope.suggestions = data;
+				$scope.articles = data;
+			});
+		};
+	});
 		</script>
 	</head>
-	<body ng-app="myApp">
+	<body ng-app="myApp" ng-controller="DoctorController" ng-init="getArticles();">
 
 		<!-- Header -->
 			<div id="header">
@@ -58,7 +73,7 @@
 							-->
 							<ul>
 								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-								<li><a href="#recommendations" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
+								<li><a href="#recommendations" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Articles</span></a></li>
 								<li><a href="#latestNews" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Latest News</span></a></li>
 								<li><a href="#contact_us" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact Us</span></a></li>
 							</ul>
@@ -104,59 +119,22 @@
 					<section id="recommendations" class="two">
 						<div class="container">
 
-							<header>
-								<h2>Recommendations</h2>
-							</header>
+						<div class="container">
 
-							<p>Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-							egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-							Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-							fusce hendrerit lacus ridiculus.</p>
+				<header>
+					<h2>Articles</h2>
+				</header>
+				<div ng-repeat="article in articles.data">
 
-							<div class="row">
-								<div class="4u 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic02.jpg" alt="" /></a>
-										<header>
-											<h3>Ipsum Feugiat</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic03.jpg" alt="" /></a>
-										<header>
-											<h3>Rhoncus Semper</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic04.jpg" alt="" /></a>
-										<header>
-											<h3>Magna Nullam</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic05.jpg" alt="" /></a>
-										<header>
-											<h3>Natoque Vitae</h3>
-										</header>
-									</article>
-								</div>
-								<div class="4u$ 12u$(mobile)">
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic06.jpg" alt="" /></a>
-										<header>
-											<h3>Dolor Penatibus</h3>
-										</header>
-									</article>
-									<article class="item">
-										<a href="#" class="image fit"><img src="/images/pic07.jpg" alt="" /></a>
-										<header>
-											<h3>Orci Convallis</h3>
-										</header>
-									</article>
-								</div>
-							</div>
+					<div class="article-heading">{{article.Summary}}</div>
+					<div class="article-description">{{article.Description}}
+						<span class="article-link">
+						<a href={{article.Link}} target="_blank">Read more...</a>
+					</span>
+					</div>
+					</div>
+
+			</div>
 
 						</div>
 					</section>

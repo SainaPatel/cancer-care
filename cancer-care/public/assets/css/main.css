@@ -158,7 +158,7 @@
 	text-align: center !important;
 	margin-bottom: 5%;
 	width: 20%;
-	padding-top: 0px;
+	vertical-align: top;
 }
 
 .social .article-heading{
