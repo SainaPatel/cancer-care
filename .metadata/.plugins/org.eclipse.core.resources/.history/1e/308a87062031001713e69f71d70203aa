@@ -221,13 +221,6 @@
 	color: #754B57;
 	font-size: large;
 }
-
-.recipe_title{
-	cursor:hand;
-	text-align: left;
-	color: #754B57;
-		font-size: large;
-}
 .article-heading {
 	text-align: left;
 	color: #754B57;

@@ -21,18 +21,13 @@
 <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
 <script src="/node_modules/angular-material/angular-material.min.js"></script>
 <style>
-
-
-
-.radonList li{
-display: list-item;
-list-style-type: disc;
-  text-align: left;
+.myList:hover {
+	background-color: BA99A2;
+	color: white;
 }
 
-.radonList{
-margin:5%;
-
+.myList a:hover {
+	color: white;
 }
 </style>
 <script
@@ -44,106 +39,120 @@ margin:5%;
 	src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-chart/0.1.0/ng-google-chart.min.js"
 	type="text/javascript"></script>
 <script>
+	var app = angular.module('myApp', [ 'ngMaterial', 'googlechart' ]).run(
+			function() {
+				console.log("Ready angular");
+			}).config(
+			function($mdThemingProvider) {
+				$mdThemingProvider.definePalette('cancer-care-palette', {
+
+					'100' : '754B57',
+					'200' : 'BA99A2',
+					'300' : 'D1B8BF',
+					'50' : 'ffebee',
+					'400' : 'ef5350',
+					'500' : 'f44336',
+					'600' : 'e53935',
+					'700' : 'd32f2f',
+					'800' : 'c62828',
+					'900' : 'b71c1c',
+					'A100' : 'ff8a80',
+					'A200' : 'ff5252',
+					'A400' : 'ff1744',
+					'A700' : 'd50000',
+					'contrastDefaultColor' : 'light', // whether, by default, text (contrast)
+					// on this palette should be dark or light
+
+					'contrastDarkColors' : [ '50', '100', //hues which contrast should be 'dark' by default
+					'200', '300', '400', 'A100' ],
+					'contrastLightColors' : undefined
+
+				});
+
+				$mdThemingProvider.theme('default').primaryPalette(
+						'cancer-care-palette', {
+							'default' : '100'
+						}).accentPalette('cancer-care-palette', {
+					'default' : '200'
+				});
+			})
+
+	app
+			.controller(
+					"PatientController",
+					function($window, $scope, $http, $mdDialog, $mdMedia,
+							$mdToast) {
 
 
-	var app = angular.module('myApp', [ 'ngMaterial','googlechart' ]).run(function() {
-		console.log("Ready angular");
-	})	.config(function($mdThemingProvider) {
-		$mdThemingProvider.definePalette('cancer-care-palette', {
-			   
-		    '100': '754B57',
-		    '200': 'BA99A2',
-		    '300': 'D1B8BF',
-		    '50': 'ffebee',
-		    '400': 'ef5350',
-		    '500': 'f44336',
-		    '600': 'e53935',
-		    '700': 'd32f2f',
-		    '800': 'c62828',
-		    '900': 'b71c1c',
-		    'A100': 'ff8a80',
-		    'A200': 'ff5252',
-		    'A400': 'ff1744',
-		    'A700': 'd50000',
-		    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
-		                                        // on this palette should be dark or light
+						$scope.showToast = function(message) {
+							$mdToast.show($mdToast.simple()
+									.textContent(message).hideDelay(3000));
+						};
+						$scope.profile = {};
+						$scope.profile.types = [ "unsure", "small cell",
+								"non-small cell" ];
+						$scope.profile.stages = [ "1", "2", "3", "4", "unsure" ];
+						$scope.profile.treatments = [ "Chemotherapy",
+								"Radiotherapy", "Surgery" ];
+						$scope.getProfileInfo = function() {
+							$http
+									.get('/getProfileInfo')
+									.success(
+											function(response) {
+												console
+														.log($scope.user = response.result);
 
-		    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
-		     '200', '300', '400', 'A100'],
-		    'contrastLightColors': undefined 
-		
-		  });
+											})
+						};
+						$scope.logout = function() {
+							$window.location.href = '/logout';
 
+						}
+						$scope.updateProfileInfo = function() {
+							$scope.user.type = "user";
+							console.log($scope.user)
+							$http.post('/updateProfileInfo', $scope.user)
+									.success(function(response) {
+										console.log("successfully updated");
+									})
+						}
+						$scope.toggle = function(item, list) {
+							var idx = list.indexOf(item);
+							if (idx > -1) {
+								list.splice(idx, 1);
+							} else {
+								list.push(item);
+							}
+						};
 
-			$mdThemingProvider.theme('default')
-		.primaryPalette('cancer-care-palette',{'default':'100'})
-	.accentPalette('cancer-care-palette',{'default':'200'});
-	})
-
-	app.controller("PatientController", function($window,$scope, $http, $mdDialog, $mdMedia,$mdToast) {
-	      $scope.showToast = function(message) {
-              $mdToast.show(
-                 $mdToast.simple()
-                    .textContent(message)                       
-                    .hideDelay(3000)
-              );
-           };
-		$scope.profile={};
-		$scope.profile.types=["unsure","small cell","non-small cell"];
-		$scope.profile.stages=["1","2","3","4","unsure"];
-	    $scope.profile.treatments=["Chemotherapy","Radiotherapy","Surgery"];
-			$scope.getProfileInfo=function(){
-				 $http.get('/getProfileInfo').success(function (response) {
-	                    console.log($scope.user=response.result);              
-	                  
-	                })  
-			};
-			$scope.logout=function(){
-				$window.location.href='/logout';
-				
-			}
-			$scope.updateProfileInfo=function(){
-				$scope.user.type="user";
-				console.log($scope.user)
-				$http.post('/updateProfileInfo',$scope.user).success(function(response){
-					console.log("successfully updated");
-					$scope.showToast("successfully updated");
-					$window.location.reload();
-				})
-			}
-		      $scope.toggle = function (item, list) {
-			        var idx = list.indexOf(item);
-			        if (idx > -1) {
-			          list.splice(idx, 1);
-			        }
-			        else {
-			          list.push(item);
-			        }
-			      };
-
-			      $scope.exists = function (item, list) {
-			        return list.indexOf(item) > -1;
-			      };
-		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-		  $scope.showFACTL = function(ev) {
-		    $mdDialog.show({
-		      controller: FACTLController,
-		      templateUrl: 'FACTL.tmpl.html',
-		      parent: angular.element(document.body),
-		      targetEvent: ev,
-		      clickOutsideToClose:true,
-		      locals: {
-		          answers: $scope.answers
-		       }
-		    })
-		        .then(function(answer) {
-		          $scope.status = 'You said the information was "' + answer + '".';
-		        }, function() {
-		          $scope.status = 'You cancelled the dialog.';
-		        });
-		  };
-	
-
+						 $scope.exists = function (item, list) {
+						  return list.indexOf(item) > -1;
+						}; 
+						$scope.customFullscreen = $mdMedia('xs')
+								|| $mdMedia('sm');
+						$scope.showFACTL = function(ev) {
+							$mdDialog
+									.show(
+											{
+												controller : FACTLController,
+												templateUrl : 'FACTL.tmpl.html',
+												parent : angular
+														.element(document.body),
+												targetEvent : ev,
+												clickOutsideToClose : true,
+												locals : {
+													answers : $scope.answers
+												}
+											})
+									.then(
+											function(answer) {
+												$scope.status = 'You said the information was "'
+														+ answer + '".';
+											},
+											function() {
+												$scope.status = 'You cancelled the dialog.';
+											});
+						};
 						$scope.showCancerInfo1 = false;
 						$scope.showCancerInfo2 = false;
 						$scope.showCancerInfo3 = false;
@@ -370,7 +379,6 @@ margin:5%;
 							$scope.showTreatments = false;
 							$scope.showFoodDetails = false;
 							$scope.showLifestyleDetails = false;
-							
 
 						};
 						
@@ -441,116 +449,188 @@ margin:5%;
 											});
 						}
 
-						
+						/* $scope.getCamTreatments = function() {
+							 $http({
+								method : 'GET',
+								url : '/getCamTreatments',
+								data : {}
+							}).success(function(data) {
+								//	window.alert("In Success");
+								//console.log("data" + data.result[0].lattitude);
+								console.log("in success" + data.result.length);
+								var result = data.result;
+								$scope.treatments = result;
 
-		
-		$scope.personalizedRadonInfo="";
-		$scope.generalMessage=false;				
-		$scope.getRadonInfo=function(){	
-			$scope.generalMessage=true;
-			console.log($scope.user.state+" "+$scope.user.county);
-			if(typeof $scope.user.state!='undefined'&& $scope.user.state!=""&&typeof $scope.user.county!='undefined'&&$scope.user.county)
-			 {
-				$scope.zone1=0;
-				$scope.zone2=0;
-				$scope.zone3=0;
-				$http.get('/radonInfo').success(function (response) {
-	            console.log(response.data);
-	            $scope.stateContacts=response.data.contacts;
-	    		$scope.createPieChart(response);
-				$scope.personalizedRadonInfo="Your county "+$scope.user.county+" in your state "+$scope.user.state+" has radon Zone "+response.data.radon;
-	        })   
-			 }
-			else if(typeof $scope.user.state!='undefined'&&$scope.user.state!=""){
-				$scope.zone1=0;
-				$scope.zone2=0;
-				$scope.zone3=0;
-				$http.get('/radonInfoState').success(function (response) {
-		            console.log(response.data);
-		            $scope.stateContacts=response.data.contacts;
-		    		$scope.createPieChart(response);
-				   })	
-				
-			}
-			else{
-				$http.get('/radoninfoGeneral').success(function (response) {
-	                console.log(response.data);
-					var chart1={};
-					chart1.type = "GeoChart";
-					chart1.data=[  ['State', 'Radon Level'],
-					               ];							
-					chart1.options={
-			        		region:'US',
-			        		displayMode: 'regions',
-			        		resolution: 'provinces',
-			        	colorAxis: {colors: ['yellow', 'orange', 'red']}
-			        };
-	                for(var i=0;i<response.data.length;i++)
-	                {
-	                	chart1.data.push([response.data[i].code,response.data[i].level]);		                    	
-	                }        
-	                console.log(chart1.data);
-	                $scope.chart=chart1;			                  
-	            })   
-			}							        
+							}); 
+							$scope.showTreatments = false;
+						}; */
+
+						/* $scope.getFoodDetails = function() {
+							 $http({
+								method : 'GET',
+								url : '/getFoodDetails',
+								data : {}
+							}).success(function(data) {
+								//	window.alert("In Success");
+								//console.log("data" + data.result[0].lattitude);
+								console.log("in success" + data.result.length);
+								var result = data.result;
+								$scope.foodDetails = result;
+
+							}); 
+							$scope.showFoodDetails = false;
+						}; */
+
+						/* $scope.getLifestyleDetails = function() {
+							$http({
+								method : 'GET',
+								url : '/getLifestyleDetails',
+								data : {}
+							}).success(function(data) {
+								//	window.alert("In Success");
+								//console.log("data" + data.result[0].lattitude);
+								console.log("in success" + data.result.length);
+								var result = data.result;
+								$scope.LifestyleDetails = result;
+
+							});
+							$scope.showLifestyleDetails = false;
+						};*/
+
+						$scope.personalizedRadonInfo = "";
+						$scope.generalMessage = false;
+						$scope.getRadonInfo = function() {
+							$scope.generalMessage = true;
+							if ($scope.user.state != ""
+									&& $scope.user.county != "") {
+								$scope.zone1 = 0;
+								$scope.zone2 = 0;
+								$scope.zone3 = 0;
+								$http
+										.get('/radonInfo')
+										.success(
+												function(response) {
+													console.log(response.data);
+													$scope.stateContacts = response.data.contacts;
+													for ( var zone in response.data.stateZonesCount) {
+														console
+																.log(response.data.stateZonesCount[zone]);
+														if (response.data.stateZonesCount[zone]._id == 1)
+															$scope.zone1 = response.data.stateZonesCount[zone].count;
+														else if (response.data.stateZonesCount[zone]._id == 2)
+															$scope.zone2 = response.data.stateZonesCount[zone].count;
+														else if (response.data.stateZonesCount[zone]._id == 3)
+															$scope.zone3 = response.data.stateZonesCount[zone].count;
+													}
+													var chart2 = {};
+													chart2.type = "PieChart";
+													chart2.data = {
+														"cols" : [
+																{
+																	id : "t",
+																	label : "Radon Level",
+																	type : "string"
+																},
+																{
+																	id : "s",
+																	label : "Radon Zone",
+																	type : "string"
+																} ],
+														"rows" : [
+																{
+																	c : [
+																			{
+																				v : "High Risk"
+																			},
+																			{
+																				v : $scope.zone1
+																			}, ]
+																},
+
+																{
+																	c : [
+																			{
+																				v : "Medium Risk"
+																			},
+																			{
+																				v : $scope.zone2
+																			} ]
+																},
+																{
+																	c : [
+																			{
+																				v : "Low Risk"
+																			},
+																			{
+																				v : $scope.zone3
+																			}, ]
+																}
+
+														]
+													};
+													chart2.options = {
+														'title' : "Percentage of Radonzones in your state"
+													}
+													$scope.chart = chart2;
+													$scope.personalizedRadonInfo = "Your county "
+															+ $scope.user.county
+															+ " has radon level "
+															+ response.data.radon;
+												})
+							} else {
+								$http
+										.get('/radoninfoGeneral')
+										.success(
+												function(response) {
+													console.log(response.data);
+													var chart1 = {};
+													chart1.type = "GeoChart";
+													chart1.data = [
+															[ 'State',
+																	'Radon Level' ], ];
+													chart1.options = {
+														region : 'US',
+														displayMode : 'regions',
+														resolution : 'provinces',
+														colorAxis : {
+															colors : [
+																	'yellow',
+																	'orange',
+																	'red' ]
+														}
+													};
+													for (var i = 0; i < response.data.length; i++) {
+														chart1.data
+																.push([
+																		response.data[i].code,
+																		response.data[i].level ]);
+													}
+													console.log(chart1.data);
+													$scope.chart = chart1;
+												})
+							}
+						}
+
+					});
+
+	function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
+
+		$scope.showToast = function(message) {
+			$mdToast.show($mdToast.simple().textContent(message)
+					.hideDelay(3000));
+		};
+		$scope.hide = function() {
+
+			$mdDialog.hide(answer);
+		};
+		$scope.cancel = function() {
+
+			$mdDialog.cancel("cancel");
 		};
 		
-		$scope.createPieChart=function(response){
-			 for(var zone in response.data.stateZonesCount){
-	            	console.log(response.data.stateZonesCount[zone]);
-	            	if(response.data.stateZonesCount[zone]._id==1)
-	            		$scope.zone1=response.data.stateZonesCount[zone].count;
-	            	else if(response.data.stateZonesCount[zone]._id==2)
-	            		$scope.zone2=response.data.stateZonesCount[zone].count;
-	            	else if(response.data.stateZonesCount[zone]._id==3)
-	            		$scope.zone3=response.data.stateZonesCount[zone].count;
-	            }
-	            var chart2={};
-				chart2.type = "PieChart";
-				chart2.data={"cols": [
-				                      {id: "t", label: "Radon Level", type: "string"},
-				                      {id: "s", label: "Radon Zone", type: "string"}
-				                  ], "rows": [
-				                      {c: [
-				                          {v: "High Risk"},
-				                          {v: $scope.zone1},
-				                      ]},
-				                    
-				                      {c: [
-				                          {v: "Medium Risk"},
-				                          {v: $scope.zone2}
-				                      ]},
-				                      {c: [
-				                          {v: "Low Risk"},
-				                          {v: $scope.zone3},
-				                      ]}
-				                     
-				                  ]};
-				chart2.options={'title':"Percentage of Radonzones in your state"}
-	            $scope.chart=chart2;
+		$scope.edit = function() {
+
 		};
-	});
-		
-
-function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
-
-	$scope.showToast = function(message) {
-		$mdToast.show($mdToast.simple().textContent(message)
-				.hideDelay(3000));
-	};
-	$scope.hide = function() {
-
-		$mdDialog.hide(answer);
-	};
-	$scope.cancel = function() {
-
-		$mdDialog.cancel("cancel");
-	};
-	
-	$scope.edit = function() {
-
-
-		}
 
 		$scope.currentStep = 0;
 		$scope.currentType = 0;
@@ -1105,15 +1185,21 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 
 			<div ng-show="generalMessage">
 			<h3>Did you know?</h3>
-			<ul >
-			<li style=>{{personalizedRadonInfo}}</li>
-			<li>According to the U.S. Environmental Protection Agency (EPA) a radon level at or above 4 picocuries per liter(pCi/L) of air is dangerous</li>
-			<li>Radon decays quickly, giving off tiny radioactive particles which when inhaled can damage the cells that line the lung. </li>
-			<li>Long-term exposure to radon can lead to lung cancer.</li>
-			<li>There has been a suggestion of increased risk of leukemia associated with radon exposure in adults and children.</li>
-			<li>Radon is the second leading cause of lung cancer in the United States.Scientists estimate that 15,000 to 22,000 lung</li>
-			cancer deaths in the United States each year are related to radon. </li>
-			</ul>
+			{{personalizedRadonInfo}}
+			<strong>According to the U.S. Environmental Protection
+				Agency (EPA) a radon level at or above 4 picocuries per liter
+				(pCi/L) of air is dangerous</strong>
+				Radon decays quickly, giving off tiny
+			radioactive particles. When inhaled, these radioactive particles can
+			damage the cells that line the lung. Long-term exposure to radon can
+			lead to lung cancer, only cancer proved to be associated with
+			inhaling radon. There has been a suggestion of increased risk of
+			leukemia associated with radon exposure in adults and children;
+			however, the evidence is not conclusive.Cigarette smoking is the most
+			common cause of lung cancer. Radon represents a far smaller risk for
+			this disease, but it is the second leading cause of lung cancer in
+			the United States. Scientists estimate that 15,000 to 22,000 lung
+			cancer deaths in the United States each year are related to radon. 
 			</div>
 			<md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Show Radon gas information</md-button>
 
@@ -1184,7 +1270,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				<tr>
 					<td style="width: 50%; padding:2px" >Recipes
 					<div ng-repeat="recipe in food.recipes" >
-				<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
+				<div ng-click="showRecipes($event,recipe)">{{recipe.title}}</div>
 					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
 					<b class="books_text"> by {{book.author}}</b>
 					<div class="books_text"> Price : {{book.price}} </div> -->
@@ -1193,7 +1279,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 					</td>
 					<td>
 					Buying Links
-					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" width="25" height="25"/> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
+					<div ng-repeat="buy in food.buying_links"><img src="{{buy.image}}" /> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
 					</td>
 				</tr>
 
@@ -1226,32 +1312,29 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
           			<div ng-show="generalMessage">
           			<div google-chart chart="chart"></div>
           			<div ng-show="stateContacts">
-          			<span class="icon fa-info-circle"> {{personalizedRadonInfo}}.</span> 
-          			 <p>Following are some Radon measurement and mitigation services near you:</p>
-          			<md-list  flex="row">
+          			<span class="icon fa-info-circle"> Radon measurement and mitigation services near you:</span> 
+          			<md-list  flex>
           			<md-list-item class="myList" ng-repeat="contact in stateContacts">
-
-          			
-          			
-          			<div align="left" layout="column">
-          			<div layout="row"><img height="50rem" width="50rem" src="/images/environment.png"> <h3>{{contact.title}}</h3></div>
-
-          			{{contact.address}}<br>
-          			{{contact.phone}}         			          			
-          			<a target="_blank" ng-href="{{contact.url}}">{{contact.url}}</a> 
-          			</div>
-          			</<md-list-item>
-
+          			<a ng-href="{{contact.url}}">{{contact.title}}</a> 
+          			<md-list-item>
           			</md-list>
           			</div>
 			<h3>Did you know?</h3>
-			<ul class="radonList">
-			<li>According to the U.S. Environmental Protection Agency (EPA) a radon level at or above 4 picocuries per liter(pCi/L) of air is dangerous</li>
-			<li>Radon decays quickly, giving off tiny radioactive particles which when inhaled can damage the cells that line the lung. </li>
-			<li>There has been a suggestion of increased risk of leukemia associated with radon exposure in adults and children.</li>
-			<li>Radon is the second leading cause of lung cancer in the United States.Scientists estimate that 15,000 to 22,000 lung cancer deaths in the United States each year are related to radon.</li>
-			
-			</ul>
+			{{personalizedRadonInfo}}
+			<strong>According to the U.S. Environmental Protection
+				Agency (EPA) a radon level at or above 4 picocuries per liter
+				(pCi/L) of air is dangerous</strong>
+				Radon decays quickly, giving off tiny
+			radioactive particles. When inhaled, these radioactive particles can
+			damage the cells that line the lung. Long-term exposure to radon can
+			lead to lung cancer, only cancer proved to be associated with
+			inhaling radon. There has been a suggestion of increased risk of
+			leukemia associated with radon exposure in adults and children;
+			however, the evidence is not conclusive.Cigarette smoking is the most
+			common cause of lung cancer. Radon represents a far smaller risk for
+			this disease, but it is the second leading cause of lung cancer in
+			the United States. Scientists estimate that 15,000 to 22,000 lung
+			cancer deaths in the United States each year are related to radon. 
 			</div>
         </md-content>
       </md-tab>	 
