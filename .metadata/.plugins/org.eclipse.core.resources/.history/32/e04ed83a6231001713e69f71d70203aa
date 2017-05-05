@@ -1151,7 +1151,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 			<md-content> <md-tabs md-dynamic-height md-border-bottom>
 			<md-tab label="Treatments"> <md-content class="md-padding">
 			<h1 class="md-display-2">Treatments</h1>
-			<md-card style="padding:25px;" ng-repeat="treatment in treatments">
+			<div ng-repeat="treatment in treatments">
 				<div class="treatment-heading">{{treatment.name}}</div>
 
 				<p class="treatment-text">
@@ -1164,7 +1164,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 					<div ng-repeat="book in treatment.books" >
 					
 
-					 <a target="_blank" href="{{book.buy_link}}" class="books_heading">{{book.name}}</a></br>
+					 <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a></br>
 					<b class="books_text"> by {{book.author}}</b>
 					<div class="books_text"> Price : {{book.price}} </div>
 					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
@@ -1178,43 +1178,40 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				</tr>
 
 			</table>
-			</md-content> </md-tab> 
-			<md-tab label="Food"> 
-			<md-content class="md-padding">
+<!-- 				<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
+ -->			</div>
+			
+			
+			</md-content> </md-tab> <md-tab label="Food"> <md-content class="md-padding">
 			<h1 class="md-display-2">Food</h1>
 			
-				<md-card ng-repeat="food in foodDetails" style="padding:25px;">
+				<div ng-repeat="food in foodDetails">
 					<div class="treatment-heading">{{food.name}}</div>
-       				<p class="treatment-text">
+       <p class="treatment-text">
 						<img class="treatment-image" src="{{food.image}}" alt=""
 							align="left" /> {{food.description}}
 					</p>
+					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+					<table style="width: 100%">
+				<tr>
+					<td style="width: 50%; padding:2px" >Recipes
+					<div ng-repeat="recipe in food.recipes" >
+				<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
+					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
+					<b class="books_text"> by {{book.author}}</b>
+					<div class="books_text"> Price : {{book.price}} </div> -->
+					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
+					</div> 
+					</td>
+					<td>
+					Buying Links
+					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" class="buy_image"/> <p><a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</p></div>
+					</td>
+				</tr>
 
-
-					<div style="clear:both;"></div>
-					<!-- start -->
-					<div layout="row">
-						<div flex=50 layout="column">
-							<h4 align="left">Recipes</h4>
-							<div ng-repeat="recipe in food.recipes" >
-								<div ng-click="showRecipes($event,recipe)" class="recipe_title"><i class="fa fa-cutlery"></i> {{recipe.title}}</div>
-							</div>
-						</div> 
-						<div flex=50 layout="column">
-							<h4 align="left">Buying Links</h4>
-							<div layout="row" ng-repeat="buy in food.buying_links" class="treatment-text">
-								<img flex=25 src="{{buy.image}}" width="50px" height="50px" /> 
-								<div flex=75>
-									<a target="_blank" href="{{buy.link}}">{{buy.name}} </a>
-									<div> {{buy.price}}</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</md-card>
-			</md-content> 
-			</md-tab> 
-
+			</table>
+				</div>
+			</md-content> </md-tab> 
       <md-tab label="Lifestyle">
         <md-content class="md-padding">
           <h1 class="md-display-2">Lifestyle</h1>
@@ -1222,7 +1219,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 					Along with medications your lifestyle plays a very important role
 					towards your health. Incorporate the following recommendations in
 					your day to day activities to lead a healthier life.</br></br>
-					<md-card style="padding:25px;" ng-repeat="lifestyle in LifestyleDetails">
+					<div ng-repeat="lifestyle in LifestyleDetails">
 						<div class="treatment-heading">{{lifestyle.name}}</div>
 
 						<p class="treatment-text">
@@ -1236,18 +1233,18 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						<div ng-repeat="buy in lifestyle.buying_links" class="treatment-text">
 						<img src="{{buy.image}}" class="buy_image"/>
 						 <p>
-						 <a target="_blank" href="{{buy.link}}">{{buy.name}} 
+						 <a href="{{buy.link}}">{{buy.name}} 
 						 </a></br> {{buy.price}}
 						 </p>
 						 </div>
 						
 						<div ng-repeat="book in lifestyle.books" class="treatment-text">
-						<a target="_blank" href="{{book.buy_link}}" class="books_heading" style="text-align:right">{{book.name}}</a>
+						<a href="{{book.buy_link}}" class="books_heading" style="text-align:right">{{book.name}}</a>
 					<b class="books_text" style="text-align:left"> by {{book.author}}</b>
 					<div class="books_text" style="text-align:left"> Price : {{book.price}} </div>
 					</div>
 
-					</md-card>
+					</div>
 				</div>
         </md-content>
       </md-tab>
@@ -1255,7 +1252,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
         <md-content class="md-padding">
           <h1 class="md-display-2">Radon risk in your area <%=user.state%></h1>
           <md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Get Info</md-button>
-          			<md-card style="padding:25px;" ng-show="generalMessage">
+          			<div ng-show="generalMessage">
           			<div google-chart chart="chart"></div>
           			<div ng-show="stateContacts">
           			<span class="icon fa-info-circle"> {{personalizedRadonInfo}}.</span> 
@@ -1266,7 +1263,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
           			
           			
           			<div align="left" layout="column">
-          			<div layout="row"><img height="50rem" width="50rem" src="/images/environment.png"> <h4>{{contact.title}}</h4></div>
+          			<div layout="row"><img height="50rem" width="50rem" src="/images/environment.png"> <h3>{{contact.title}}</h3></div>
 
           			{{contact.address}}<br>
           			{{contact.phone}}         			          			
@@ -1284,14 +1281,12 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 			<li>Radon is the second leading cause of lung cancer in the United States.Scientists estimate that 15,000 to 22,000 lung cancer deaths in the United States each year are related to radon.</li>
 			
 			</ul>
-			</md-card>
+			</div>
         </md-content>
       </md-tab>	 
 	        <md-tab ng-click="getSupportGroups()" label="Support Groups">
         <md-content class="md-padding">
           <h4 class="heading">Support groups in <%=user.state%> and Social media groups</h4>
-		  <md-card style="padding:25;">
-		  <div>
           	<div class="support-groups" ng-repeat="group in supportGroups.data">
 					<img src="/images/support-icon.jpg" class="img-circle" width="200" height="200">
 					<div class="article-heading">{{group.Name}}</div>
@@ -1301,16 +1296,10 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						<span class="icon fa fa-external-link"></span><a href={{group.Link}} target="_blank">     {{group.Link}}</a>
 					</div>		
           	</div>
-		  </div>
-		  <div>
 			<div class="social" ng-repeat="social in supportGroups.social">
-				<div>
 					<div class="article-heading"><a href={{social.Link}} target="_blank">{{social.Name}}</a></div>
 					<div class="article-description">{{social.Description}}</div>
-				</div>
 			</div>
-		  </div>
-		  </md-card>
         </md-content>
       </md-tab>
     </md-tabs>
@@ -1345,7 +1334,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				</header>
 
 				<div class="news news_font">
-					OncoMed's lung cancer drug fails mid-stage study, shares tumble <a target="_blank"
+					OncoMed's lung cancer drug fails mid-stage study, shares tumble <a
 						href="https://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font
 						color="black" width="100%">&#8594;</font></a>
 				</div>
@@ -1358,7 +1347,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				</br>
 				<div class="news news_font">
 					OncoMed stock drops 25% after lung cancer drug misses in mid-stage
-					clinical trial <a target="_blank"
+					clinical trial <a
 						href="https://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font
 						color="black" width="100%">&#8594;</font></a>
 				</div>

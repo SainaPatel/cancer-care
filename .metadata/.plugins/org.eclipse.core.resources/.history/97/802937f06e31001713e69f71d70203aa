@@ -1189,7 +1189,26 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						<img class="treatment-image" src="{{food.image}}" alt=""
 							align="left" /> {{food.description}}
 					</p>
-
+<<<<<<< Updated upstream
+=======
+					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
+					<table style="width: 100%">
+				<tr>
+					<td style="width: 50%; padding:2px; color:#754B57" >Recipes
+					<div ng-repeat="recipe in food.recipes" >
+				<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
+					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
+					<b class="books_text"> by {{book.author}}</b>
+					<div class="books_text"> Price : {{book.price}} </div> -->
+					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
+					</div> 
+					</td>
+					<td style="color:#754B57">
+					Buying Links
+					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" class="buy_image"/> <p><a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</p></div>
+					</td>
+				</tr>
+>>>>>>> Stashed changes
 
 					<div style="clear:both;"></div>
 					<!-- start -->
