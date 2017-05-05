@@ -3,7 +3,6 @@ INDEX VERSION 1.3+/Users/sainapatel/Desktop/295B/cancer-care/.metadata/.plugins/
 1179836580.index
 3130212474.index
 607268697.index
-3401888667.index
 4055918815.index
 1227954098.index
 987087729.index

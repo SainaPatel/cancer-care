@@ -390,6 +390,23 @@ margin:5%;
 						    });
 						  };
 						  
+						  $scope.showPoses = function(ev,pose) {
+							    $mdDialog.show({
+							      controller: DialogController,
+							      template : '<div class="treatment-heading" style="padding:10px">'+pose.name+' </div><div style="padding:10px">'+pose.link+'</div> ',
+							      parent: angular.element(document.body),
+							      targetEvent: ev,
+							      clickOutsideToClose:true,
+							      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+							    })
+							    .then(function(answer) {
+							      $scope.status = 'You said the information was "' + answer + '".';
+							    }, function() {
+							      $scope.status = 'You cancelled the dialog.';
+							    });
+							  };
+						  
+						  
 						 function DialogController($scope, $mdDialog) {
 							    $scope.hide = function() {
 							      $mdDialog.hide();
@@ -1141,17 +1158,9 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				<tr>
 					<td style="width: 50%; padding:2px" >Books
 					<div ng-repeat="book in treatment.books" >
-					<!-- <table>
-					<tr>
-					<td>
-					<img class="books_image" src="{{book.image}}" />
-					</td>
-					<td>
-					<div>{{book.name}}</div>
-					</td>
-					</tr>
-					</table> -->
-					 <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
+					
+
+					 <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a></br>
 					<b class="books_text"> by {{book.author}}</b>
 					<div class="books_text"> Price : {{book.price}} </div>
 					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
@@ -1193,7 +1202,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 					</td>
 					<td>
 					Buying Links
-					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" width="25" height="25"/> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
+					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" class="buy_image"/> <p><a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</p></div>
 					</td>
 				</tr>
 
@@ -1206,15 +1215,32 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
           <div>
 					Along with medications your lifestyle plays a very important role
 					towards your health. Incorporate the following recommendations in
-					your day to day activities to lead a healthier life.</br>
+					your day to day activities to lead a healthier life.</br></br>
 					<div ng-repeat="lifestyle in LifestyleDetails">
 						<div class="treatment-heading">{{lifestyle.name}}</div>
 
 						<p class="treatment-text">
 							<img class="treatment-image" src="{{lifestyle.image}}" alt=""
 								align="right" /> {{lifestyle.description}}
-						</p>
-						<a href="{{lifestyle.link1}}" class="treatment-link">{{lifestyle.link1}}</a>
+								</p>
+								<div ng-repeat="pose in lifestyle.poses">
+													
+						<div ng-click="showPoses($event,pose)" class="recipe_title" style="color: blue">{{pose.name}}</div>
+						</div></br>
+						<div ng-repeat="buy in lifestyle.buying_links" class="treatment-text">
+						<img src="{{buy.image}}" class="buy_image"/>
+						 <p>
+						 <a href="{{buy.link}}">{{buy.name}} 
+						 </a></br> {{buy.price}}
+						 </p>
+						 </div>
+						
+						<div ng-repeat="book in lifestyle.books" class="treatment-text">
+						<a href="{{book.buy_link}}" class="books_heading" style="text-align:right">{{book.name}}</a>
+					<b class="books_text" style="text-align:left"> by {{book.author}}</b>
+					<div class="books_text" style="text-align:left"> Price : {{book.price}} </div>
+					</div>
+
 					</div>
 				</div>
         </md-content>
