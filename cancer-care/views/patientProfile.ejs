@@ -390,6 +390,23 @@ margin:5%;
 						    });
 						  };
 						  
+						  $scope.showPoses = function(ev,pose) {
+							    $mdDialog.show({
+							      controller: DialogController,
+							      template : '<div class="treatment-heading" style="padding:10px">'+pose.name+' </div><div style="padding:10px">'+pose.link+'</div> ',
+							      parent: angular.element(document.body),
+							      targetEvent: ev,
+							      clickOutsideToClose:true,
+							      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+							    })
+							    .then(function(answer) {
+							      $scope.status = 'You said the information was "' + answer + '".';
+							    }, function() {
+							      $scope.status = 'You cancelled the dialog.';
+							    });
+							  };
+						  
+						  
 						 function DialogController($scope, $mdDialog) {
 							    $scope.hide = function() {
 							      $mdDialog.hide();
@@ -1141,17 +1158,9 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				<tr>
 					<td style="width: 50%; padding:2px" >Books
 					<div ng-repeat="book in treatment.books" >
-					<!-- <table>
-					<tr>
-					<td>
-					<img class="books_image" src="{{book.image}}" />
-					</td>
-					<td>
-					<div>{{book.name}}</div>
-					</td>
-					</tr>
-					</table> -->
-					 <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
+					
+
+					 <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a></br>
 					<b class="books_text"> by {{book.author}}</b>
 					<div class="books_text"> Price : {{book.price}} </div>
 					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
@@ -1181,6 +1190,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						<img class="treatment-image" src="{{food.image}}" alt=""
 							align="left" /> {{food.description}}
 					</p>
+
 					<div style="clear:both;"></div>
 					<!-- start -->
 					<div layout="row">
@@ -1204,21 +1214,39 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				</md-card>
 			</md-content> 
 			</md-tab> 
+
       <md-tab label="Lifestyle">
         <md-content class="md-padding">
           <h1 class="md-display-2">Lifestyle</h1>
           <div>
 					Along with medications your lifestyle plays a very important role
 					towards your health. Incorporate the following recommendations in
-					your day to day activities to lead a healthier life.</br>
+					your day to day activities to lead a healthier life.</br></br>
 					<div ng-repeat="lifestyle in LifestyleDetails">
 						<div class="treatment-heading">{{lifestyle.name}}</div>
 
 						<p class="treatment-text">
 							<img class="treatment-image" src="{{lifestyle.image}}" alt=""
 								align="right" /> {{lifestyle.description}}
-						</p>
-						<a href="{{lifestyle.link1}}" class="treatment-link">{{lifestyle.link1}}</a>
+								</p>
+								<div ng-repeat="pose in lifestyle.poses">
+													
+						<div ng-click="showPoses($event,pose)" class="recipe_title" style="color: blue">{{pose.name}}</div>
+						</div></br>
+						<div ng-repeat="buy in lifestyle.buying_links" class="treatment-text">
+						<img src="{{buy.image}}" class="buy_image"/>
+						 <p>
+						 <a href="{{buy.link}}">{{buy.name}} 
+						 </a></br> {{buy.price}}
+						 </p>
+						 </div>
+						
+						<div ng-repeat="book in lifestyle.books" class="treatment-text">
+						<a href="{{book.buy_link}}" class="books_heading" style="text-align:right">{{book.name}}</a>
+					<b class="books_text" style="text-align:left"> by {{book.author}}</b>
+					<div class="books_text" style="text-align:left"> Price : {{book.price}} </div>
+					</div>
+
 					</div>
 				</div>
         </md-content>
@@ -1262,6 +1290,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 	        <md-tab ng-click="getSupportGroups()" label="Support Groups">
         <md-content class="md-padding">
           <h4 class="heading">Support groups in <%=user.state%> and Social media groups</h4>
+		  <div>
           	<div class="support-groups" ng-repeat="group in supportGroups.data">
 					<img src="/images/support-icon.jpg" class="img-circle" width="200" height="200">
 					<div class="article-heading">{{group.Name}}</div>
@@ -1271,10 +1300,15 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						<span class="icon fa fa-external-link"></span><a href={{group.Link}} target="_blank">     {{group.Link}}</a>
 					</div>		
           	</div>
+		  </div>
+		  <div>
 			<div class="social" ng-repeat="social in supportGroups.social">
+				<div>
 					<div class="article-heading"><a href={{social.Link}} target="_blank">{{social.Name}}</a></div>
 					<div class="article-description">{{social.Description}}</div>
+				</div>
 			</div>
+		  </div>
         </md-content>
       </md-tab>
     </md-tabs>

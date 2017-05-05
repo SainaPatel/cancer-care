@@ -75,6 +75,20 @@ margin:5%;
 	})
 
 	app.controller("DoctorController", function($window,$scope, $http, $mdDialog, $mdMedia,$mdToast) {
+
+					$scope.getArticles = function() {
+			console.log("Get Articles Called");
+			$http({
+				method: 'GET',
+				url: '/getDoctorArticles/',
+				data: {}
+		}).success(function(data) {
+				console.log("Back" + JSON.stringify(data));
+				$scope.suggestions = data;
+				$scope.articles = data;
+			});
+		};
+
 	      $scope.showToast = function(message) {
               $mdToast.show(
                  $mdToast.simple()
@@ -302,22 +316,8 @@ margin:5%;
 												console.log("clickedSpace1"+$scope.clickedSpace); */
 											});
 							//console.log("title outside" + $scope.value);
-
 						};
 
-						//get lifestyle articles
-						$scope.getArticles = function() {
-							console.log("Get Articles Called");
-							$http({
-								method : 'GET',
-								url : '/getArticles/',
-								data : {}
-							}).success(function(data) {
-								console.log("Back" + JSON.stringify(data));
-								$scope.suggestions = data;
-								$scope.articles = data;
-							});
-						};
 
 						//get supportGroups
 						$scope.getSupportGroups = function() {
@@ -434,9 +434,6 @@ margin:5%;
 												alert("error");
 											});
 						}
-
-						
-
 		
 		$scope.personalizedRadonInfo="";
 		$scope.generalMessage=false;				

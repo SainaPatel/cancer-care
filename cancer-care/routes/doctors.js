@@ -1,5 +1,7 @@
 var mongo = require("./mongo");
 var mongoURL = "mongodb://doctorSearch:cmpe295@ds163940.mlab.com:63940/betterdoctor";
+var supportArticlemongoURL = "mongodb://cmpe295lifestyle:cmpe295@ds111771.mlab.com:11771/circleofhope";
+var json_responses = {};
 
 exports.getDoctors = function(req,res){
 	mongo.connect(mongoURL, function(){
@@ -47,3 +49,34 @@ distanceCal=function(lat1, lon1, lat2, lon2, unit) {
 	if (unit=="N") { dist = dist * 0.8684 }
 	return dist
 }
+
+exports.getArticles = function (req, res) {
+	var keywords = ["/General/", "/Doctor/"];
+	console.log("getArticles called:" +req.user.state);	
+
+	var rx = [];
+	keywords.forEach(function name(value) {
+		var v = value.replace(/\//ig, "");
+		rx.push(new RegExp(v));
+	});
+
+	mongo.connect(supportArticlemongoURL, function () {
+		var coll = mongo.collection('articlesLifestyle');
+		coll.find({
+			"Keywords": { $in : rx}
+		}).toArray(function (err, articles) {
+			if (articles) {
+				json_responses.status_code = 200;
+				json_responses.data = articles;
+				console.log("Success!");
+				console.log(articles);
+				res.send(json_responses);
+			} else {
+				json_responses.status_code = 500;
+				console.log("Error");
+				console.log(err);
+				res.send(json_responses);
+			}
+		});
+	});
+};
