@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move &apos;ngmap&apos; to &apos;node_modules&apos;" description="Move &apos;ngmap&apos; to &apos;node_modules&apos;" destination="public/node_modules" element1="public/ngmap" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="1" stamp="1493857753037" updateReferences="true"/>
-</session>
