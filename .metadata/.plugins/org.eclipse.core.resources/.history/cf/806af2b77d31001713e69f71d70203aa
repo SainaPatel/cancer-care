@@ -362,17 +362,8 @@ console.log("error")
 										$scope.name1 = filtered.name;
 										$scope.treatmentLocationInfo = filtered;
 										$scope.$apply();
-									var message="Name : <a href="+filtered.url+">"+$scope.name1+"  </a> </br> Contact : "+filtered.display_phone+"   ";
-										  infoWindow = new google.maps.InfoWindow({
-											  content: message
-											  });
-										  google.maps.event.addListener(marker, 'click', function () {
-								                infoWindow.open(map, marker);
-								            });
-										  });
-
-									};
-						
+									});
+						};
 
 						//get lifestyle articles
 						$scope.getArticles = function() {

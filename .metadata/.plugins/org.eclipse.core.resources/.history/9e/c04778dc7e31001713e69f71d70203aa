@@ -362,7 +362,7 @@ console.log("error")
 										$scope.name1 = filtered.name;
 										$scope.treatmentLocationInfo = filtered;
 										$scope.$apply();
-									var message="Name : <a href="+filtered.url+">"+$scope.name1+"  </a> </br> Contact : "+filtered.display_phone+"   ";
+									var message="Name :"+$scope.name1+" </br> Contact : "+filtered.display_phone;
 										  infoWindow = new google.maps.InfoWindow({
 											  content: message
 											  });
