@@ -124,9 +124,9 @@ margin:5%;
 			        }
 			      };
 
-			       $scope.exists = function (item, list) {
+			      $scope.exists = function (item, list) {
 			        return list.indexOf(item) > -1;
-			      }; 
+			      };
 		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 		  $scope.showFACTL = function(ev) {
 		    $mdDialog.show({
@@ -145,20 +145,21 @@ margin:5%;
 		          $scope.status = 'You cancelled the dialog.';
 		        });
 		  };
-		  
-	 $scope.getLocation=function(Latitude, Longitude){
-	
+	var Lat;
+	var Lon;
+$scope.getLocation=function(){
+	var Lat = Latitude;
+	var Lon = Longitude;
 	if (navigator.geolocation) {
 navigator.geolocation.getCurrentPosition(function(position) {
-$scope.Lat = position.coords.latitude,
-$scope.Lon = position.coords.longitude
+Lat = position.coords.latitude,
+Lon = position.coords.longitude
 });
 } else {
-	$scope.Lat = Latitude;
-	$scope.Lon = Longitude;
+
 console.log("error")
 };
-}; 
+};
 	
 
 						$scope.showCancerInfo1 = false;
@@ -176,24 +177,7 @@ console.log("error")
     }
     	console.log("position not provided");
     	} */
-    	var Lat = Latitude;
-		var Lon = Longitude;
-		$scope.Lat=Latitude;
-		$scope.Lon = Longitude;
-    	if (navigator.geolocation) {
-    		navigator.geolocation.getCurrentPosition(function(position) {
-    		Lat = position.coords.latitude,
-    		Lon = position.coords.longitude
-    		$scope.Lat=position.coords.latitude,
-    		$scope.Lon=position.coords.longitude
-    		});
-    		} else {
-    			
-    		console.log("error")
-    		};
-    		
-    		
-    		var mapProp = {
+							var mapProp = {
 								// var position=getLocation();
 								center : new google.maps.LatLng(Lat,
 										Lon),
@@ -238,12 +222,22 @@ console.log("error")
 							//var markers=[[37.791198,-122.431769],[37.66554,-122.47586],[37.94366,-122.53337],[37.3558630,-121.8505680],[37.2583720,-121.9188660],[37.4975170,-122.2710600],[37.3785350,-122.0865850],[37.3189150,-121.9416230],[37.3558630,-121.8505680],[37.3132070,-121.9334580],[37.3280060,-121.9370740],[37.2520720,-121.9463300],[37.3630490,-121.8531090],[37.2533940,-121.9516570],[37.4357880,-122.1765360],[37.3132070,-121.9334580],[37.3157330,-121.9371280],[37.3325120,-121.9089420],[37.3526400,-122.0492810],[37.3132070,-121.9334580],[37.2637820,-121.8775830],[37.2637820,-121.8775830]];
 							
 							
-											
+											var Lat = Latitude;
+							var Lon = Longitude;
+							if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+    Lat = position.coords.latitude,
+    Lon = position.coords.longitude
+    });
+    } else {
+    	
+    console.log("error")
+    	};
 							console.log("id in createMap2"+id);
 							var mapProp1 = {
 								// var position=getLocation();
-								center : new google.maps.LatLng($scope.Lat,
-										$scope.Lon),
+								center : new google.maps.LatLng(Lat,
+										Lon),
 								zoom : 10,
 								mapTypeId : google.maps.MapTypeId.ROADMAP,
 							};
@@ -252,8 +246,8 @@ console.log("error")
 							map1 = new google.maps.Map(document
 									.getElementById(id), mapProp1);
 							mark1 = new google.maps.Marker({
-								position : new google.maps.LatLng($scope.Lat,
-										$scope.Lon),
+								position : new google.maps.LatLng(Lat,
+										Lon),
 								map : map1,
 								title : 'You are here',
 								label : 'You are here'
@@ -266,8 +260,8 @@ console.log("error")
 								url : '/getDoctors',
 								data : {
 									"state" : "California",
-									"lat" : $scope.Lat,
-									"lon" : $scope.Lon
+									"lat" : 37.3418790,
+									"lon" : -121.9242500
 								}
 							})
 									.success(
@@ -807,7 +801,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 
 
 <body ng-app="myApp" ng-controller="PatientController"
-	ng-init="getLocation(37.3418790,-121.9242500); createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles()">
+	ng-init="createMap(37.3418790,-121.9242500); getDoctors(); getRecommendations(); getProfileInfo(); getArticles()">
 
 	<!-- Header -->
 	<div id="header">

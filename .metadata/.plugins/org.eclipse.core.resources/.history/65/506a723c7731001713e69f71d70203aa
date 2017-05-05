@@ -124,9 +124,9 @@ margin:5%;
 			        }
 			      };
 
-			       $scope.exists = function (item, list) {
+			      /* $scope.exists = function (item, list) {
 			        return list.indexOf(item) > -1;
-			      }; 
+			      }; */
 		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 		  $scope.showFACTL = function(ev) {
 		    $mdDialog.show({
@@ -178,8 +178,7 @@ console.log("error")
     	} */
     	var Lat = Latitude;
 		var Lon = Longitude;
-		$scope.Lat=Latitude;
-		$scope.Lon = Longitude;
+		
     	if (navigator.geolocation) {
     		navigator.geolocation.getCurrentPosition(function(position) {
     		Lat = position.coords.latitude,
