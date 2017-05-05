@@ -1130,7 +1130,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 			<md-content> <md-tabs md-dynamic-height md-border-bottom>
 			<md-tab label="Treatments"> <md-content class="md-padding">
 			<h1 class="md-display-2">Treatments</h1>
-			<div ng-repeat="treatment in treatments">
+			<md-card style="padding:25px;" ng-repeat="treatment in treatments">
 				<div class="treatment-heading">{{treatment.name}}</div>
 
 				<p class="treatment-text">
@@ -1166,40 +1166,44 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 
 			</table>
 <!-- 				<a href="{{treatment.link1}}" class="treatment-link">{{treatment.link1}}</a>
- -->			</div>
+ -->			</md-card>
 			<!-- 		            <ng-map center="[37.3418790,-121.9242500]" zoom-control="true" zoom="8" width="700px"> </ng-map>
  -->
 			
-			</md-content> </md-tab> <md-tab label="Food"> <md-content class="md-padding">
+			</md-content> </md-tab> 
+			<md-tab label="Food"> 
+			<md-content class="md-padding">
 			<h1 class="md-display-2">Food</h1>
 			
-				<div ng-repeat="food in foodDetails">
+				<md-card ng-repeat="food in foodDetails" style="padding:25px;">
 					<div class="treatment-heading">{{food.name}}</div>
-       <p class="treatment-text">
+       				<p class="treatment-text">
 						<img class="treatment-image" src="{{food.image}}" alt=""
 							align="left" /> {{food.description}}
 					</p>
-					<a href="{{food.link1}}" class="treatment-link">{{food.link1}}</a>
-					<table style="width: 100%">
-				<tr>
-					<td style="width: 50%; padding:2px" >Recipes
-					<div ng-repeat="recipe in food.recipes" >
-				<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
-					<!--  <a href="{{book.buy_link}}" class="books_heading">{{book.name}}</a>
-					<b class="books_text"> by {{book.author}}</b>
-					<div class="books_text"> Price : {{book.price}} </div> -->
-					<!-- <a class="books_text" style="color:blue" href="{{book.buy_link}}">Buy Here</a> -->
-					</div> 
-					</td>
-					<td>
-					Buying Links
-					<div ng-repeat="buy in food.buying_links" class="treatment-text"><img src="{{buy.image}}" width="25" height="25"/> <a href="{{buy.link}}">{{buy.name}} </a></br> {{buy.price}}</div>
-					</td>
-				</tr>
-
-			</table>
-				</div>
-			</md-content> </md-tab> 
+					<div style="clear:both;"></div>
+					<!-- start -->
+					<div layout="row">
+						<div flex=50 layout="column">
+							<h4 align="left">Recipes</h4>
+							<div ng-repeat="recipe in food.recipes" >
+								<div ng-click="showRecipes($event,recipe)" class="recipe_title">{{recipe.title}}</div>
+							</div>
+						</div> 
+						<div flex=50 layout="column">
+							<h4 align="left">Buying Links</h4>
+							<div layout="row" ng-repeat="buy in food.buying_links" class="treatment-text">
+								<img flex=25 src="{{buy.image}}" width="50px" height="50px" /> 
+								<div flex=75>
+									<a href="{{buy.link}}">{{buy.name}} </a>
+									<div> {{buy.price}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</md-card>
+			</md-content> 
+			</md-tab> 
       <md-tab label="Lifestyle">
         <md-content class="md-padding">
           <h1 class="md-display-2">Lifestyle</h1>
@@ -1234,7 +1238,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
           			
           			
           			<div align="left" layout="column">
-          			<div layout="row"><img height="50rem" width="50rem" src="/images/environment.png"> <h3>{{contact.title}}</h3></div>
+          			<div layout="row"><img height="50rem" width="50rem" src="/images/environment.png"> <h4>{{contact.title}}</h4></div>
 
           			{{contact.address}}<br>
           			{{contact.phone}}         			          			
