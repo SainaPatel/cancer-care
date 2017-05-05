@@ -10,6 +10,7 @@ exports.addFACTL=function(req,res){
 	var FACTL_TOI=req.body.PWB+req.body.FWB+req.body.LCS;
 	var FACTG=req.body.PWB+req.body.FWB+req.body.SWB+req.body.EWB;
 	var FACTL=req.body.PWB+req.body.FWB+req.body.SWB+req.body.EWB+req.body.LCS;
+	var answers=(((req.body.PWBArray.concat(req.body.SWBArray)).concat(req.body.EWBArray)).concat(req.body.FWBArray)).concat(req.body.LCSArray);
 	mongo.connect(mongoURL,function() {
 	mongo.collection('user').update({"email":req.user.email},
 			{$set:
@@ -26,7 +27,8 @@ exports.addFACTL=function(req,res){
 					"SWBArray":req.body.SWBArray,
 					"EWBArray":req.body.EWBArray,
 					"FWBArray":req.body.FWBArray,
-					"LCSArray":req.body.LCSArray
+					"LCSArray":req.body.LCSArray,
+					"answers":answers
 				}
 			},
 			function(err, user) { 
