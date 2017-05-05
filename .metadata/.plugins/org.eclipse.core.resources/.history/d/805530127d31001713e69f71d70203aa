@@ -94,58 +94,6 @@ margin:5%;
 		$scope.profile={};
 		$scope.profile.types=["unsure","small cell","non-small cell"];
 		$scope.profile.stages=["1","2","3","4","unsure"];
-		$scope.profile.states=["Alabama",
-		 		              "Alaska",
-				              "Arizona",
-				              "Arkansas",
-				              "California",
-				              "Colorado",
-				              "Connecticut",
-				              "Delaware",
-				              "District of Columbia",
-				              "Florida",
-				              "Georgia",
-				              "Hawaii",
-				              "Idaho",
-				              "Illinois",
-				              "Indiana",
-				              "Iowa",
-				              "Kansas",
-				              "Kentucky",
-				              "Louisiana",
-				              "Maine",
-				              "Montana",
-				              "Nebraska",
-				              "Nevada",
-				              "New Hampshire",
-				              "New Jersey",
-				              "New Mexico",
-				              "New York",
-				              "North Carolina",
-				              "North Dakota",
-				              "Ohio",
-				              "Oklahoma",
-				              "Oregon",
-				              "Maryland",
-				              "Massachusetts",
-				              "Michigan",
-				              "Minnesota",
-				              "Mississippi",
-				              "Missouri",
-				              "Pennsylvania",
-				              "Rhode Island",
-				              "South Carolina",
-				              "South Dakota",
-				              "Tennessee",
-				              "Texas",
-				              "Utah",
-				              "Vermont",
-				              "Virginia",
-				              "Washington",
-				              "West Virginia",
-				              "Wisconsin",
-				              "Wyoming"
-			];
 	    $scope.profile.treatments=["Chemotherapy","Radiotherapy","Surgery"];
 			$scope.getProfileInfo=function(){
 				 $http.get('/getProfileInfo').success(function (response) {
@@ -412,19 +360,10 @@ console.log("error")
 										$scope.clickedMarker1 = filtered;
 
 										$scope.name1 = filtered.name;
-										$scope.treatmentLocationInfo = filtered;
+										$scope.treatmentLocationInfo = filtered.doctors;
 										$scope.$apply();
-									var message="Name : <a href="+filtered.url+">"+$scope.name1+"  </a> </br> Contact : "+filtered.display_phone+"   ";
-										  infoWindow = new google.maps.InfoWindow({
-											  content: message
-											  });
-										  google.maps.event.addListener(marker, 'click', function () {
-								                infoWindow.open(map, marker);
-								            });
-										  });
-
-									};
-						
+									});
+						};
 
 						//get lifestyle articles
 						$scope.getArticles = function() {
@@ -667,7 +606,7 @@ console.log("error")
 	});
 		
 
-function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
+function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 
 	$scope.showToast = function(message) {
 		$mdToast.show($mdToast.simple().textContent(message)
@@ -779,8 +718,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 				LCSArray : $scope.LCSArray,
 			}).success(function(response) {
 				console.log(response);
-				$window.location.reload();
-				//$mdDialog.hide(response);
+				$mdDialog.hide(response);
 			});
 		}
 		function calculatePWB(PWB) {
@@ -1525,9 +1463,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 					</tr>
 					<tr>
 						<td><md-input-container class="md-block">
-							 <md-select ng-model="user.state">		
-            		<md-option ng-value="state"  ng-repeat="state in profile.states" >{{state}}</md-option>       		
-          		</md-select></md-input-container> </md-input-container></td>
+							<label>State</label> <input ng-model="user.state"> </md-input-container></td>
 						<td><md-input-container class="md-block">
 							<label>County</label> <input ng-model="user.county"> </md-input-container></td>
 
