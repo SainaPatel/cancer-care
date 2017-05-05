@@ -23,7 +23,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
 	angular.module('myApp', ['ngMaterial'])
-	.controller('AppCtrl', function($scope, $mdDialog, $mdMedia) {
+	.controller('AppCtrl', function($window,$scope, $mdDialog, $mdMedia) {
 	  $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 	  $scope.showTabDialog = function(ev) {
 	    $mdDialog.show({
@@ -161,7 +161,7 @@
               );
            };
 	}
-	function DialogController($scope, $mdDialog,$http,$mdToast) {
+	function DialogController($window,$scope, $mdDialog,$http,$mdToast) {
 		$scope.selectedIndex=0;
 	  	$scope.hide = function() {
 	  		console.log($scope.selectedIndex);
@@ -198,8 +198,10 @@
 				   }
 			  ).success(function (response) {
 					console.log(response);
-                	if(response.status_code==200)
-                    	$mdDialog.hide(response);
+                	if(response.status_code==200){
+                		$mdDialog.hide(response);
+                		$scope.login("doctor");
+                	}                 	
                 	else  if(response.status_code==400){	                    	
                     	$scope.showToast("Username already exists");
                		}else{
@@ -224,8 +226,11 @@
 				   }
 			   ).success(function (response) {
                     console.log(response);
-                    if(response.status_code==200)
+                    if(response.status_code==200){
+                    	$scope.login("user");
                     	$mdDialog.hide(response);
+                    	
+                    }        	             	
                     else  if(response.status_code==400){
                     	
                     	$scope.showToast("Username already exists");
@@ -234,6 +239,28 @@
                     }                    	
                });			            
 		};
+	  	$scope.login = function(type) {
+	  	
+			console.log("Function called");
+			   $http.post('/login', { 
+				   email:$scope.email, 
+				   password: $scope.password, 
+				   type:type
+				   }
+			   ).success(function (response) {
+                 console.log(response);
+                 if(type=="user"){
+                	 $window.location.href='/patientProfile';
+                 }else{
+                	 $window.location.href='/doctorProfile';
+                 }
+                 
+            }).error(function(err){
+            	$scope.showToast("Unauthorized");
+              
+            });	
+		  	
+	  	};
 	    $scope.qualifications = ["MD","PHD"];
 	    $scope.treatments=["Chemotherapy","Radiotherapy","Surgery"];
 	      $scope.selectedQualifications = [];

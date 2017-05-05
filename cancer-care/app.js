@@ -101,7 +101,7 @@ app.get('/patientProfile',passport.authenticationMiddleware(),function(req,res){
 	res.render('patientProfile', { title: 'Circle of Hope', user: req.user });
 });
 app.get('/doctorProfile',passport.authenticationMiddleware(),function(req,res){
-	res.render('doctorProfile', { title: 'Circle of Hope' });
+	res.render('doctorProfile', { title: 'Circle of Hope' , user: req.user});
 });
 app.post('/register',registration.patientRegister);
 //app.post('/login',registration.login);
