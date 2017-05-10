@@ -30,6 +30,9 @@
 display: list-item;
 list-style-type: disc;
   text-align: left;
+  	color: black;
+	font-size: large;
+	font-weight:500;
 }
 
 .radonList{
@@ -54,8 +57,8 @@ margin:5%;
 	})	.config(function($mdThemingProvider) {
 		$mdThemingProvider.definePalette('cancer-care-palette', {
 			   
-		    '100': '754B57',
-		    '200': 'BA99A2',
+		    '100': '54BE90',
+		    '200': '54BE90',
 		    '300': 'D1B8BF',
 		    '50': 'ffebee',
 		    '400': 'ef5350',
@@ -893,7 +896,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 
 			<!-- Logo -->
 			<div id="logo">
-				<span class="image avatar48"><img src="/images/avatar.jpg"
+				<span class="image avatar48"><img src="/images/avatar.png"
 					alt="" /></span>
 				<h1 id="title">{{user.name}}</h1>
 				<p>Welcome to <%= title %></p>
@@ -909,10 +912,8 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 
 					<li><a href="#top" id="top-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-					<li><a href="#cancerInfo" id="cancerinfo-link"
-						class="skel-layers-ignoreHref"><span class="icon fa-th">Cancer
-								Information</span></a></li>
-					<li><a href="#cancerInfo" id="recommendations-link"
+			
+					<li><a href="#recommendations" id="recommendations-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-th">Recommendations</span></a></li>
 					<li><a href="#lifestyle" id="lifestyle-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-heart-o"
@@ -952,29 +953,29 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 	<div id="main" class="main-profile">
 
 		<!-- Intro -->
-		<section id="top" class="patient dark cover">
-			<div class="container">
+		<section id="top" >
+			<div class="container" style="background:url('/images/yoga-background.jpg') 0px -200px;height:300px; ">
 
-				<header>
-					<h2 class="main_font">
-						You beat cancer by How You Live, Why You Live and in the manner in
-						which you live
-						</p>
+				<header >
+					<h3 class="main_font">
+						"You beat cancer by How You Live, Why You Live and in the manner in
+						which you live"
+							
+					</h3>
+					<h3 class="main_font">	<pre>			                          	                    -Stuat Scott</pre></h3>
 				</header>
-				<md-button type="submit" ng-click="showFACTL($event)"
-					class="md-raised md-accent">Answer quick questions to
-				access your Quality of Life</md-button>
+			
 
 				<!-- <footer>
 								<a href="#portfolio" class="button scrolly">Magna Aliquam</a>
 							</footer> -->
 
 			</div>
-		</section>
-		<!--  CancerInfo -->
-		<section id="cancerInfo" class="two">
+	
 			<div class="container">
-
+					<br>
+					<md-button id="factlButton" type="submit" ng-click="showFACTL($event)"
+					class="md-raised md-primary">Answer quick questions to get better recommendations</md-button>
 				<header>
 					<h2>About Cancer</h2>
 				</header>
@@ -1087,7 +1088,8 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 				<div class="section__content clearfix" ng-show="showCard">
 					<div class="card effect__click">
 						<div class="image fit card__front">
-							<img class="types_cancer" src="/images/5842696.jpg" alt="" /> <span
+							<img class="types_cancer" src="/images/5842696.jpg" alt="" /> 
+							<span
 								class="card__text">Non Small Cell Lung Cancer</span>
 						</div>
 						<div class="card__back">
@@ -1260,14 +1262,15 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 		</section>-->
 
 		<section id="recommendations" ng-cloak style="margin: 5%;">
+			
 			<md-header>
 			<h2>Recommendations</h2>
 			</md-header>
 
-			<md-content> <md-tabs md-dynamic-height md-border-bottom>
+			<md-content style="color:black;opacity:1;"> <md-tabs md-dynamic-height md-border-bottom>
 			<md-tab label="Treatments"> <md-content class="md-padding">
-			<h1 class="md-display-2">Treatments</h1>
-			<md-card style="padding:25px;" ng-repeat="treatment in treatments">
+			<h4 class="md-display-1">Treatments</h4>
+			<md-card style="padding:25px;style="color:black;opacity:1;" ng-repeat="treatment in treatments">
 				<div class="treatment-heading">{{treatment.name}}</div>
 
 				<p class="treatment-text">
@@ -1276,7 +1279,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 				</p>
 				<table style="width: 100%">
 				<tr>
-					<td style="width: 50%; padding:2px" >Books
+					<td class="treatment-text" style="width: 50%; padding:2px" >Books
 					<div ng-repeat="book in treatment.books" >
 					
 
@@ -1297,7 +1300,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 			</md-content> </md-tab> 
 			<md-tab label="Food"> 
 			<md-content class="md-padding">
-			<h1 class="md-display-2">Food</h1>
+			<h2 class="md-display-1">Food</h2>
 			
 				<md-card ng-repeat="food in foodDetails" style="padding:25px;">
 					<div class="treatment-heading">{{food.name}}</div>
@@ -1333,7 +1336,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 
       <md-tab label="Lifestyle">
         <md-content class="md-padding">
-          <h1 class="md-display-2">Lifestyle</h1>
+          <h2 class="md-display-1">Lifestyle</h2>
           <div>
 					Along with medications your lifestyle plays a very important role
 					towards your health. Incorporate the following recommendations in
@@ -1369,7 +1372,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
       </md-tab>
         <md-tab label="Radon">
         <md-content class="md-padding">
-          <h1 class="md-display-2">Radon risk in your area <%=user.state%></h1>
+          <h2 class="md-display-1">Radon risk in your area <%=user.state%></h2>
           <md-button ng-hide="generalMessage" class="md-raised md-primary" ng-click="getRadonInfo()">Get Info</md-button>
           			<md-card style="padding:25px;" ng-show="generalMessage">
           			<div google-chart chart="chart"></div>
@@ -1393,7 +1396,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
           			</md-list>
           			</div>
 			<h3>Did you know?</h3>
-			<ul class="radonList">
+			<ul class="radonList" class="treatment-text">
 			<li>According to the U.S. Environmental Protection Agency (EPA) a radon level at or above 4 picocuries per liter(pCi/L) of air is dangerous</li>
 			<li>Radon decays quickly, giving off tiny radioactive particles which when inhaled can damage the cells that line the lung. </li>
 			<li>There has been a suggestion of increased risk of leukemia associated with radon exposure in adults and children.</li>
@@ -1405,7 +1408,7 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
       </md-tab>	 
 	        <md-tab ng-click="getSupportGroups()" label="Support Groups">
         <md-content class="md-padding">
-          <h4 class="heading">Support groups in <%=user.state%> and Social media groups</h4>
+          <h2 class="md-display-1">Support groups in <%=user.state%> and Social media groups</h2>
 		  <md-card style="padding:25;">
 		  <div>
           	<div class="support-groups" ng-repeat="group in supportGroups.data">
@@ -1434,11 +1437,13 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 </section>
 				
 		<section id="lifestyle" class="three">
-			<div class="container">
-
+				<div class="container">
 				<header>
 					<h2>Articles</h2>
 				</header>
+			<md-card style="padding:5%;">
+
+				
 				<div ng-repeat="article in articles.data">
 
 					<div class="article-heading">{{article.Summary}}</div>
@@ -1449,20 +1454,23 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 					</div>
 				</div>
 
-			</div>
+			</md-card>
+				</div>
 		</section>
 
 		<!-- Latest News -->
 		<section id="latestNews" class="four">
 			<div class="container">
-
-				<header>
+			<header>
 					<h2>Latest News</h2>
 				</header>
+				<md-card style="padding:5%;">
+				
 
 				<div class="news news_font">
 					OncoMed's lung cancer drug fails mid-stage study, shares tumble <a target="_blank"
-						href="https://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font
+						href="https://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK">
+						<font
 						color="black" width="100%">&#8594;</font></a>
 				</div>
 				</br>
@@ -1478,16 +1486,19 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 						href="https://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font
 						color="black" width="100%">&#8594;</font></a>
 				</div>
-
+				</md-card>
 			</div>
 		</section>
 
 
 		<!-- Doctors -->
 		<section id="doctors" class="five">
-			<header>
+			<div class="container">
+						<header>
 				<h2>Doctors</h2>
 			</header>
+			<md-card style="padding:5%;">
+
 			<div class="container" layout="row" layout-sm="column">
 
 
@@ -1505,15 +1516,19 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 
 
 			</div>
+			</md-card>
+			</div>
 		</section>
 		<br>
 		<!-- Profile -->
 		<section id="profile" class="six">
-
+			
 			<div class="container">
+				<header>
+				<h2>Profile</h2>
+			</header>
 				<md-card> <md-card-header> <md-card-avatar>
-				<img class="md-user-avatar" src="images/avatar.jpg" /> </md-card-avatar> <md-card-header-text>
-				Profile </md-card-header-text> </md-card-header> <md-card-content style="font-size:16px;width:80%;">
+				<img class="md-user-avatar" src="images/avatar.png" /> </md-card-avatar>  </md-card-header> <md-card-content style="font-size:16px;width:80%;">
 				<table ng-table="vm.tableParams" class="table table-bordered">
 					<tr>
 						<td><md-input-container class="md-block">
@@ -1527,14 +1542,15 @@ function FACTLController($window,$scope, $mdDialog, $http, $mdToast, answers) {
 						<td><md-input-container class="md-block">
 							 <md-select ng-model="user.state">		
             		<md-option ng-value="state"  ng-repeat="state in profile.states" >{{state}}</md-option>       		
-          		</md-select></md-input-container> </md-input-container></td>
-						<td><md-input-container class="md-block">
-							<label>County</label> <input ng-model="user.county"> </md-input-container></td>
+          		</md-select></md-input-container> </td>
+						
 
 					</tr>
 
 
 					<tr>
+					<td><md-input-container class="md-block">
+							<label>County</label> <input ng-model="user.county"> </md-input-container></td>
 						<td><md-input-container class="md-block">
 							<label>Gender</label> <input ng-model="user.gender"> </md-input-container></td>
 

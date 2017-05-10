@@ -8,6 +8,18 @@
 <link rel="stylesheet" href="/assets/css/main.css" />
 <link rel="stylesheet"
 	href="/node_modules/angular-material/angular-material.min.css" />
+<style>
+
+.md-input-container{
+color:#000000;	
+opacity:1;
+}
+.md-input-container label{
+color:#000000;	
+opacity:1;
+
+}
+</style>
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/node_modules/angular-animate/angular-animate.js"></script>
 <script src="/node_modules/angular-aria/angular-aria.min.js"></script>
@@ -22,8 +34,12 @@
 
 <!-- Latest compiled JavaScript -->
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+	
+</script>
+
 <script>
+
 	angular.module('myApp', ['ngMaterial'])
 	.controller('AppCtrl', function($window,$scope, $mdDialog, $mdMedia) {
 	  $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
@@ -89,8 +105,8 @@
 	}).config(function($mdThemingProvider) {
 		$mdThemingProvider.definePalette('cancer-care-palette', {
 			   
-		    '100': '754B57',
-		    '200': 'BA99A2',
+		    '100': '54BE90',
+		    '200': '54BE90',
 		    '300': 'D1B8BF',
 		    '50': 'ffebee',
 		    '400': 'ef5350',
@@ -347,7 +363,7 @@
 
 <body ng-app="myApp" ng-controller="AppCtrl">
 	<div class="navbar">
-		<a href="#home">Home</a> <a href="#about">About</a> <a href="#contact">Contact</a>
+		<a href="#top">Home</a> <a href="#about">About</a> <a href="#contact">Contact</a>
 		<a href="#login" style="float: right"
 			ng-click="showLoginDialog($event)">Login</a> <a href="#signup"
 			style="float: right" ng-click="showTabDialog($event)">Signup</a>
@@ -371,10 +387,11 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<img class="carousel-image" src="/images/circleOfHope.jpg"
+						<img class="carousel-image" src="/images/hope.jpg"
 							alt="Circle Of Hope">
-						<div class="carousel-caption">
-							<p style="float: right; font-size: 4vh">~ A platform for lung
+						<div class="carousel-caption" style="font-weight:bold;">
+							<p style="font-size:6em;float: left;">Circle of Hope</p>
+							<p style="float: right; font-size: 1.7em">~ A platform for lung
 								cancer patients giving hope, guidance and care!</p>
 						</div>
 					</div>
@@ -626,7 +643,7 @@
 	</div>
 	<script type="text/ng-template" id="tabDialog.tmpl.html">
 <md-dialog aria-label="Mango (Fruit)" style="width:50%">
-  <form name="myForm" style="font-size:80%;">
+  <form name="myForm">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Registration</h2>
@@ -644,12 +661,12 @@
 	
 			<br>
 			<md-input-container class="md-icon-float md-block">
-				<label>Email</label>
+				<label style="color:black;">Email</label>
 				
 				<input ng-model="email" type="email" ng-required="true">
 			</md-input-container>		
 			<md-input-container class="md-icon-float  md-block">
-				<label>Name</label>
+				<label style="color:black;">Name</label>
 		
 				<input ng-model="name" type="text" ng-required="true">
 			</md-input-container>
@@ -666,31 +683,31 @@
 			 <md-datepicker  ng-model="dob" md-placeholder="Enter Birth date"r></md-datepicker>	
 			 </md-input-container>				
 			<md-input-container class="md-icon-float  md-block">
-				<label>State</label>
+				<label style="color:black;">State</label>
 				<md-select ng-model="state">		
             		<md-option ng-value="state"  ng-repeat="state in states" >{{state}}</md-option>       		
           		</md-select>
 			</md-input-container>
 			<md-input-container class="md-icon-float  md-block">
-				<label>County</label>	
+				<label style="color:black;">County</label>	
 				<input ng-model="county" type="text" >
 			</md-input-container>
 			<br>
 			<md-input-container class="md-icon-float md-block">
-				<label>Type of Lung Cancer</label>		
+				<label style="color:black;">Type of Lung Cancer</label>		
 				<md-select ng-model="cancer_type">		
             		<md-option ng-value="opt"  ng-repeat="opt in types" >{{opt}}</md-option>       		
           		</md-select>
 			<br>
 			</md-input-container>
 						<md-input-container class="md-icon-float md-block">
-				<label>Stage of Lung Cancer</label>		
+				<label style="color:black;">Stage of Lung Cancer</label>		
 				<md-select ng-model="stage">		
             		<md-option ng-value="stage"  ng-repeat="stage in stages" >{{stage}}</md-option>       		
           		</md-select>
 			</md-input-container>
 			<br>
-	 		<label>Current Treatments:</label>
+	 		<label style="color:black;">Current Treatments:</label>
 			<div  ng-repeat="item in treatments">
 			<md-checkbox ng-checked="exists(item, selectedTreatments)"
 				ng-click="toggle(item, selectedTreatments)"> {{ item }} 
@@ -698,7 +715,7 @@
 				</div>
 		<br>
 			<md-input-container class="md-icon-float md-block">
-				<label>Password</label>
+				<label style="color:black;">Password</label>
 				<input ng-model="password" type="password" ng-required="true">
 			</md-input-container>	
 		
@@ -709,7 +726,7 @@
        
 		<br>
             <md-input-container class="md-icon-float md-block">
-		<label>Email</label> <input ng-model="email" type="email"
+		<label style="color:black;">Email</label> <input ng-model="email" type="email"
 			ng-required="true"> </md-input-container> <md-input-container
 			class="md-icon-float  md-block"> <label>Name</label>
 
@@ -724,31 +741,31 @@
 		</md-datepicker>
 		</md-input-container> 
 				<md-input-container class="md-icon-float  md-block">
-				<label>State</label>
+				<label style="color:black;">State</label>
 				<md-select ng-model="state">		
             		<md-option ng-value="state"  ng-repeat="state in states" >{{state}}</md-option>       		
           		</md-select>
 			</md-input-container>
 			<md-input-container class="md-icon-float  md-block">
-				<label>County</label>	
+				<label style="color:black;">County</label>	
 				<input ng-model="county" type="text" >
 			</md-input-container>
 			<br>
-		 <label>Qualifications:</label>
+		 <label style="color:black;">Qualifications:</label>
 		<div  ng-repeat="item in qualifications">
 			<md-checkbox ng-checked="exists(item, selectedQualifications)"
 				ng-click="toggle(item, selectedQualifications)"> {{ item }} 
 				 </md-checkbox>
 		</div>
 		<br>
-			 <label>Specialization:</label>
+			 <label style="color:black;">Specialization:</label>
 		<div  ng-repeat="item in specializations">
 			<md-checkbox ng-checked="exists(item, selectedSpecializations)"
 				ng-click="toggle(item, selectedSpecializations)"> {{ item }}</md-checkbox>
 		</div>
 		<br>
 		<md-input-container class="md-icon-float md-block"">
-		<label>Password</label> <input ng-model="password" type="password"
+		<label style="color:black;">Password</label> <input ng-model="password" type="password"
 			ng-required="true"> </md-input-container> 
 		
           </md-content>
@@ -773,8 +790,8 @@
 
 
 	<script type="text/ng-template" id="loginDialog.tmpl.html">
-<md-dialog style="width:50%">
-  <form name="loginForm" style="font-size:80%;">
+<md-dialog style="width:50%;">
+  <form name="loginForm" >
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Login</h2>
@@ -784,19 +801,19 @@
         </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content>
+    <md-dialog-content >
       <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
         <md-tab label="patient" >
           <md-content class="md-padding">
             <br>
 			<md-input-container class="md-icon-float md-block">
-				<label>Patient Email</label>
+				<label style="color:black;">Patient Email</label>
 				
 				<input ng-model="email" type="email" ng-required="true">
 			</md-input-container>		
 	
 			<md-input-container class="md-icon-float md-block">
-				<label>Patient Password</label>
+				<label style="color:black;">Patient Password</label>
 				<input ng-model="password" type="password" ng-required="true">
 			</md-input-container>	
 			
@@ -808,13 +825,13 @@
                    <md-content class="md-padding">
             <br>
 			<md-input-container class="md-icon-float md-block">
-				<label>Doctor Email</label>
+				<label style="color:black;">Doctor Email</label>
 				
 				<input ng-model="email" type="email" ng-required="true">
 			</md-input-container>		
 	
 			<md-input-container class="md-icon-float md-block">
-				<label>Doctor Password</label>
+				<label style="color:black;">Doctor Password</label>
 				<input ng-model="password" type="password" ng-required="true">
 			</md-input-container>	
 			

@@ -747,7 +747,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 
 			<!-- Logo -->
 			<div id="logo">
-				<span class="image avatar48"><img src="/images/avatar.jpg"
+				<span class="image avatar48"><img src="/images/avatar.png"
 					alt="" /></span>
 				<h1 id="title">{{user.name}}</h1>
 				<p>Welcome to <%= title %></p>
@@ -763,9 +763,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 
 					<li><a href="#top" id="top-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-					<li><a href="#cancerInfo" id="cancerinfo-link"
-						class="skel-layers-ignoreHref"><span class="icon fa-th">Cancer
-								Information</span></a></li>
+				
 					
 					<li><a href="#lifestyle" id="lifestyle-link"
 						class="skel-layers-ignoreHref"><span class="icon fa-heart-o"
@@ -803,24 +801,23 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 	<div id="main" class="main-profile">
 
 		<!-- Intro -->
-		<section id="top" class="patient dark cover">
-			<div class="container">
+		<section id="top" >
+		
+			<div class="container" style="background:url('/images/yoga-background.jpg') 0px -200px;height:300px;">
 
-				<header>
-					<h2 class="main_font">
-						You beat cancer by How You Live, Why You Live and in the manner in
-						which you live
-						</p>
+			<header>
+					<h3 class="main_font">
+						"Medicines can cure, but a good doctors inspirational words cab give the strength to fight from within"
+							
+					</h3>
+					<h3 class="main_font">	<pre>				-Stuat Scott</pre></h3>
 				</header>
 		
 
 
-			</div>
-		</section>
-		<!--  CancerInfo -->
-		<section id="cancerInfo" class="two">
+		</div>
+	
 			<div class="container">
-
 				<header>
 					<h2>About Cancer</h2>
 				</header>
@@ -988,6 +985,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				<header>
 					<h2>Articles</h2>
 				</header>
+				<md-card style="padding:5%;">
 				<div ng-repeat="article in articles.data">
 
 					<div class="article-heading">{{article.Summary}}</div>
@@ -997,7 +995,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						</span>
 					</div>
 				</div>
-
+				</md-card>
 			</div>
 		</section>
 
@@ -1008,7 +1006,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 				<header>
 					<h2>Latest News</h2>
 				</header>
-
+				<md-card style="padding:5%;">
 				<div class="news news_font">
 					OncoMed's lung cancer drug fails mid-stage study, shares tumble <a
 						href="https://www.reuters.com/article/us-oncomed-pharms-study-idUSKBN17J0ZK"><font
@@ -1027,7 +1025,7 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 						href="https://www.marketwatch.com/story/oncomed-stock-halted-after-lung-cancer-drug-misses-in-mid-stage-clinical-trial-2017-04-17"><font
 						color="black" width="100%">&#8594;</font></a>
 				</div>
-
+				</md-card>
 			</div>
 		</section>
 
@@ -1036,9 +1034,9 @@ function FACTLController($scope, $mdDialog, $http, $mdToast, answers) {
 		<section id="profile" class="six">
 
 			<div class="container">
+			<header><h2>Profile</h2></header>
 				<md-card> <md-card-header> <md-card-avatar>
-				<img class="md-user-avatar" src="images/avatar.jpg" /> </md-card-avatar> <md-card-header-text>
-				Profile </md-card-header-text> </md-card-header> <md-card-content style="font-size:16px;width:80%;">
+				<img class="md-user-avatar" src="images/avatar.png" /> </md-card-avatar> </md-card-header> <md-card-content style="font-size:16px;width:80%;">
 				<table ng-table="vm.tableParams" class="table table-bordered">
 					<tr>
 						<td><md-input-container class="md-block">

@@ -12,9 +12,10 @@
 
 /* Reset */
 .heading{
-	color:#5B0E20;
+	color:#000000;
 	font-weight: 600;
 }
+
 
 .carousel-image{
 	width: 100% !important;
@@ -22,7 +23,8 @@
 }
 .navbar {
   overflow: hidden;
-  background-color: rgba(96,13,41,0.75);
+  background-color: #1c1c1c;
+  opacity:0.50;
   position: fixed !important;
   top: 0;
   width: 100%;
@@ -49,11 +51,13 @@
 	padding: 5vh 12vw !important;
 }
 .landing-card {
+	margin:25px;
   position: relative;
   float: left;
-  padding-bottom: 25%;
-  height: 100%;
-  width: 100%;
+  padding-bottom: 25px;
+  height: 250px;
+  width: 250px;
+  
   text-align: center;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
@@ -63,8 +67,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  height: 250px;
+  width: 250px;
+   overflow:hidden;
+ 
 }
 
 .landing-card__front,
@@ -76,7 +82,7 @@
 }
 
 .landing-card__front {
-  background-color: #ff5078;
+  background-color: #54BE90;
 }
 
 .landing-card__back {
@@ -110,7 +116,7 @@
 	 font-weight:600; 
 	 font-size:3vh;
 	 height: 20%;
-	 background-color: #87113D;
+	 background-color: #54BE90;
 	 color: white;
 }
 .card-content{
@@ -123,7 +129,7 @@
 
 .article-heading{
     text-align: left;
-    color: #754B57;
+    color: black;
     font-weight: 600;
     font-size: large;
 }
@@ -175,7 +181,7 @@
 
 .treatment-heading {
 	text-align: left;
-	color: #754B57;
+	color: black;
 	font-weight: 600;
 	font-size: large;
 }
@@ -197,7 +203,7 @@
 
 .books_heading{
 	text-align: left;
-	color: #754B57;
+	color: black;
 	font-weight: 600;
 	font-size: large;
 }
@@ -224,19 +230,20 @@
 
 .treatment-text {
     text-align: justify;
-	color: #754B57;
+	color: black;
 	font-size: large;
+	font-weight:500;
 }
 
 .recipe_title{
 	cursor:hand;
 	text-align: left;
-	color: #754B57;
+	color: black;
 		font-size: large;
 }
 .article-heading {
 	text-align: left;
-	color: #754B57;
+	color: black;
 	font-weight: 600;
 	font-size: large;
 }
@@ -255,13 +262,15 @@
 }
 
 .main_font {
-	font-style: Helvetica;
-	color: #2b2b2b;
-	text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+	font-style: italic;
+	color: grey;
+	font-size:2em;
+
+	
 }
 
 .news {
-	background-color: #875D67;
+	background-color: #54BE90;
 	height: 50px;
 	border-bottom-left-radius: 0.5em;
 	border-bottom-right-radius: 0.5em;
@@ -289,7 +298,7 @@
 }
 
 .types_cancer {
-	height: 80%
+	height: 100%
 }
 /* card fronts and backs */
 .card__front, .card__back {
@@ -308,11 +317,11 @@
 }
 
 .card__front {
-	background-color: #754B57;
+	
 }
 
 .card__back {
-	background-color: #754B57;
+	background-color: #54BE90;
 	-webkit-transform: rotateY(-180deg);
 	transform: rotateY(-180deg);
 }
@@ -332,9 +341,16 @@
 	top: 190px;
 	left: 0;
 	width: 100%;
-	color: white;
-	font-family: Arial;
-	font-style: Italic;
+	color: #fff;
+  	visibility: hidden;
+  	opacity: 0;
+
+	transition: opacity .2s, visibility .2s;
+	background: #54BE90;
+}
+.card__front:hover .card__text {
+  visibility: visible;
+  opacity: 1;
 }
 
 .card__text__back {
@@ -2180,7 +2196,7 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 
 #nav ul li a {
 	display: block;
-	padding: 0.5em 1.5em 0.5em 1.5em;
+	padding: 0.5em 1.5em 0em 0em;
 	color: rgba(255, 255, 255, 0.5);
 	text-decoration: none;
 	outline: 0;
@@ -2213,19 +2229,22 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 }
 
 #nav ul li a.active span:before {
-	color: #e27689;
+	color: #3B8A75;
 }
 
 /* Footer */
 #footer {
 	text-align: center;
-	background-color: #77394E;
+	background-color: #1c1c1c;
+	opacity:0.75;
 	padding: 3em 0 4em 0;
 	box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0
 		rgba(0, 0, 0, 0.025);
 	font-size: 0.8em;
 }
-
+#id>.container{
+	padding:0px;
+}
 #footer-profile {
 	margin-left: 375px;
 	text-align: center;
@@ -2268,7 +2287,10 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 	box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0
 		rgba(0, 0, 0, 0.025);
 	text-align: center;
-	background-image: url("images/overlay.png");
+	/*background-image: url("images/overlay.png");*/
+}
+#factlButton:hover {
+    background-color:#2E7168
 }
 
 #main>section.dark {
@@ -2403,8 +2425,8 @@ input[type="button"]:active, input[type="submit"]:active, input[type="reset"]:ac
 	}
 	#nav ul li a {
 		font-size: 0.8em;
-		padding-top: 0.5em;
-		padding-bottom: 0.5em;
+		padding-top: 0.1em;
+		padding-bottom: 0.1em;
 	}
 	#nav ul li a span {
 		padding-right: 2.25em;

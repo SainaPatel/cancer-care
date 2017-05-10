@@ -19,7 +19,7 @@ exports.getRecommendations=function(req,res)
 		newData.push("0");
 		console.log("NewData"+JSON.stringify(newData));
 		request.post(
-				'https://ibm-watson-ml.mybluemix.net/pm/v1/score/FactL-Calculator?accesskey=Your Access Key',
+				'https://ibm-watson-ml.mybluemix.net/pm/v1/score/FactL-Calculator?accesskey=rucZP7CLeqbTVw85PCcm1gX8a76oNKjUAnfex0ZMDJBJFkvUxHa3H5EMT4Vb/stqHxGxQ3pIogjgEOjN0TGDTcL0h32gVzPkwMbmHXNpi+Fkertjm3UnGaRXUfTe986JxC8UEnc77nqrI4BC9n7SEwXCPpTKy6c6gKNAIMiHWHE=',
 				{ json: {  "tablename":"Fact-L-Calculated-Modified.xls", 
 					"header":["GP1", "GP2", "GP3", "GP4", "GP5", "GP6", "GP7","GS1", "GS2","GS3", "GS4", "GS5", "GS6", "GS7", "GE1", "GE2", "GE3", "GE4", "GE5", "GE6", "GF1", "GF2", "GF3", "GF4", "GF5", "GF6", "GF7", "B1", "C2", "L1", "L2", "B5", "C6", "L3", "L4", "Q3", "L5","Factor"], 
 					"data":[newData] } },
@@ -119,8 +119,8 @@ exports.getTreatmentLocations=function(req,res){
 	console.log("term in getTreatmentLocations"+term);
 	var lat = "37.3418790";
 	var lon = "-121.9242500";
-	var clientId = 'Your Client Id';
-	var clientSecret = 'Your Client Secret';
+	var clientId = 'KUbmuIidZJ6jNsVJfPS3Dg';
+	var clientSecret = 'kQcDMElY8AlceD1Xqr2kIkJ7cfNgFdbnPy9SMBH5361rvFK87u75oGziJNI2cav7';
 
 	var searchRequest = {
 			term:term,
